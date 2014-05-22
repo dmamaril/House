@@ -26,10 +26,10 @@ module.exports = function(app) {
     // name budget location prefDistance
     User.findOne({ id: req.user.id }, function (err, user) {
       if (user) {
-        user.name = req.body.name || user.name;
-        user.budget = req.body.budget || user.budget;
-        user.location = req.body.location || user.location;
-        user.prefDistance = req.body.prefDistance || user.prefDistance;
+        user.name = req.body.name;
+        user.budget = req.body.budget;
+        user.location = req.body.location;
+        user.prefDistance = req.body.prefDistance;
       }
       user.save(function (err, savedUser) { 
         console.log (savedUser, 'Successfully saved!'); 
@@ -86,7 +86,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/properties', function (req, res) {
+  app.get('/api/property', function (req, res) {
     User.findOne({ id: req.user.id }, function (err, user) {
       if (user) {
         Group.findOne({ id: user.groupId }, function (err, group) {
@@ -102,7 +102,7 @@ module.exports = function(app) {
     })
   });
 
-  app.post('/api/properties', function (req, res) {
+  app.post('/api/property', function (req, res) {
     var newProperty = new Property();
     newProperty.url = req.body.url;
     newProperty.title = req.body.title;

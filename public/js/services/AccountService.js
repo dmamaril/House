@@ -6,6 +6,10 @@ angular.module('AccountService', []).factory('Account', ['$http', function($http
           console.log('Account Service returned user', user);
           return user.data;
         });
+    },
+    post: function (data, callback) {
+      $http.post('/api/user', data)
+        .success(callback);
     }
   }
 }]);
