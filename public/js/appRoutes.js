@@ -2,21 +2,22 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 
 	$routeProvider
 
-		// home page
 		.when('/', {
 			templateUrl: 'views/home.html',
-			controller: 'MainController'
+			controller: 'HomeController'
 		})
 
-		.when('/nerds', {
-			templateUrl: 'views/nerd.html',
-			controller: 'NerdController'
+		.when('/account', {
+			templateUrl: 'views/account.html',
+			controller: 'AccountController'
 		})
 
-		.when('/geeks', {
-			templateUrl: 'views/geek.html',
-			controller: 'GeekController'	
-		});
+		.when('/list', {
+			templateUrl: 'views/list.html',
+			controller: 'ListController'	
+		})
+
+
 
 	$locationProvider.html5Mode(true);
 
