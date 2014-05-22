@@ -2,6 +2,7 @@ angular.module('AccountCtrl', ['AccountService']).controller('AccountController'
   $scope.user = accountInfo;
   $scope.group = groupMembers;
 
+  
 
 	$scope.tagline = 'Nothing beats a pocket protector!';
 
