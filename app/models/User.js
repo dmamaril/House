@@ -3,16 +3,15 @@ var Promise = require('bluebird');
 var mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
-    id : Number,
     name: String,
-    // lastname: String,
     email: String,
     password: String,
     prefDistance: String,
     budget: Number,
     groupId: Number,
-    location: Array // lat & long
-  });
+    location: Array, // lat & long
+    properties: Array
+});
 
 userSchema.pre('save', function (next) {
   var cipher = Promise.promisify(bcrypt.hash);
