@@ -1,5 +1,7 @@
-angular.module('GeekCtrl', []).controller('GeekController', function($scope) {
+angular.module('LinkCtrl', ['LinkService']).controller('LinkController', function($scope, Link, properties) {
+  $scope.properties = properties;
 
-	$scope.tagline = 'The square root of life is pi!';	
-
+  $scope.tagline = 'Nothing beats a pocket protector!';
 });
+
+

@@ -5,11 +5,7 @@ angular.module('AccountService', []).factory('Account', ['$http', function($http
         .success(function (user) {
           console.log('Account Service returned user', user);
           return user.data;
-        })
+        });
     }
   }
 }]);
-
-
-$window.sessionStorage.token
-$window.sessionStorage._id

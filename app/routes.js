@@ -100,13 +100,6 @@ module.exports = function(app) {
         });
       }
     })
-    // User.findone user..
-    // retrieve groupID
-      // var properties = [];
-      // retrieve group.members
-        // for each user
-        // concat user.properties
-    // res.send properties
   });
 
   app.post('/api/properties', function (req, res) {

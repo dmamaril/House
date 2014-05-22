@@ -1,12 +1,28 @@
 ***** TO DO *****
+
+AccountService
+
+ListService
+
+Templates
+  - Accounts
+  - List
+
+Doug @ 11am 
+
+
+
+***** CHECK *****
 appRoutes.js
   - resolve.groupMembers
     - members.data?
 
 
 
-Changelog:
 
+***** CHANGELOG ******
+
+Register & Login functionality
 
 /api/properties
   - User.findone user..
