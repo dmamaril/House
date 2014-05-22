@@ -5,12 +5,17 @@ appRoutes.js
 
 
 
-
-
-
-
-
 Changelog:
+
+
+/api/properties
+  - User.findone user..
+  - retrieve groupID
+    - var properties = [];
+    - retrieve group.members
+      - for each user
+      - concat user.properties
+  - res.send properties
 
 Group View
   - grab user prpoerties
@@ -32,17 +37,17 @@ Listing View
   - other members of group ability to delete properties
 
 /api/group:
-- client issues GET request
-- server receives GET request, retrieves _id from req.user
-- server queries database, User.findOne(id: id)
-  - retrieves groupID from user
-  - server queries database, Group.findOne(id: groupId)
-  - create variable storage (var members = [])
-  - retrieves all members
-    - make a copy
-    - get rid of password
-    - for each member, members.push(user);
-  - res.send(members)
+  - client issues GET request
+  - server receives GET request, retrieves _id from req.user
+  - server queries database, User.findOne(id: id)
+    - retrieves groupID from user
+    - server queries database, Group.findOne(id: groupId)
+    - create variable storage (var members = [])
+    - retrieves all members
+      - make a copy
+      - get rid of password
+      - for each member, members.push(user);
+    - res.send(members)
 
-- client receives members array
-  - render out with ng-repeat each user
+  - client receives members array
+    - render out with ng-repeat each user

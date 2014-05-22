@@ -87,8 +87,26 @@ module.exports = function(app) {
   });
 
   app.get('/api/properties', function (req, res) {
-    // get property linked to user (and group, if the user belongs to a group)
-
+    User.findOne({ id: req.user.id }, function (err, user) {
+      if (user) {
+        Group.findOne({ id: user.groupId }, function (err, group) {
+          var properties = [];
+          group.members.forEach(function (memberId) {
+            User.findOne({ id: memberId}, function (err, user) { // might make things blow up
+              properties.concat(user.properties);
+            });
+          })
+          res.send(properties);
+        });
+      }
+    })
+    // User.findone user..
+    // retrieve groupID
+      // var properties = [];
+      // retrieve group.members
+        // for each user
+        // concat user.properties
+    // res.send properties
   });
 
   app.post('/api/properties', function (req, res) {

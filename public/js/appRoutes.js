@@ -29,10 +29,16 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', '
 
 		.when('/list', {
 			templateUrl: 'views/list.html',
-			controller: 'ListController'	
+			controller: 'ListController',
+			resolve: {
+				properties: function (ListService) {
+					return ListService.get('/api/properties')
+						.then(function (property) {
+							return property;
+						});
+				}
+			}
 		})
-
-
 
 	$locationProvider.html5Mode(true);
 
