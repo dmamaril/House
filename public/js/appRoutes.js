@@ -1,4 +1,4 @@
-angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', 'AccountService', function($routeProvider, $locationProvider) {
 
 	$routeProvider
 
@@ -9,7 +9,22 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 
 		.when('/account', {
 			templateUrl: 'views/account.html',
-			controller: 'AccountController'
+			controller: 'AccountController',
+			resolve: {
+				accountInfo: function (AccountService) {
+					return AccountService.get('/api/user')
+						.then(function (user) {
+							return user.data;
+						});
+				},
+				groupMembers: function (AccountService) {
+					return AccountService.get('/api/group')
+						.then(function (members) {
+							// could this be members.data??
+							return members;
+						});
+				}
+			}
 		})
 
 		.when('/list', {

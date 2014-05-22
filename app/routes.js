@@ -1,5 +1,6 @@
 var jwt = require('jsonwebtoken');
 var User = require('./models/User.js');
+var Group = require('./models/Group.js');
 
 module.exports = function(app) {
 
@@ -9,17 +10,45 @@ module.exports = function(app) {
 
 	// frontend routes =========================================================
 	// route to handle all angular requests
-	app.get('*', function(req, res) {
-		res.sendfile('./public/index.html');
-	});
 
+  app.get('/api/user', function (req, res) {
+    User.findOne({ id: req.user.id }, function (err, user); {
+      if (!err) {
+        res.send(user);
+      } else {
+        res.send(501, err);
+      }
+    })
+  })
 
   app.post('/api/user', function (req, res) {
-    // get user profile
+    // change user profile
   });
 
   app.get('/api/group', function (req, res) {
-    // get group member's info
+    var groupId;
+    User.findOne({ id: req.user.id }, function (err, user) {
+      if (user) {
+        Group.findOne({ id: user.groupId }, function (err, group) {
+          var members;
+          if (group) {
+            members = group.members;
+            members.forEach(function (member) {
+              delete member.password;
+            });
+            res.send(members);
+          } else {
+            res.send(501, err);
+          }
+        });
+      } else {
+        res.send(501, err);
+      }
+    });
+  });
+
+  app.post('/api/group', function (req, res) {
+    // joining || create a new group
   });
 
   app.get('/api/properties', function (req, res) {
@@ -27,8 +56,8 @@ module.exports = function(app) {
   });
 
   app.post('/register', function (req, res) {
-    User.findOne({email: req.body.email}, function (err, exists) {
-      if (!exists) {
+    User.findOne({email: req.body.email}, function (err, user) {
+      if (!user) {
         var newUser = new User ({ 
           email: req.body.email,
           name: req.body.name, 
@@ -56,7 +85,7 @@ module.exports = function(app) {
             };
             console.log(user.firstname + ' has successfully logged in.');
             var token = jwt.sign(tokenProfile, secret, {expiresInMinutes: 20});
-            res.json({token:token, _id: user._id, user: user.firstname + ' ' + user.lastname});
+            res.json({token:token, _id: user._id, user: user.name});
           } else { 
             res.send(401, 'Wrong user or password'); 
           }
@@ -65,6 +94,10 @@ module.exports = function(app) {
         console.log ('Error @ Line 25 requestHandler.js');
       }
     });
+  });
+
+  app.get('*', function(req, res) {
+    res.sendfile('./public/index.html');
   });
 
 
