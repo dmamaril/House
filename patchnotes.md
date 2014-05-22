@@ -1,14 +1,16 @@
 ***** TO DO *****
 
-AccountService
-
-ListService
 
 Templates
   - Accounts
   - List
 
 Doug @ 11am 
+
+***** SCOTT MOSS ******
+- Best practices ng-models & values
+
+- Why factories? Seems repetitive
 
 
 
@@ -17,11 +19,12 @@ appRoutes.js
   - resolve.groupMembers
     - members.data?
 
-
-
-
 ***** CHANGELOG ******
+5/22/2014
+AccountService
+ListService
 
+5/21/2014
 Register & Login functionality
 
 /api/properties
