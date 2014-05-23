@@ -13,8 +13,9 @@ module.exports = function(app) {
 	// route to handle all angular requests
 
   app.get('/api/user', function (req, res) {
-    User.findOne({ id: req.user.id }, function (err, user) {
+    User.findOne({ _id: req.user.id }, function (err, user) {
       if (!err) {
+        console.log('routes.js app.get /api/user', user);
         res.send(user);
       } else {
         res.send(501, err);
@@ -24,7 +25,7 @@ module.exports = function(app) {
 
   app.post('/api/user', function (req, res) {
     // name budget location prefDistance
-    User.findOne({ id: req.user.id }, function (err, user) {
+    User.findOne({ _id: req.user.id }, function (err, user) {
       if (user) {
         user.name = req.body.name;
         user.budget = req.body.budget;
@@ -39,9 +40,9 @@ module.exports = function(app) {
 
   app.get('/api/group', function (req, res) {
     var groupId;
-    User.findOne({ id: req.user.id }, function (err, user) {
+    User.findOne({ _id: req.user.id }, function (err, user) {
       if (user) {
-        Group.findOne({ id: user.groupId }, function (err, group) {
+        Group.findOne({ _id: user.groupId }, function (err, group) {
           var members;
           if (group) {
             members = group.members;
@@ -61,7 +62,7 @@ module.exports = function(app) {
 
   app.post('/api/group', function (req, res) {
     var updateUser = function (savedGroup, req) {
-      User.findOne({ id: req.user.id }, function (err, user) {
+      User.findOne({ _id: req.user.id }, function (err, user) {
         if (user) {
           user.groupId = savedGroup._id;
           user.save();
@@ -87,9 +88,9 @@ module.exports = function(app) {
   });
 
   app.get('/api/property', function (req, res) {
-    User.findOne({ id: req.user.id }, function (err, user) {
+    User.findOne({ _id: req.user.id }, function (err, user) {
       if (user) {
-        Group.findOne({ id: user.groupId }, function (err, group) {
+        Group.findOne({ _id: user.groupId }, function (err, group) {
           var properties = [];
           group.members.forEach(function (memberId) {
             User.findOne({ id: memberId}, function (err, user) { // might make things blow up
