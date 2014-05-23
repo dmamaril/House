@@ -15,6 +15,14 @@ appRoutes.js
 Routes.js
   - /api/property
     - only search for group when groupID is present
+  - /api/groups
+    - returns empty array if groupId is not found
+
+AppRoutes.js
+  - refractor resolve for /account
+
+AccountService.js
+  - add getMembers() to issue get request to /api/group
 
 HOUSE
   - Refractor angular app modules, factories & controllers

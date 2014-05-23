@@ -39,9 +39,11 @@ module.exports = function(app) {
   });
 
   app.get('/api/group', function (req, res) {
-    var groupId;
+    console.log('Checking for session ID', req.user.id)
     User.findOne({ _id: req.user.id }, function (err, user) {
-      if (user) {
+      console.log('User in /api/group',user);
+      if (user.groupId) {
+        console.log('Found user.groupId', user.groupId)
         Group.findOne({ _id: user.groupId }, function (err, group) {
           var members;
           if (group) {
@@ -55,7 +57,7 @@ module.exports = function(app) {
           }
         });
       } else {
-        res.send(501, err);
+        res.send([]);
       }
     });
   });
@@ -89,7 +91,7 @@ module.exports = function(app) {
 
   app.get('/api/property', function (req, res) {
     User.findOne({ _id: req.user.id }, function (err, user) {
-      console.log('GroupID', user.groupId)
+      console.log('User groupID: ', user.groupId)
       if (user.groupId) {
         Group.findOne({ _id: user.groupId }, function (err, group) {
           var properties = [];

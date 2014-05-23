@@ -4,7 +4,6 @@ app.factory('Account', function ($http) {
     get: function () {
       return $http.get('/api/user')
         .success(function (user) {
-          console.log('Account Service returned user', user);
           return user.data;
         })
         .error(function () {
@@ -14,6 +13,13 @@ app.factory('Account', function ($http) {
     post: function (data, callback) {
       return $http.post('/api/user', data)
         .success(callback);
+    },
+    getMembers: function () {
+      return $http.get('/api/group')
+        .success(function (groupMembers) {
+          console.log('Group Members', groupMembers)
+          return groupMembers.data;
+        });
     }
   };
 })
