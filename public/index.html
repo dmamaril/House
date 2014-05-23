@@ -26,20 +26,7 @@
 	<script src="js/services/ListService.js"></script>
 	<script src="js/AuthInterceptorConfig.js"></script>
 </head>
-<body ng-app="houseApp" ng-controller="MainController">
-<div class="container">
-
-	<!-- HEADER -->
-	<nav class="navbar navbar-inverse">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="/">Stencil: Node and Angular</a>
-		</div>
-		<ul class="nav navbar-nav">
-			<li><a href="/account">Account</a></li>
-			<li><a href="/list">List</a></li>
-			<li><a href='/' ng-click='logout()'>Logout</a></li>
-		</ul>
-	</nav>
+<body ng-app="houseApp">
 
 	<!-- ANGULAR DYNAMIC CONTENT -->
 	<div ng-view></div>

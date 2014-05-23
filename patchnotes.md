@@ -1,9 +1,14 @@
 ***** TO DO *****
-
+Home.html
+  - Add confirm password
 
 
 ***** CHANGELOG ******
 5/22/2014 #####
+MainCtrl
+  - transferred navbar to List & Account
+  - delete MainCtrl
+
 Home.html
   - change basic signup form with validation
 
