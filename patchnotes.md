@@ -2,6 +2,10 @@
 Home.html
   - Add confirm password
 
+Create Group
+  - /api/property
+    - currently errors when user does not have any properties
+
 
 ***** CHANGELOG ******
 5/22/2014 #####
@@ -26,6 +30,7 @@ HomeCtrl.js
 Routes.js
   - /api/property
     - only search for group when groupID is present
+    - fix property GET requests
   - /api/groups
     - returns empty array if groupId is not found
   - Refractor updateUser

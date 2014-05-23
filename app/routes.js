@@ -100,10 +100,8 @@ module.exports = function(app) {
         Group.findOne({ _id: user.groupId }, function (err, group) {
           var properties = [];
           group.members.forEach(function (memberId) {
-            User.findOne({ id: memberId }, function (err, user) { // might make things blow up
-              if (user.properties) {
+            User.findOne({ _id: memberId }, function (err, user) {
                 properties.concat(user.properties); 
-              }
             });
           });
           res.send(properties);
