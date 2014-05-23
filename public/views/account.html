@@ -4,10 +4,11 @@
 	<p>{{ tagline }}</p>
 
   <form ng-submit='saveAccount()'>
-    <input type='text' ng-model='user.name'/>
-    <input type='text' ng-model='user.budget'/>
-    <input type='text' ng-model='user.prefDistance'/>
-    <input type='text' ng-model='user.location'/>
+    <input type='text' ng-model='user.name' placeholder='user.name'/>
+    <input type='text' ng-model='user.budget' placeholder='Budget'/>
+    <input type='text' ng-model='user.prefDistance' placeholder='Preferred max distance'/>
+    <input type='text' ng-model='user.location' placeholder='Daily Commute'/>
+    <button type='submit'>Make me pretty pls</button>
   </form>
 
   <ul>

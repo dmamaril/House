@@ -10,7 +10,7 @@ app.controller('HomeController', function ($scope, $http, $window, $location) {
 
   $scope.logInUser = function () {
     $http.post('/login', { email: $scope.email, password: $scope.password })
-      .success(function (token, status, headres, config) {
+      .success(function (token, status, headers , config) {
         $window.sessionStorage.token = token.token;
         $window.sessionStorage.id = token._id;
         $window.sessionStorage.name = token.name;
@@ -25,7 +25,16 @@ app.controller('HomeController', function ($scope, $http, $window, $location) {
       name: $scope.name
     };
     // need to receive session token & assign to $window.sessionStorage then redirect to /account
-    $http.post('/register', userData);
+    $http.post('/register', userData)
+      .success(function (registeredUser) {
+        $http.post('/login', { email: userData.email, password: userData.password })
+          .success(function (token, status, headers, config) {
+            $window.sessionStorage.token = token.token;
+            $window.sessionStorage.id = token._id;
+            $window.sessionStorage.name = token.name;
+            $location.path('/account');
+          });
+      });
   };
 })
 

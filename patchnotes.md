@@ -11,7 +11,12 @@ appRoutes.js
     - members.data?
 
 ***** CHANGELOG ******
-5/22/2014
+5/22/2014 #####
+HomeCtrl.js
+  - refractor registerUser()
+  - redirect to /account on /login
+  - toggleSignUp()
+
 Routes.js
   - /api/property
     - only search for group when groupID is present
@@ -36,7 +41,8 @@ AccountService
 ListService
   - complete get & post requests
 
-5/21/2014
+
+5/21/2014 ######
 Register & Login functionality
 
 /api/properties

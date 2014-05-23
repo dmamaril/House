@@ -42,7 +42,7 @@ module.exports = function(app) {
     console.log('Checking for session ID', req.user.id)
     User.findOne({ _id: req.user.id }, function (err, user) {
       console.log('User in /api/group',user);
-      if (user.groupId) {
+      if (user.hasOwnProperty('groupId')) {
         console.log('Found user.groupId', user.groupId)
         Group.findOne({ _id: user.groupId }, function (err, group) {
           var members;
