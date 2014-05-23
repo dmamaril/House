@@ -12,6 +12,9 @@ appRoutes.js
 
 ***** CHANGELOG ******
 5/22/2014 #####
+AccountCtrl
+  - toggleInput form on edit & on save
+
 HomeCtrl.js
   - refractor registerUser()
   - redirect to /account on /login

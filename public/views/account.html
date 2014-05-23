@@ -3,7 +3,17 @@
 
 	<p>{{ tagline }}</p>
 
-  <form ng-submit='saveAccount()'>
+  
+  <div ng-hide='showInput'>
+    <p> {{ user.name }} </p>
+    <p> {{ user.budget }} </p>
+    <p> {{ user.prefDistance }} </p>
+    <p> {{ user.location }} </p>
+    <button ng-click='toggleInput()'>Edit</button>
+  </div>  
+
+  <!-- SHOWS ONLY ON CLICK OF EDIT -->
+  <form ng-submit='saveAccount()' ng-show='showInput'>
     <input type='text' ng-model='user.name' placeholder='user.name'/>
     <input type='text' ng-model='user.budget' placeholder='Budget'/>
     <input type='text' ng-model='user.prefDistance' placeholder='Preferred max distance'/>
