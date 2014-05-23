@@ -6,10 +6,19 @@ Create Group
   - /api/property
     - currently errors when user does not have any properties
 
+Parse Craigslist
+  - http request
+  - add $scope.listingUrl navbar to listview
+
+
 
 ***** CHANGELOG ******
 5/23/2014 ######
+Http-request Node
+  - add node module to scrape listings
 
+fetchListing()
+  - added to ListCtrl, ListService, routes.js
 
 
 

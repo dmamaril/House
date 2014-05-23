@@ -171,9 +171,10 @@ module.exports = function(app) {
   });
 
   app.post('/api/fetchListing', function (req, res) {
+    console.log('Fetching listing at ', req.body.listingUrl);
     http.get(req.body.listingUrl, function (err, response) {
-      console.log(response);
-      res.send(response);
+      console.log(response.buffer.toString());
+      res.send(response.buffer.toString());
     });
   });
 

@@ -20,9 +20,9 @@ app.factory('List', function ($http) {
       return $http.post('/api/group', data)
         .success(callback);
     } ,
-    fetchListing: function(data, callback) {
+    fetchListing: function(listingData, callback) {
       return $http.post('/api/fetchListing', listingData)
-        .success(callback(listingData));
+        .success(callback);
     }
   };
 })

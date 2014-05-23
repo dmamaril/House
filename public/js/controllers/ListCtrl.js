@@ -13,9 +13,11 @@ app.controller('ListController', function ($scope, List, properties, $window) {
     });
   };
 
+
+  $scope.listingUrl = 'https://sfbay.craigslist.org/sfc/apa/4481288320.html'
   $scope.fetchListing = function () {
     List.fetchListing({ listingUrl: $scope.listingUrl }, function (expectListingData) {
-      console.log(expectListingData, 'Received');
+      console.log('Now @ ListCtrl');
     });
   }
   
