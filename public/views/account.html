@@ -2,16 +2,16 @@
 	<h1>Geek City</h1>
 
 	<p>{{ tagline }}</p>
-  
+
   <form ng-submit='saveAccount()'>
-    <input type='text' ng-model='user.name'/>  
-    <input type='text' ng-model='user.budget'/>  
+    <input type='text' ng-model='user.name'/>
+    <input type='text' ng-model='user.budget'/>
     <input type='text' ng-model='user.prefDistance'/>
     <input type='text' ng-model='user.location'/>
   </form>
 
   <ul>
-    <li ng-repeat="member in groupMembers">{{member.name}}, {{member.budget}}, {{member.prefDistance}}, {{member.location}}</li>
+    <li ng-repeat='member in groupMembers'>{{ member.name }}, {{ member.budget }}, {{ member.prefDistance }}, {{ member.location }}</li>
   </ul>
 
 </div>

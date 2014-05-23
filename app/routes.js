@@ -31,8 +31,8 @@ module.exports = function(app) {
         user.location = req.body.location;
         user.prefDistance = req.body.prefDistance;
       }
-      user.save(function (err, savedUser) { 
-        console.log (savedUser, 'Successfully saved!'); 
+      user.save(function (err, savedUser) {
+        console.log (savedUser, 'Successfully saved!');
       });
     });
   });
@@ -66,7 +66,7 @@ module.exports = function(app) {
           user.groupId = savedGroup._id;
           user.save();
         }
-      })
+      });
     };
 
     Group.findOne({ groupName: req.body.groupName }, function (err, group) {
@@ -74,13 +74,13 @@ module.exports = function(app) {
         var newGroup = new Group();
         newGroup.members.push(req.user.id);
         newGroup.groupName = req.body.groupName;
-        newGroup.save(function(err, savedGroup, numberAffected, req) { 
-          updateUser(savedGroup,req); 
+        newGroup.save(function(err, savedGroup, numberAffected, req) {
+          updateUser(savedGroup,req);
         });
       } else if (group) {
         group.members.push(req.user.id);
-        group.save(function(err, savedGroup, numberAffected, req) { 
-          updateUser(savedGroup, req); 
+        group.save(function(err, savedGroup, numberAffected, req) {
+          updateUser(savedGroup, req);
         });
       }
     });
@@ -95,11 +95,11 @@ module.exports = function(app) {
             User.findOne({ id: memberId}, function (err, user) { // might make things blow up
               properties.concat(user.properties);
             });
-          })
+          });
           res.send(properties);
         });
       }
-    })
+    });
   });
 
   app.post('/api/property', function (req, res) {
@@ -116,9 +116,9 @@ module.exports = function(app) {
   app.post('/register', function (req, res) {
     User.findOne({email: req.body.email}, function (err, user) {
       if (!user) {
-        var newUser = new User ({ 
+        var newUser = new User ({
           email: req.body.email,
-          name: req.body.name, 
+          name: req.body.name,
           password: req.body.password
         });
         newUser.save(function (err, user){
@@ -126,7 +126,7 @@ module.exports = function(app) {
           console.log(user);
           console.log('Saved!');
           res.send(user);
-        });      
+        });
       }
     });
   });
@@ -135,20 +135,20 @@ module.exports = function(app) {
     User.findOne({email: req.body.email}, function (err, user) {
       if (!err && user) {
         user.comparePassword(req.body.password, function (isMatch) {
-          if (isMatch) { 
+          if (isMatch) {
             var tokenProfile = {
-              name: user.name 
+              name: user.name,
               email: user.email,
               id: user._id
             };
-            console.log(user.firstname + ' has successfully logged in.');
-            var token = jwt.sign(tokenProfile, secret, {expiresInMinutes: 20});
+            console.log(user.name + ' has successfully logged in.');
+            var token = jwt.sign(tokenProfile, 'houseApp', {expiresInMinutes: 20});
             res.json({token:token, _id: user._id, user: user.name});
-          } else { 
-            res.send(401, 'Wrong user or password'); 
+          } else {
+            res.send(401, 'Wrong user or password');
           }
         });
-      } else { 
+      } else {
         console.log ('Error @ Line 25 requestHandler.js');
       }
     });

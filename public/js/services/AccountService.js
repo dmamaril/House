@@ -11,5 +11,5 @@ angular.module('AccountService', []).factory('Account', ['$http', function($http
       $http.post('/api/user', data)
         .success(callback);
     }
-  }
+  };
 }]);

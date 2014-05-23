@@ -3,5 +3,19 @@
 
 	<p>{{ tagline }}</p>
   <!-- show map -->
-  <!-- show list info -->
+
+  <table>
+    <tr>
+      <th>Votes</th>
+      <th>Title</th>
+      <th>Location</th>
+      <th>Price</th>
+    </tr>
+    <tr ng-repeat='property in properties'>
+      <td>{{ property.votes }}</td>
+      <td>{{ property.title }}</td>
+      <td>{{ property.location }}</td>
+      <td>{{ property.price }}</td>
+    </tr>
+  </table>
 </div>
