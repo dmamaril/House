@@ -2,14 +2,17 @@
 app.factory('Account', function ($http) {
   return {
     get: function () {
-      $http.get('/api/user')
+      return $http.get('/api/user')
         .success(function (user) {
           console.log('Account Service returned user', user);
           return user.data;
-        });
+        })
+        .error(function () {
+          console.log('Err @ .get AccountService.js');
+        })
     },
     post: function (data, callback) {
-      $http.post('/api/user', data)
+      return $http.post('/api/user', data)
         .success(callback);
     }
   };
