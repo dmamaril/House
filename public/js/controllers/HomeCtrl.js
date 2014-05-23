@@ -1,5 +1,6 @@
-angular.module('HomeCtrl', []).controller('HomeController', function($scope, $http, $window) {
+// angular.module('HomeCtrl', []).controller('HomeController', function($scope, $http, $window) {
 
+app.controller('HomeController', function ($scope, $http, $window) {
   $scope.tagline = 'KillBnB';
 
   $scope.logInUser = function () {
@@ -15,5 +16,7 @@ angular.module('HomeCtrl', []).controller('HomeController', function($scope, $ht
   $scope.registerUser = function () {
     $http.post('/register', { email: $scope.email, password: $scope.password, name: $scope.name});
   };
+})
 
-});
+
+// });

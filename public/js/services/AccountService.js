@@ -1,4 +1,5 @@
-angular.module('AccountService', []).factory('Account', ['$http', function($http) {
+// angular.module('AccountService', []).factory('Account', ['$http', function($http) {
+app.factory('Account', function ($http) {
   return {
     get: function () {
       $http.get('/api/user')
@@ -12,4 +13,5 @@ angular.module('AccountService', []).factory('Account', ['$http', function($http
         .success(callback);
     }
   };
-}]);
+})
+// }]);

@@ -1,4 +1,6 @@
-angular.module('ListService', []).factory('List', function($http) {
+// angular.module('ListService', []).factory('List', function($http) {
+
+app.factory('List', function ($http) {  
   return {
     get: function () {
       $http.get('/api/property')
@@ -12,4 +14,5 @@ angular.module('ListService', []).factory('List', function($http) {
         .success(callback);
     }
   };
-});
+})
+// });

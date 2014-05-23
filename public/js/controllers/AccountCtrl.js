@@ -1,4 +1,5 @@
-angular.module('AccountCtrl', ['AccountService']).controller('AccountController', function($scope, Account, accountInfo, groupMembers) {
+// angular.module('AccountCtrl', ['AccountService']).controller('AccountController', function($scope, Account, accountInfo, groupMembers) {
+app.controller('AccountController', function ($scope, Account, accountInfo, groupMembers) {
   $scope.user = accountInfo;
   $scope.groupMembers = groupMembers;
 
@@ -8,10 +9,9 @@ angular.module('AccountCtrl', ['AccountService']).controller('AccountController'
     });
   };  
 
-	$scope.tagline = 'Nothing beats a pocket protector!';
+  $scope.tagline = 'Nothing beats a pocket protector!';
+})
 
-  // acct view controller
-
-});
+// });
 
 

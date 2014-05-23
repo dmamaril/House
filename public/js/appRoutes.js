@@ -1,5 +1,5 @@
-angular.module('appRoutes', ['AccountService', 'ListService']).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-
+// angular.module('appRoutes', ['AccountService', 'ListService']).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 	$routeProvider
 
 		.when('/', {
@@ -41,5 +41,7 @@ angular.module('appRoutes', ['AccountService', 'ListService']).config(['$routePr
 		});
 
 	$locationProvider.html5Mode(true);
+	
+}])
 
-}]);
+// }]);
