@@ -13,10 +13,7 @@ app.controller('ListController', function ($scope, List, properties, $window) {
     });
   };
 
-
-  // $scope.listingUrl = 'https://sfbay.craigslist.org/sfc/apa/4481288320.html';
-  $scope.listingUrl = 'https://sfbay.craigslist.org/eby/apa/4485134306.html'
-  // $scope.listingUrl = 'https://www.airbnb.com/rooms/2178509?s=zb3k'
+  $scope.listingUrl = 'https://www.airbnb.com/rooms/2178509?s=zb3k'
   $scope.fetchListing = function () {
     List.fetchListing({ listingUrl: $scope.listingUrl }, function (expectListingData) {
       console.log('Now @ ListCtrl');

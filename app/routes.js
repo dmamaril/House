@@ -9,16 +9,29 @@ var Property = require('./models/Property.js');
 
 
 var parseCraigsList = function (toParse) {
-  var start = toParse.indexOf('<div class="mapAndAttrs">');
-  var end = toParse.indexOf('<section id="postingbody">');
-  var str = toParse.substring(start, end);
+  // PARSE NEIGHBORHOOD
+  var start = toParse.indexOf('<h2 class="postingtitle">');
+  var stop = toParse.indexOf('</h2>');
+  var neighborhood = toParse.substring(start, stop);
+  neighborhood = neighborhood.substring(neighborhood.lastIndexOf('(')+1, neighborhood.lastIndexOf(')'));
+
+  // PARSE MAPS & BEDROOM
+  start = toParse.indexOf('<div class="mapAndAttrs">');
+  stop = toParse.indexOf('<section id="postingbody">');
+  var mapAndAttrs = toParse.substring(start, stop);
 
   // MAP COORDINATES -----------------------------
-  start = str.indexOf('data-latitude="');
-  stop = str.indexOf('data-longitude="') + 30;
-  var coordinates = findCoords(str.substring(start, stop).replace(/[A-Za-z$]/g, ""));
+  start = mapAndAttrs.indexOf('data-latitude="');
+  stop = mapAndAttrs.indexOf('data-longitude="') + 30;
+  var coordinates = findCoords(mapAndAttrs.substring(start, stop).replace(/[A-Za-z$]/g, ""));
+  // NUMBER OF BEDROOMS
+  mapAndAttrs = mapAndAttrs.substring(mapAndAttrs.indexOf('<p class="attrgroup"'), mapAndAttrs.lastIndexOf('</b>BR'));
+  var bedrooms = mapAndAttrs.slice(mapAndAttrs.lastIndexOf('>')+1);
 
+  console.log(neighborhood, coordinates, bedrooms);
+  return { coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms }
 };
+
 
 var findCoords = function (coordinates) {
     var temp = [];
@@ -33,6 +46,7 @@ var findCoords = function (coordinates) {
         }
       }
     }
+    if (temp[0].length === 0) { temp[0] = undefined; }
     return { latitude: temp[0], longtitude: temp[1] };
 };
 
