@@ -2,6 +2,14 @@ app.controller('ListController', function ($scope, List, properties, $window) {
   $scope.properties = properties;
 
   $scope.tagline = 'Nothing beats a pocket protector!';
+  
+  $scope.map = {
+      center: {
+          latitude: 45,
+          longitude: -73
+      },
+      zoom: 13
+  };
 
   $scope.toggleGroupForm = function () {
     $scope.creatingGroup = !$scope.creatingGroup;
@@ -18,14 +26,12 @@ app.controller('ListController', function ($scope, List, properties, $window) {
       console.log(expectListingData, 'Received');
     });
   }
-  
+
   $scope.logout = function () {
     delete $window.sessionStorage.token;
     delete $window.sessionStorage.id;
     delete $window.sessionStorage.name;
   };
-
-
 
 });
 
