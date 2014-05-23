@@ -20,7 +20,6 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 				groupMembers: function (Account) {
 					return Account.get('/api/group')
 						.then(function (members) {
-							// could this be members.data??
 							return members;
 						});
 				}
