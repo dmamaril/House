@@ -13,7 +13,7 @@ app.controller('ListController', function ($scope, List, properties, $window) {
     });
   };
 
-  $scope.listingUrl = 'https://www.airbnb.com/rooms/2178509?s=zb3k'
+  $scope.listingUrl = 'https://www.airbnb.com/rooms/784034'
   $scope.fetchListing = function () {
     List.fetchListing({ listingUrl: $scope.listingUrl }, function (expectListingData) {
       console.log('Now @ ListCtrl');

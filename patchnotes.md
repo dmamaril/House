@@ -19,7 +19,8 @@ Http-request Node
   - scrapes listings
 
 Parser(CraigsList)
-  - map coordinates
+
+Parser(BnB)
 
 fetchListing()
   - added to ListCtrl, ListService, routes.js
