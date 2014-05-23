@@ -1,17 +1,12 @@
 ***** TO DO *****
 
 
-Templates
-  - Accounts
-  - List
-
-***** CHECK *****
-appRoutes.js
-  - resolve.groupMembers
-    - members.data?
 
 ***** CHANGELOG ******
 5/22/2014 #####
+Home.html
+  - change basic signup form with validation
+
 MainCtrl.js
   - delete tokens on logout & redirect to login
 
