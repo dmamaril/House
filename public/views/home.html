@@ -3,7 +3,7 @@
   <p>{{ tagline }}</p>
 
   <div>
-      <div class="row">
+      <div class="row" ng-hide='showSignUp'>
           <div class="col-md-12">
               <div class="wrap">
                   <p class="form-title"></p>
@@ -11,7 +11,7 @@
                   <input type="text" ng-model='email' placeholder="e-mail" />
                   <input type="password" ng-model='password' placeholder="Password" />
                   <input type="submit" value="Sign In" class="btn btn-default btn-sm" />
-                  <small><a href='#signup'>Not yet registered?</a></small>
+                  <small><a href='' ng-click='toggleSignUp()'>Not yet registered?</a></small>
                       </div>
                   </div>
                   </form>
@@ -21,7 +21,7 @@
   </div>
 
 
-  <div>
+  <div ng-show='showSignUp'>
       <div class="row">
           <div class="col-md-12">
               <div class="wrap">
