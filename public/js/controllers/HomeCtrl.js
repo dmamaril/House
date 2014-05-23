@@ -14,7 +14,7 @@ app.controller('HomeController', function ($scope, $http, $window, $location) {
         $window.sessionStorage.token = token.token;
         $window.sessionStorage.id = token._id;
         $window.sessionStorage.name = token.name;
-        $location.path('/account')
+        $location.path('/account');
       });
   };
 

@@ -15,7 +15,7 @@ module.exports = function(app) {
   app.get('/api/user', function (req, res) {
     User.findOne({ _id: req.user.id }, function (err, user) {
       if (!err) {
-        console.log('routes.js app.get /api/user', user);
+        console.log('/api/user has found ', user.name);
         res.send(user);
       } else {
         res.send(501, err);
@@ -24,7 +24,6 @@ module.exports = function(app) {
   });
 
   app.post('/api/user', function (req, res) {
-    // name budget location prefDistance
     User.findOne({ _id: req.user.id }, function (err, user) {
       if (user) {
         user.name = req.body.name;
@@ -39,9 +38,7 @@ module.exports = function(app) {
   });
 
   app.get('/api/group', function (req, res) {
-    console.log('Checking for session ID', req.user.id)
     User.findOne({ _id: req.user.id }, function (err, user) {
-      console.log('User in /api/group',user);
       if (user.hasOwnProperty('groupId')) {
         console.log('Found user.groupId', user.groupId)
         Group.findOne({ _id: user.groupId }, function (err, group) {
@@ -121,7 +118,9 @@ module.exports = function(app) {
 
   app.post('/register', function (req, res) {
     User.findOne({email: req.body.email}, function (err, user) {
+      console.log('Checking if email exists...', !user);
       if (!user) {
+        console.log('Creating new user...');
         var newUser = new User ({
           email: req.body.email,
           name: req.body.name,
@@ -138,10 +137,13 @@ module.exports = function(app) {
   });
 
   app.post('/login', function (req, res) {
+    console.log('Logging in as ', req.body.email);
     User.findOne({email: req.body.email}, function (err, user) {
-      if (!err && user) {
+      if (user) {
+        console.log('User found. Checking password....');
         user.comparePassword(req.body.password, function (isMatch) {
           if (isMatch) {
+            console.log('Password matched! Creating token...')
             var tokenProfile = {
               name: user.name,
               email: user.email,

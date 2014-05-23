@@ -17,7 +17,6 @@ app.factory('Account', function ($http) {
     getMembers: function () {
       return $http.get('/api/group')
         .success(function (groupMembers) {
-          console.log('Group Members', groupMembers)
           return groupMembers.data;
         });
     }

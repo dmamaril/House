@@ -12,6 +12,9 @@ appRoutes.js
 
 ***** CHANGELOG ******
 5/22/2014 #####
+MainCtrl.js
+  - delete tokens on logout & redirect to login
+
 AccountCtrl
   - toggleInput form on edit & on save
 
