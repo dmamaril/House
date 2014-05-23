@@ -89,7 +89,8 @@ module.exports = function(app) {
 
   app.get('/api/property', function (req, res) {
     User.findOne({ _id: req.user.id }, function (err, user) {
-      if (user) {
+      console.log('GroupID', user.groupId)
+      if (user.groupId) {
         Group.findOne({ _id: user.groupId }, function (err, group) {
           var properties = [];
           group.members.forEach(function (memberId) {
@@ -99,6 +100,8 @@ module.exports = function(app) {
           });
           res.send(properties);
         });
+      } else {
+        res.send([]);
       }
     });
   });

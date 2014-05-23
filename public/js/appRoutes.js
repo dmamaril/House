@@ -33,6 +33,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 				properties: function (List) {
 					return List.get('/api/property')
 						.then(function (property) {
+							console.log('Property', property);
 							return property;
 						});
 				}

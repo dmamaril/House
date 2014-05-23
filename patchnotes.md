@@ -5,15 +5,6 @@ Templates
   - Accounts
   - List
 
-Doug @ 11am 
-
-***** SCOTT MOSS ******
-- Best practices ng-models & values
-
-- Why factories? Seems repetitive
-
-
-
 ***** CHECK *****
 appRoutes.js
   - resolve.groupMembers
@@ -21,8 +12,21 @@ appRoutes.js
 
 ***** CHANGELOG ******
 5/22/2014
+Routes.js
+  - /api/property
+    - only search for group when groupID is present
+
+HOUSE
+  - Refractor angular app modules, factories & controllers
+
+Auth Interceptor 
+  - Fully functional authorization
+
 AccountService
+  - complete get & post requests
+
 ListService
+  - complete get & post requests
 
 5/21/2014
 Register & Login functionality
