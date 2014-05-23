@@ -13,27 +13,27 @@ var parseCraigsList = function (toParse) {
   var end = toParse.indexOf('<section id="postingbody">');
   var str = toParse.substring(start, end);
 
-  // grab lat & long
+  // MAP COORDINATES -----------------------------
   start = str.indexOf('data-latitude="');
   stop = str.indexOf('data-longitude="') + 30;
+  var coordinates = findCoords(str.substring(start, stop).replace(/[A-Za-z$]/g, ""));
 
+};
 
-
-  // MAP COORDINATES FUNCTIONAL
-  var coordinates = str.substring(start, stop).replace(/[A-Za-z$]/g, "");
-  stop = coordinates.lastIndexOf('"');
-  coordinates = coordinates.substring(0, stop);
-  start = coordinates.lastIndexOf('"');
-  var longtitude = coordinates.substring(start+1, stop);
-  coordinates = coordinates.substring(0, start);
-  var latitude = coordinates.substring(coordinates.indexOf('"')+1, coordinates.lastIndexOf('"'));
-
-  coordinates = {
-    latitude: latitude,
-    longtitude: longtitude
-  };
-
-  console.log(coordinates);
+var findCoords = function (coordinates) {
+    var temp = [];
+    for (var i = 0 ; i < coordinates.length ; i++) {
+      if (coordinates[i] === '"') {
+        for (var j = i+1; j < coordinates.length ; j++) {
+          if (coordinates[j] === '"') {
+            temp.push(coordinates.substring(i+1, j));
+            i = j;
+            break;
+          }
+        }
+      }
+    }
+    return { latitude: temp[0], longtitude: temp[1] };
 };
 
 
