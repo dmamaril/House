@@ -13,9 +13,13 @@ app.factory('List', function ($http) {
         });
     },
     post: function(data, callback) {
-      return $http.post('/api/property')
+      return $http.post('/api/property', data)
         .success(callback);
-    }
+    },
+    createNewGroup: function(data, callback) {
+      return $http.post('/api/group', data)
+        .success(callback);
+    } 
   };
 })
 // });

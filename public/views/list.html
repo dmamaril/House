@@ -16,9 +16,15 @@
 	<h1>Nerds and Proud</h1>
 
 	<p>{{ tagline }}</p>
-  <!-- show map -->
 
-  <table>
+  <a href='' ng-click='toggleGroupForm()' ng-hide='creatingGroup'>Create a new group</a>
+
+  <form ng-submit='createGroup()' ng-show='creatingGroup'>
+    <input type='text' ng-model='groupName' placeholder='Enter group name' ></input>
+  </form>
+
+
+  <table ng-show='properties'>
     <tr>
       <th>Votes</th>
       <th>Title</th>
@@ -33,3 +39,4 @@
     </tr>
   </table>
 </div>
+

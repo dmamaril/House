@@ -60,27 +60,34 @@ module.exports = function(app) {
   });
 
   app.post('/api/group', function (req, res) {
-    var updateUser = function (savedGroup, req) {
-      User.findOne({ _id: req.user.id }, function (err, user) {
-        if (user) {
-          user.groupId = savedGroup._id;
-          user.save();
-        }
+    
+    var updateUser = function (savedGroup, userId) {
+      console.log('Searching for user...', userId);
+      User.update({ _id: userId }, { $set: { groupId: savedGroup._id }}, function () {
+        User.findOne({ _id: userId }, function (err, user) {
+          console.log('Saved!', user);
+        }); 
       });
     };
 
+    console.log('Checking for groupName: ', req.body.groupName);
     Group.findOne({ groupName: req.body.groupName }, function (err, group) {
       if (!group) {
+        console.log(req.body.groupId, ' Not found. Creating a new group...')
         var newGroup = new Group();
         newGroup.members.push(req.user.id);
         newGroup.groupName = req.body.groupName;
-        newGroup.save(function(err, savedGroup, numberAffected, req) {
-          updateUser(savedGroup,req);
+        console.log('Creating group...', newGroup)
+        newGroup.save(function(err, savedGroup, numberAffected) {
+          updateUser(savedGroup, req.user.id);
+          res.end();
         });
       } else if (group) {
         group.members.push(req.user.id);
-        group.save(function(err, savedGroup, numberAffected, req) {
-          updateUser(savedGroup, req);
+        group.save(function(err, savedGroup, numberAffected) {
+          console.log('Updated existing group: ', savedGroup);
+          updateUser(savedGroup, req.user.id);
+          res.end();
         });
       }
     });
@@ -93,8 +100,10 @@ module.exports = function(app) {
         Group.findOne({ _id: user.groupId }, function (err, group) {
           var properties = [];
           group.members.forEach(function (memberId) {
-            User.findOne({ id: memberId}, function (err, user) { // might make things blow up
-              properties.concat(user.properties);
+            User.findOne({ id: memberId }, function (err, user) { // might make things blow up
+              if (user.properties) {
+                properties.concat(user.properties); 
+              }
             });
           });
           res.send(properties);

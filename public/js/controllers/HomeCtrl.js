@@ -11,6 +11,7 @@ app.controller('HomeController', function ($scope, $http, $window, $location) {
   $scope.logInUser = function () {
     $http.post('/login', { email: $scope.email, password: $scope.password })
       .success(function (token, status, headers , config) {
+        console.log('Token', token);
         $window.sessionStorage.token = token.token;
         $window.sessionStorage.id = token._id;
         $window.sessionStorage.name = token.name;

@@ -28,6 +28,8 @@ Routes.js
     - only search for group when groupID is present
   - /api/groups
     - returns empty array if groupId is not found
+  - Refractor updateUser
+    - set groupID: String in schema
 
 AppRoutes.js
   - refractor resolve for /account
@@ -43,9 +45,11 @@ Auth Interceptor
 
 AccountService
   - complete get & post requests
+  - add getMembers()
 
 ListService
   - complete get & post requests
+  - add createNewGroup()
 
 
 5/21/2014 ######
