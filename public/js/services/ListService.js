@@ -19,7 +19,11 @@ app.factory('List', function ($http) {
     createNewGroup: function(data, callback) {
       return $http.post('/api/group', data)
         .success(callback);
-    } 
+    } ,
+    fetchListing: function(data, callback) {
+      return $http.post('/api/fetchListing', listingData)
+        .success(callback(listingData));
+    }
   };
 })
 // });

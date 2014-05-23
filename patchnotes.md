@@ -8,7 +8,12 @@ Create Group
 
 
 ***** CHANGELOG ******
-5/22/2014 #####
+5/23/2014 ######
+
+
+
+
+5/22/2014 ######
 MainCtrl
   - transferred navbar to List & Account
   - delete MainCtrl

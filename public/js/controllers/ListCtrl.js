@@ -1,5 +1,3 @@
-// angular.module('ListCtrl', ['ListService']).controller('ListController', function($scope, List, properties) {
-
 app.controller('ListController', function ($scope, List, properties, $window) {
   $scope.properties = properties;
 
@@ -7,11 +5,17 @@ app.controller('ListController', function ($scope, List, properties, $window) {
 
   $scope.toggleGroupForm = function () {
     $scope.creatingGroup = !$scope.creatingGroup;
-  }
+  };
 
   $scope.createGroup = function () {
     List.createNewGroup({ groupName: $scope.groupName }, function () {
       console.log($scope.groupName, 'has been created');
+    });
+  };
+
+  $scope.fetchListing = function () {
+    List.fetchListing({ listingUrl: $scope.listingUrl }, function (expectListingData) {
+      console.log(expectListingData, 'Received');
     });
   }
   
@@ -20,11 +24,9 @@ app.controller('ListController', function ($scope, List, properties, $window) {
     delete $window.sessionStorage.id;
     delete $window.sessionStorage.name;
   };
+
+
+
 });
-
-
-
-
-// });
 
 

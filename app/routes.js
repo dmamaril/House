@@ -1,4 +1,5 @@
 var jwt = require('jsonwebtoken');
+var http = require('http-request');
 var User = require('./models/User.js');
 var Group = require('./models/Group.js');
 var Property = require('./models/Property.js');
@@ -168,6 +169,14 @@ module.exports = function(app) {
       }
     });
   });
+
+  app.post('/api/fetchListing', function (req, res) {
+    http.get(req.body.listingUrl, function (err, response) {
+      console.log(response);
+      res.send(response);
+    });
+  });
+
 
   app.get('*', function(req, res) {
     res.sendfile('./public/index.html');
