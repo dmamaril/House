@@ -1,17 +1,41 @@
+<div class="container">
+  <nav class="navbar navbar-inverse">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Stencil: Node and Angular</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/account">Account</a></li>
+      <li><a href="/list">List</a></li>
+      <li><a href='/' ng-click='logout()'>Logout</a></li>
+    </ul>
+  </nav>
+</div>
+
 <div class="jumbotron text-center">
 	<h1>Geek City</h1>
 
 	<p>{{ tagline }}</p>
+
   
-  <form ng-submit='saveAccount()'>
-    <input type='text' ng-model='user.name'/>  
-    <input type='text' ng-model='user.budget'/>  
-    <input type='text' ng-model='user.prefDistance'/>
-    <input type='text' ng-model='user.location'/>
+  <div ng-hide='showInput'>
+    <p> {{ user.name }} </p>
+    <p> {{ user.budget }} </p>
+    <p> {{ user.prefDistance }} </p>
+    <p> {{ user.location }} </p>
+    <button ng-click='toggleInput()'>Edit</button>
+  </div>  
+
+  <!-- SHOWS ONLY ON CLICK OF EDIT -->
+  <form ng-submit='saveAccount()' ng-show='showInput'>
+    <input type='text' ng-model='user.name' placeholder='user.name'/>
+    <input type='text' ng-model='user.budget' placeholder='Budget'/>
+    <input type='text' ng-model='user.prefDistance' placeholder='Preferred max distance'/>
+    <input type='text' ng-model='user.location' placeholder='Daily Commute'/>
+    <button type='submit'>Make me pretty pls</button>
   </form>
 
   <ul>
-    <li ng-repeat="member in groupMembers">{{member.name}}, {{member.budget}}, {{member.prefDistance}}, {{member.location}}</li>
+    <li ng-repeat='member in groupMembers'>{{ member.name }}, {{ member.budget }}, {{ member.prefDistance }}, {{ member.location }}</li>
   </ul>
 
 </div>

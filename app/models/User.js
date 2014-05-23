@@ -8,7 +8,7 @@ var userSchema = mongoose.Schema({
     password: String,
     prefDistance: String,
     budget: Number,
-    groupId: Number,
+    groupId: String,
     location: Array, // lat & long
     properties: Array
 });

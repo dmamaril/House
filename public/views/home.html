@@ -3,39 +3,46 @@
   <p>{{ tagline }}</p>
 
   <div>
-      <div class="row">
+      <div class="row" ng-hide='showSignUp'>
           <div class="col-md-12">
               <div class="wrap">
                   <p class="form-title"></p>
                   <form class="login" ng-submit='logInUser()'>
+                   
                   <input type="text" ng-model='email' placeholder="e-mail" />
                   <input type="password" ng-model='password' placeholder="Password" />
                   <input type="submit" value="Sign In" class="btn btn-default btn-sm" />
-                  <small><a href='#signup'>Not yet registered?</a></small>
-                      </div>
-                  </div>
-                  </form>
+                  <small><a href='' ng-click='toggleSignUp()'>Not yet registered?</a></small>
+                  </form> 
               </div>
           </div>
       </div>
   </div>
 
 
-  <div>
-      <div class="row">
-          <div class="col-md-12">
-              <div class="wrap">
-                  <p class="form-title"></p>
-                  <form class="register" ng-submit='registerUser()'>
-                  <input type="text" ng-model='name' placeholder="full name" />
-                  <input type="text" ng-model='email' placeholder="e-mail" />
-                  <input type="password" ng-model='password' placeholder="Password" />
-                  <input type="submit" value="Register" class="btn btn-default btn-sm" />
-                  </form>
-              </div>
-          </div>
+  <div ng-show='showSignUp'>
+    <form name="userForm" ng-submit="registerUser(userForm.$valid)" novalidate>
+      <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name" class="form-control" ng-model="name" required>
+          <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
       </div>
-  </div>
+
+      <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" class="form-control" ng-model="email">
+          <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+      </div>
+
+      <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" class="form-control" ng-model="password">
+      </div>
+      <!-- ADD A CONFIRM PASSWORD -->
+      <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+    </form>
+  </div> 
+
 
 </div>
 

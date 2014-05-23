@@ -3,10 +3,11 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var expressJwt = require('express-jwt');
+var jwt = require('jsonwebtoken');
 
 
 // configuration ===========================================
-	
+
 // config files
 var db = require('./config/db');
 
@@ -18,7 +19,7 @@ app.configure(function() {
 	app.use(express.logger('dev')); 					// log every request to the console
 	app.use(express.bodyParser()); 						// pull information from html in POST
 	app.use(express.methodOverride()); 					// simulate DELETE and PUT
-  app.use('/api', expressJwt({secret: secret}))
+  app.use('/api', expressJwt({secret: 'houseApp'}));
 
 });
 
@@ -26,6 +27,6 @@ app.configure(function() {
 require('./app/routes')(app); // pass our application into our routes
 
 // start app ===============================================
-app.listen(port);	
+app.listen(port);
 console.log('Magic happens on port ' + port); 			// shoutout to the user
 exports = module.exports = app; 						// expose app

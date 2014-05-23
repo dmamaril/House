@@ -1,7 +1,44 @@
+<div class="container">
+  <nav class="navbar navbar-inverse">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Stencil: Node and Angular</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/account">Account</a></li>
+      <li><a href="/list">List</a></li>
+      <li><a href='/' ng-click='logout()'>Logout</a></li>
+    </ul>
+  </nav>
+</div>
+
+
 <div class="jumbotron text-center">
 	<h1>Nerds and Proud</h1>
 
 	<p>{{ tagline }}</p>
-  <!-- show map -->
-  <!-- show list info -->
+
+  <a href='' ng-click='toggleGroupForm()' ng-hide='creatingGroup'>Create a new group</a>
+
+  <form ng-submit='createGroup()' ng-show='creatingGroup'>
+    <input type='text' ng-model='groupName' placeholder='Enter group name' ></input>
+  </form>
+
+
+  <table ng-show='properties'>
+    <tr>
+      <th>Votes</th>
+      <th>Title</th>
+      <th>Location</th>
+      <th>Price</th>
+    </tr>
+    <tr ng-repeat='property in properties'>
+      <td>{{ property.votes }}</td>
+      <td>{{ property.title }}</td>
+      <td>{{ property.location }}</td>
+      <td>{{ property.price }}</td>
+    </tr>
+  </table>
 </div>
+
+<button ng-click='fetchListing()'>Fetch List Test</button>
+

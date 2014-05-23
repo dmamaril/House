@@ -1,30 +1,81 @@
 ***** TO DO *****
+Home.html
+  - Add confirm password
+
+Create Group
+  - /api/property
+    - currently errors when user does not have any properties
+
+Parse Craigslist
+  - http request
+  - add $scope.listingUrl navbar to listview
 
 
-Templates
-  - Accounts
-  - List
-
-Doug @ 11am 
-
-***** SCOTT MOSS ******
-- Best practices ng-models & values
-
-- Why factories? Seems repetitive
-
-
-
-***** CHECK *****
-appRoutes.js
-  - resolve.groupMembers
-    - members.data?
 
 ***** CHANGELOG ******
-5/22/2014
-AccountService
-ListService
+5/23/2014 ######
+Http-request Node
+  - add node module to scrape listings
+  - scrapes listings
 
-5/21/2014
+Parser(CraigsList)
+  - map coordinates
+
+fetchListing()
+  - added to ListCtrl, ListService, routes.js
+
+
+
+5/22/2014 ######
+MainCtrl
+  - transferred navbar to List & Account
+  - delete MainCtrl
+
+Home.html
+  - change basic signup form with validation
+
+MainCtrl.js
+  - delete tokens on logout & redirect to login
+
+AccountCtrl
+  - toggleInput form on edit & on save
+
+HomeCtrl.js
+  - refractor registerUser()
+  - redirect to /account on /login
+  - toggleSignUp()
+
+Routes.js
+  - /api/property
+    - only search for group when groupID is present
+    - fix property GET requests
+  - /api/groups
+    - returns empty array if groupId is not found
+  - Refractor updateUser
+    - set groupID: String in schema
+
+AppRoutes.js
+  - refractor resolve for /account
+
+AccountService.js
+  - add getMembers() to issue get request to /api/group
+
+HOUSE
+  - Refractor angular app modules, factories & controllers
+
+Auth Interceptor 
+  - Fully functional authorization
+
+AccountService
+  - complete get & post requests
+  - add getMembers()
+
+ListService
+  - complete get & post requests
+  - add createNewGroup()
+
+
+5/21/2014 ######
 Register & Login functionality
 
 /api/properties

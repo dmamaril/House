@@ -1,15 +1,25 @@
-angular.module('AccountService', []).factory('Account', ['$http', function($http) {
+// angular.module('AccountService', []).factory('Account', ['$http', function($http) {
+app.factory('Account', function ($http) {
   return {
     get: function () {
-      $http.get('/api/user')
+      return $http.get('/api/user')
         .success(function (user) {
-          console.log('Account Service returned user', user);
           return user.data;
-        });
+        })
+        .error(function () {
+          console.log('Err @ .get AccountService.js');
+        })
     },
     post: function (data, callback) {
-      $http.post('/api/user', data)
+      return $http.post('/api/user', data)
         .success(callback);
+    },
+    getMembers: function () {
+      return $http.get('/api/group')
+        .success(function (groupMembers) {
+          return groupMembers.data;
+        });
     }
-  }
-}]);
+  };
+})
+// }]);

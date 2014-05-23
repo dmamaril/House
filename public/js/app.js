@@ -1,2 +1,3 @@
-angular.module('sampleApp', ['ngRoute', 'appRoutes', 'MainCtrl', 'AccountCtrl', 'AccountService', 'ListCtrl', 'HomeCtrl', 'ListService']);
+// angular.module('houseApp', ['ngRoute', 'appRoutes', 'authInterceptorConfig', 'MainCtrl', 'AccountCtrl', 'AccountService', 'ListCtrl', 'HomeCtrl', 'ListService', 'AuthInterceptor']);
 
+var app = angular.module('houseApp', ['ngRoute']);
