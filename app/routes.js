@@ -1,8 +1,42 @@
 var jwt = require('jsonwebtoken');
 var http = require('http-request');
+var xml2js = require('xml2js');
+
+// Mongoose Models
 var User = require('./models/User.js');
 var Group = require('./models/Group.js');
 var Property = require('./models/Property.js');
+
+
+var parseCraigsList = function (toParse) {
+  var start = toParse.indexOf('<div class="mapAndAttrs">');
+  var end = toParse.indexOf('<section id="postingbody">');
+  var str = toParse.substring(start, end);
+
+  // grab lat & long
+  start = str.indexOf('data-latitude="');
+  stop = str.indexOf('data-longitude="') + 30;
+
+
+
+  // MAP COORDINATES FUNCTIONAL
+  var coordinates = str.substring(start, stop).replace(/[A-Za-z$]/g, "");
+  stop = coordinates.lastIndexOf('"');
+  coordinates = coordinates.substring(0, stop);
+  start = coordinates.lastIndexOf('"');
+  var longtitude = coordinates.substring(start+1, stop);
+  coordinates = coordinates.substring(0, start);
+  var latitude = coordinates.substring(coordinates.indexOf('"')+1, coordinates.lastIndexOf('"'));
+
+  coordinates = {
+    latitude: latitude,
+    longtitude: longtitude
+  };
+
+  console.log(coordinates);
+};
+
+
 
 module.exports = function(app) {
 
@@ -173,8 +207,7 @@ module.exports = function(app) {
   app.post('/api/fetchListing', function (req, res) {
     console.log('Fetching listing at ', req.body.listingUrl);
     http.get(req.body.listingUrl, function (err, response) {
-      console.log(response.buffer.toString());
-      res.send(response.buffer.toString());
+      parseCraigsList(response.buffer.toString());
     });
   });
 

@@ -16,6 +16,10 @@ Parse Craigslist
 5/23/2014 ######
 Http-request Node
   - add node module to scrape listings
+  - scrapes listings
+
+Parser(CraigsList)
+  - map coordinates
 
 fetchListing()
   - added to ListCtrl, ListService, routes.js
