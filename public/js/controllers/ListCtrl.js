@@ -1,5 +1,6 @@
 app.controller('ListController', function ($scope, List, properties, $window) {
   $scope.properties = properties;
+  $scope.user = $window.sessionStorage.userData;
 
   $scope.tagline = 'Nothing beats a pocket protector!';
 
@@ -18,7 +19,16 @@ app.controller('ListController', function ($scope, List, properties, $window) {
     List.fetchListing({ listingUrl: $scope.listingUrl }, function (listingData) {
       $scope.listingData = listingData;
     });
-  }
+  };
+
+  $scope.fetchGroupListings = function () {
+    List.get()
+      .success(function (groupListings) {
+        $scope.listings = groupListings;
+      });
+  };
+
+  $scope.fetchGroupListings();
   
   $scope.logout = function () {
     delete $window.sessionStorage.token;

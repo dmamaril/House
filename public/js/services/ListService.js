@@ -1,4 +1,4 @@
-app.factory('List', function ($http) {  
+app.factory('List', function ($http, $window) {  
   return {
     get: function () {
       return $http.get('/api/property')

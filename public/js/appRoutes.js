@@ -13,7 +13,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 			resolve: {
 				accountInfo: function (Account) {
 					return Account.get()
-						.then (function (user) {
+						.then (function (user, $window) {
 							return user.data;
 						});
 				},
