@@ -1,5 +1,3 @@
-// angular.module('ListService', []).factory('List', function($http) {
-
 app.factory('List', function ($http) {  
   return {
     get: function () {
@@ -25,5 +23,4 @@ app.factory('List', function ($http) {
         .success(callback);
     }
   };
-})
-// });
+});

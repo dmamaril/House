@@ -40,5 +40,10 @@
   </table>
 </div>
 
+<input type='text' placeholder='UrL to render' ng-model='listingUrl'/>
 <button ng-click='fetchListing()'>Fetch List Test</button>
+<p> {{ listingData.coordinates }} </p>
+<p> {{ listingData.neighborhood }} </p>
+<p> {{ listingData.bedrooms }} </p>
+<p> {{ listingData.monthlyPrice }} </p>
 

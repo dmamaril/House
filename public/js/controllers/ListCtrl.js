@@ -13,10 +13,9 @@ app.controller('ListController', function ($scope, List, properties, $window) {
     });
   };
 
-  $scope.listingUrl = 'https://www.airbnb.com/rooms/784034'
   $scope.fetchListing = function () {
+    console.log($scope.listingUrl);
     List.fetchListing({ listingUrl: $scope.listingUrl }, function (listingData) {
-      // { coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice }
       $scope.listingData = listingData;
     });
   }
@@ -26,9 +25,6 @@ app.controller('ListController', function ($scope, List, properties, $window) {
     delete $window.sessionStorage.id;
     delete $window.sessionStorage.name;
   };
-
-
-
 });
 
 

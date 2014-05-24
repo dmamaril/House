@@ -6,15 +6,20 @@ Create Group
   - /api/property
     - currently errors when user does not have any properties
 
+401 Errors - Unauth
 
+Listings Render View
 
 Parse Craigslist
   - http request
   - add $scope.listingUrl navbar to listview
 
+FetchUrl
+  - what to do after fetching & rendering?
+  - where to assign if not logged in?
+    - Group.groupName, Group.members
 
-
-
+SpiffyGifs everywhere
 
 ***** CHANGELOG ******
 5/23/2014 ######
