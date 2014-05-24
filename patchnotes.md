@@ -10,6 +10,9 @@ Parse Craigslist
   - http request
   - add $scope.listingUrl navbar to listview
 
+ParseBnB
+  - daily cost
+
 
 
 ***** CHANGELOG ******

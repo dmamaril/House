@@ -36,9 +36,19 @@ var parseBnB = function (toParse) {
   var longitude = coordinates.substring(coordinates.lastIndexOf('=')+1, coordinates.lastIndexOf('>'));
   coordinates = { latitude: latitude, longitude: longitude };
 
+  // PARSE DAILYPRICE * 30
+  if (!monthlyPrice) {
+    start = toParse.indexOf('<div class="text-muted">From</div>');
+    stop = toParse.indexOf('<meta content="USD"');
+    var dailyPrice = toParse.substring(start, stop);
+    dailyPrice = dailyPrice.substring(dailyPrice.lastIndexOf('$')+1, dailyPrice.lastIndexOf('</')) * 30;
+    monthlyPrice = dailyPrice;
+  };
+    
   console.log({ coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice });
-};
+  return { coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice } ;
 
+};
 
 var parseCraigsList = function (toParse) {
   // PARSE NEIGHBORHOOD
@@ -61,8 +71,12 @@ var parseCraigsList = function (toParse) {
   mapAndAttrs = mapAndAttrs.substring(mapAndAttrs.indexOf('<p class="attrgroup"'), mapAndAttrs.lastIndexOf('</b>BR'));
   var bedrooms = mapAndAttrs.slice(mapAndAttrs.lastIndexOf('>')+1);
 
-  console.log(neighborhood, coordinates, bedrooms);
-  return { coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice }
+  // MONTHLY PRICE
+  var monthlyPrice = toParse.substring(toParse.indexOf('&#x0024;'), toParse.indexOf('&#x0024;') + 20);
+  monthlyPrice = monthlyPrice.substring(monthlyPrice.indexOf(';')+1, monthlyPrice.indexOf('/')-1);
+ 
+  console.log({ coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice });
+  return { coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice };
 };
 
 var findCoordsCL = function (coordinates) {
