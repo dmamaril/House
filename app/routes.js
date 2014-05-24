@@ -8,7 +8,7 @@ var Group = require('./models/Group.js');
 var Property = require('./models/Property.js');
 
 
-var parseBnB = function (toParse) {
+var parseBnB = function (toParse, listingUrl) {
   var start = toParse.indexOf('<table class="table table-bordered table-striped" id="description_details" itemprop="breadcrumb">');
   var stop = toParse.indexOf('<td>Cancellation:</td>');
   var details = toParse.substring(start, stop);
@@ -45,12 +45,12 @@ var parseBnB = function (toParse) {
     monthlyPrice = dailyPrice;
   };
     
-  console.log({ coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice });
-  return { coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice } ;
+  console.log({ listingUrl: listingUrl, coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice, votes: 0 });
+  return { listingUrl: listingUrl, coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice, votes: 0 } ;
 
 };
 
-var parseCraigsList = function (toParse) {
+var parseCraigsList = function (toParse, listingUrl) {
   // PARSE NEIGHBORHOOD
   var start = toParse.indexOf('<h2 class="postingtitle">');
   var stop = toParse.indexOf('</h2>');
@@ -75,8 +75,8 @@ var parseCraigsList = function (toParse) {
   var monthlyPrice = toParse.substring(toParse.indexOf('&#x0024;'), toParse.indexOf('&#x0024;') + 20);
   monthlyPrice = monthlyPrice.substring(monthlyPrice.indexOf(';')+1, monthlyPrice.indexOf('/')-1);
  
-  console.log({ coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice });
-  return { coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice };
+  console.log({ listingUrl: listingUrl, coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice, votes: 0 });
+  return { listingUrl: listingUrl, coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice, votes: 0 };
 };
 
 var findCoordsCL = function (coordinates) {
@@ -199,11 +199,13 @@ module.exports = function(app) {
           group.members.forEach(function (memberId) {
             console.log('Searching for user ', memberId);
             User.findOne({ _id: memberId }, function (err, user) {
-                console.log('Found user. Adding properties', user.properties);
-                properties.concat(user.properties); 
+                console.log('Found user. Adding properties from', user.properties);
+                user.properties.forEach(function (property) {
+                  properties.push(property);
+                });
+                res.send(properties);
             });
           });
-          res.send(properties);
         });
       } else {
         res.send([]);
@@ -271,12 +273,13 @@ module.exports = function(app) {
   app.post('/api/fetchListing', function (req, res) {
     console.log('Fetching listing at ', req.body.listingUrl);
     http.get(req.body.listingUrl, function (err, response) {
-      if (req.body.listingUrl.indexOf('craigslist') !== -1) { res.send(parseCraigsList(response.buffer.toString())); }
-        else { res.send(parseBnB(response.buffer.toString())); }
+      if (req.body.listingUrl.indexOf('craigslist') !== -1) { res.send(parseCraigsList(response.buffer.toString(), req.body.listingUrl)); }
+        else { res.send(parseBnB(response.buffer.toString(), req.body.listingUrl )); }
     });
   });
 
   app.post('/api/addListingToUserProperties', function (req, res) {
+    console.log(req.user.id, 'addListingToUserProperties')
     User.update({ _id: req.user.id }, { $push: { properties: req.body }}, function () {
       User.findOne({ _id: req.user.id }, function (err, user) {
         console.log('Property ', req.body, ' saved!', user);

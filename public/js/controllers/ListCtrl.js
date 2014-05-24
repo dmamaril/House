@@ -15,12 +15,12 @@ app.controller('ListController', function ($scope, List, properties, $window) {
   };
 
   $scope.fetchListing = function () {
-    console.log($scope.listingUrl);
     List.fetchListing({ listingUrl: $scope.listingUrl }, function (listingData) {
       $scope.listingData = listingData;
+      console.log(listingData);
       List.addListingToUserProperties(listingData, function (userProperties) {
-        console.log(userProperties);
-      })
+        console.log(userProperties, ' has been saved to user.');
+      });
     });
   };
 

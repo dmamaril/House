@@ -25,8 +25,14 @@ FetchUrl
 
 SpiffyGifs everywhere
 
+PROPERTY MODEL
+  - is still needed? currently saves related property data to user.properties[];
+
 ***** CHANGELOG ******
 5/23/2014 ######
+/api/property
+  - fix push to properties
+
 /api/addListingToUserProperty
   - saves sent property data to user's properties array
 
