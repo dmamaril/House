@@ -267,8 +267,8 @@ module.exports = function(app) {
   app.post('/api/fetchListing', function (req, res) {
     console.log('Fetching listing at ', req.body.listingUrl);
     http.get(req.body.listingUrl, function (err, response) {
-      if (req.body.listingUrl.indexOf('craigslist') !== -1) { parseCraigsList(response.buffer.toString()); }
-        else { parseBnB(response.buffer.toString()); }
+      if (req.body.listingUrl.indexOf('craigslist') !== -1) { res.send(parseCraigsList(response.buffer.toString())); }
+        else { res.send(parseBnB(response.buffer.toString())); }
     });
   });
 

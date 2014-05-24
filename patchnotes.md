@@ -6,12 +6,13 @@ Create Group
   - /api/property
     - currently errors when user does not have any properties
 
+
+
 Parse Craigslist
   - http request
   - add $scope.listingUrl navbar to listview
 
-ParseBnB
-  - daily cost
+
 
 
 
