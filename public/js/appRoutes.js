@@ -31,9 +31,9 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 			controller: 'ListController',
 			resolve: {
 				properties: function (List) {
-					return List.get('/api/property')
+					return List.get()
 						.then(function (property) {
-							console.log('Property', property);
+							console.log('Properties', property);
 							return property.data;
 						});
 				}
