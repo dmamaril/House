@@ -1,4 +1,4 @@
-app.factory('List', function ($http, $window) {  
+app.factory('List', function ($http) {  
   return {
     get: function () {
       return $http.get('/api/property')
@@ -21,6 +21,9 @@ app.factory('List', function ($http, $window) {
     fetchListing: function(listingData, callback) {
       return $http.post('/api/fetchListing', listingData)
         .success(callback);
+    },
+    addListingToUserProperties: function (listingData, callback) {
+      return $http.post('/api/addListingToUserProperties', listingData);
     }
   };
 });

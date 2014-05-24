@@ -189,13 +189,17 @@ module.exports = function(app) {
   });
 
   app.get('/api/property', function (req, res) {
+    console.log('Current user: ', req.user);
     User.findOne({ _id: req.user.id }, function (err, user) {
       console.log('User groupID: ', user.groupId)
       if (user.groupId) {
         Group.findOne({ _id: user.groupId }, function (err, group) {
+          console.log(group.members.length, ' members found for this group');
           var properties = [];
           group.members.forEach(function (memberId) {
+            console.log('Searching for user ', memberId);
             User.findOne({ _id: memberId }, function (err, user) {
+                console.log('Found user. Adding properties', user.properties);
                 properties.concat(user.properties); 
             });
           });
@@ -269,6 +273,15 @@ module.exports = function(app) {
     http.get(req.body.listingUrl, function (err, response) {
       if (req.body.listingUrl.indexOf('craigslist') !== -1) { res.send(parseCraigsList(response.buffer.toString())); }
         else { res.send(parseBnB(response.buffer.toString())); }
+    });
+  });
+
+  app.post('/api/addListingToUserProperties', function (req, res) {
+    User.update({ _id: req.user.id }, { $push: { properties: req.body }}, function () {
+      User.findOne({ _id: req.user.id }, function (err, user) {
+        console.log('Property ', req.body, ' saved!', user);
+        res.send(user.properties);
+      }); 
     });
   });
 

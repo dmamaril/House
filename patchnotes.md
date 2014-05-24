@@ -6,6 +6,10 @@ Create Group
   - /api/property
     - currently errors when user does not have any properties
 
+Public View
+  - addListingToUserProperty on click
+
+
 401 Errors - Unauth
 
 Listings Render View
@@ -23,6 +27,9 @@ SpiffyGifs everywhere
 
 ***** CHANGELOG ******
 5/23/2014 ######
+/api/addListingToUserProperty
+  - saves sent property data to user's properties array
+
 Http-request Node
   - add node module to scrape listings
   - scrapes listings

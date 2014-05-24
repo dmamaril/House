@@ -18,6 +18,9 @@ app.controller('ListController', function ($scope, List, properties, $window) {
     console.log($scope.listingUrl);
     List.fetchListing({ listingUrl: $scope.listingUrl }, function (listingData) {
       $scope.listingData = listingData;
+      List.addListingToUserProperties(listingData, function (userProperties) {
+        console.log(userProperties);
+      })
     });
   };
 
