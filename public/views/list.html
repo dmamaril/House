@@ -13,9 +13,9 @@
 
 
 <div class="jumbotron text-center">
-	<h1>Nerds and Proud</h1>
+	<h1>Listings</h1>
 
-	<p>{{ tagline }}</p>
+</div>
 
   <a href='' ng-click='toggleGroupForm()' ng-hide='creatingGroup'>Create a new group</a>
 
@@ -39,7 +39,16 @@
     </tr>
   </table>
 
-  
-</div>
-  <google-map center="map.center" zoom="map.zoom" draggable="true"></google-map>
+  <google-map center="map.center" zoom="map.zoom" draggable="true">
 
+    <marker ng-repeat="m in map.markers" coords="m.coords" click="m.show = !m.show">
+      <window show="m.show">
+        <div>
+          <h4 class="list-group-item-heading">{{m.info.price}}</h4>
+          <p class="list-group-item-text">{{m.info.title}} This is just a bunch of text</p>
+          <p class="list-group-item-text">{{m.info.title}} This is just a bunch of text</p>
+        </div>
+      </window>
+    </marker>
+  
+  </google-map>
