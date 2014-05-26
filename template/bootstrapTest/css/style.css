@@ -5,6 +5,7 @@ html, body {
     height: 100%;
 }
 
+/* ========= CONTAINERS ========= */
 /* HOME PAGE CONTAINERS */
 .navbar-splash {
     min-height: 40px;
@@ -12,32 +13,55 @@ html, body {
 }
 .splash {
     padding-top: 40px;
-    background-color: #3DBB97;
+    background-color: #40BC98;
     height: 100%;
 }
 
-/* SPLASH HEADER */
-.header-splash {
-    display: table;
-    overflow: hidden;
-    height: 39px;
-}
-.logo, .links { 
-    display: table-cell; 
-    vertical-align: middle;
-    height: 100%;
-}
-
+/* ========= HEADERS ========= */
 /* COMMON HEADER */
 .logo {
-    font-size: 2.5em; line-height: 1;
+    font-size: 32px; line-height: 1;
     font-weight: 200; 
-    color: #3DBB97; 
+    color: #40BC98; 
     height: 100%;
+    padding-top: 4px;
+    text-transform: uppercase;
 }
+.links { padding-top: 10px; }
 .link {
     font-weight: 300;
-    color: #3DBB97; 
+    color: #40BC98; 
     text-transform: uppercase;
     padding-left: 12px;
 }
+
+/* ========= BODY ========= */
+/* SPLASH PAGE */
+.title, .subtitle {
+    color: #E0E4E0;
+}
+.title {
+    font-size: 60px; font-weight: 100;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.subtitle {
+    font-size: 18px; font-weight: 100;
+}
+.splash-pad-top { height: 40%; }
+.splash-pad-middle { height: 5%; }
+.splash-leading { line-height: 0.85;}
+.submitter-splash { 
+    border: 1px solid #EEF4EE;
+    color: #909090;
+    font-weight: 200;
+    border-radius: 7px;
+    height: 30px; width: 100%;
+    padding-left: 7px;
+    background-color: #cbe3b0;
+}
+.submitter-splash:focus { outline: none; box-shadow: none; }
+
+
+
+
