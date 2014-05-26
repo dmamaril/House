@@ -1,0 +1,43 @@
+html, body {
+    font-family: 'Raleway', sans-serif;
+    background-color: #EEF4EE;
+    width: 100%;
+    height: 100%;
+}
+
+/* HOME PAGE CONTAINERS */
+.navbar-splash {
+    min-height: 40px;
+    background-color: #EEF4EE;
+}
+.splash {
+    padding-top: 40px;
+    background-color: #3DBB97;
+    height: 100%;
+}
+
+/* SPLASH HEADER */
+.header-splash {
+    display: table;
+    overflow: hidden;
+    height: 39px;
+}
+.logo, .links { 
+    display: table-cell; 
+    vertical-align: middle;
+    height: 100%;
+}
+
+/* COMMON HEADER */
+.logo {
+    font-size: 2.5em; line-height: 1;
+    font-weight: 200; 
+    color: #3DBB97; 
+    height: 100%;
+}
+.link {
+    font-weight: 300;
+    color: #3DBB97; 
+    text-transform: uppercase;
+    padding-left: 12px;
+}
