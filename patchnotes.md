@@ -6,20 +6,43 @@ Create Group
   - /api/property
     - currently errors when user does not have any properties
 
+Public View
+  - addListingToUserProperty on click
+
+
+401 Errors - Unauth
+
+Listings Render View
+
 Parse Craigslist
   - http request
   - add $scope.listingUrl navbar to listview
 
+FetchUrl
+  - what to do after fetching & rendering?
+  - where to assign if not logged in?
+    - Group.groupName, Group.members
 
+SpiffyGifs everywhere
+
+PROPERTY MODEL
+  - is still needed? currently saves related property data to user.properties[];
 
 ***** CHANGELOG ******
 5/23/2014 ######
+/api/property
+  - fix push to properties
+
+/api/addListingToUserProperty
+  - saves sent property data to user's properties array
+
 Http-request Node
   - add node module to scrape listings
   - scrapes listings
 
 Parser(CraigsList)
-  - map coordinates
+
+Parser(BnB)
 
 fetchListing()
   - added to ListCtrl, ListService, routes.js

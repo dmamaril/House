@@ -1,5 +1,3 @@
-// angular.module('ListService', []).factory('List', function($http) {
-
 app.factory('List', function ($http) {  
   return {
     get: function () {
@@ -23,7 +21,9 @@ app.factory('List', function ($http) {
     fetchListing: function(listingData, callback) {
       return $http.post('/api/fetchListing', listingData)
         .success(callback);
+    },
+    addListingToUserProperties: function (listingData, callback) {
+      return $http.post('/api/addListingToUserProperties', listingData);
     }
   };
-})
-// });
+});

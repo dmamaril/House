@@ -8,7 +8,49 @@ var Group = require('./models/Group.js');
 var Property = require('./models/Property.js');
 
 
-var parseCraigsList = function (toParse) {
+var parseBnB = function (toParse, listingUrl) {
+  var start = toParse.indexOf('<table class="table table-bordered table-striped" id="description_details" itemprop="breadcrumb">');
+  var stop = toParse.indexOf('<td>Cancellation:</td>');
+  var details = toParse.substring(start, stop);
+
+  // PARSE MONTHLY PRICE
+  start = details.indexOf('<td>Monthly Price:</td>');
+  stop = details.indexOf('</span> /month');
+  var monthlyPrice = details.substring(start, stop);
+  monthlyPrice = monthlyPrice.slice(monthlyPrice.lastIndexOf('$')+1);
+
+  // PARSE BEDROOMS
+  start = details.indexOf('<td>Bedrooms:</td>');
+  var bedrooms = details.substring(start, start+52)[details.substring(start, start+52).length-1];
+
+  // PARSE NEIGHBORHOOD
+  start = details.lastIndexOf("'>");
+  var neighborhood = details.substring(start+1);
+  neighborhood = neighborhood.substring(1, neighborhood.indexOf('<'));
+
+  // PARSE COORDINATES
+  start = toParse.indexOf('latitude" content="');
+  stop = toParse.indexOf('<meta property="og:locale"');
+  var coordinates = toParse.substring(start, stop).replace(/[A-Za-z$"]/g, "");
+  var latitude = coordinates.substring(coordinates.indexOf('=')+1, coordinates.indexOf('>'));
+  var longitude = coordinates.substring(coordinates.lastIndexOf('=')+1, coordinates.lastIndexOf('>'));
+  coordinates = { latitude: latitude, longitude: longitude };
+
+  // PARSE DAILYPRICE * 30
+  if (!monthlyPrice) {
+    start = toParse.indexOf('<div class="text-muted">From</div>');
+    stop = toParse.indexOf('<meta content="USD"');
+    var dailyPrice = toParse.substring(start, stop);
+    dailyPrice = dailyPrice.substring(dailyPrice.lastIndexOf('$')+1, dailyPrice.lastIndexOf('</')) * 30;
+    monthlyPrice = dailyPrice;
+  };
+    
+  console.log({ listingUrl: listingUrl, coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice, votes: 0 });
+  return { listingUrl: listingUrl, coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice, votes: 0 } ;
+
+};
+
+var parseCraigsList = function (toParse, listingUrl) {
   // PARSE NEIGHBORHOOD
   var start = toParse.indexOf('<h2 class="postingtitle">');
   var stop = toParse.indexOf('</h2>');
@@ -20,20 +62,24 @@ var parseCraigsList = function (toParse) {
   stop = toParse.indexOf('<section id="postingbody">');
   var mapAndAttrs = toParse.substring(start, stop);
 
-  // MAP COORDINATES -----------------------------
+  // MAP COORDINATES
   start = mapAndAttrs.indexOf('data-latitude="');
   stop = mapAndAttrs.indexOf('data-longitude="') + 30;
-  var coordinates = findCoords(mapAndAttrs.substring(start, stop).replace(/[A-Za-z$]/g, ""));
+  var coordinates = findCoordsCL(mapAndAttrs.substring(start, stop).replace(/[A-Za-z$]/g, ""));
+
   // NUMBER OF BEDROOMS
   mapAndAttrs = mapAndAttrs.substring(mapAndAttrs.indexOf('<p class="attrgroup"'), mapAndAttrs.lastIndexOf('</b>BR'));
   var bedrooms = mapAndAttrs.slice(mapAndAttrs.lastIndexOf('>')+1);
 
-  console.log(neighborhood, coordinates, bedrooms);
-  return { coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms }
+  // MONTHLY PRICE
+  var monthlyPrice = toParse.substring(toParse.indexOf('&#x0024;'), toParse.indexOf('&#x0024;') + 20);
+  monthlyPrice = monthlyPrice.substring(monthlyPrice.indexOf(';')+1, monthlyPrice.indexOf('/')-1);
+ 
+  console.log({ listingUrl: listingUrl, coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice, votes: 0 });
+  return { listingUrl: listingUrl, coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice, votes: 0 };
 };
 
-
-var findCoords = function (coordinates) {
+var findCoordsCL = function (coordinates) {
     var temp = [];
     for (var i = 0 ; i < coordinates.length ; i++) {
       if (coordinates[i] === '"') {
@@ -47,7 +93,7 @@ var findCoords = function (coordinates) {
       }
     }
     if (temp[0].length === 0) { temp[0] = undefined; }
-    return { latitude: temp[0], longtitude: temp[1] };
+    return { latitude: temp[0], longitude: temp[1] };
 };
 
 
@@ -143,17 +189,23 @@ module.exports = function(app) {
   });
 
   app.get('/api/property', function (req, res) {
+    console.log('Current user: ', req.user);
     User.findOne({ _id: req.user.id }, function (err, user) {
       console.log('User groupID: ', user.groupId)
       if (user.groupId) {
         Group.findOne({ _id: user.groupId }, function (err, group) {
+          console.log(group.members.length, ' members found for this group');
           var properties = [];
           group.members.forEach(function (memberId) {
+            console.log('Searching for user ', memberId);
             User.findOne({ _id: memberId }, function (err, user) {
-                properties.concat(user.properties); 
+                console.log('Found user. Adding properties from', user.properties);
+                user.properties.forEach(function (property) {
+                  properties.push(property);
+                });
+                res.send(properties);
             });
           });
-          res.send(properties);
         });
       } else {
         res.send([]);
@@ -221,7 +273,18 @@ module.exports = function(app) {
   app.post('/api/fetchListing', function (req, res) {
     console.log('Fetching listing at ', req.body.listingUrl);
     http.get(req.body.listingUrl, function (err, response) {
-      parseCraigsList(response.buffer.toString());
+      if (req.body.listingUrl.indexOf('craigslist') !== -1) { res.send(parseCraigsList(response.buffer.toString(), req.body.listingUrl)); }
+        else { res.send(parseBnB(response.buffer.toString(), req.body.listingUrl )); }
+    });
+  });
+
+  app.post('/api/addListingToUserProperties', function (req, res) {
+    console.log(req.user.id, 'addListingToUserProperties')
+    User.update({ _id: req.user.id }, { $push: { properties: req.body }}, function () {
+      User.findOne({ _id: req.user.id }, function (err, user) {
+        console.log('Property ', req.body, ' saved!', user);
+        res.send(user.properties);
+      }); 
     });
   });
 

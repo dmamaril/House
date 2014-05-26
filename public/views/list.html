@@ -17,28 +17,37 @@
 
 	<p>{{ tagline }}</p>
 
-  <a href='' ng-click='toggleGroupForm()' ng-hide='creatingGroup'>Create a new group</a>
+  <a href='' ng-show='{{ user.groupId }}' ng-click='toggleGroupForm()' ng-hide='creatingGroup'>Create a new group</a>
 
   <form ng-submit='createGroup()' ng-show='creatingGroup'>
     <input type='text' ng-model='groupName' placeholder='Enter group name' ></input>
   </form>
-
-
-  <table ng-show='properties'>
-    <tr>
-      <th>Votes</th>
-      <th>Title</th>
-      <th>Location</th>
-      <th>Price</th>
-    </tr>
-    <tr ng-repeat='property in properties'>
-      <td>{{ property.votes }}</td>
-      <td>{{ property.title }}</td>
-      <td>{{ property.location }}</td>
-      <td>{{ property.price }}</td>
-    </tr>
-  </table>
 </div>
 
+  <table>
+    <h1> THIS IS FROM THE SERVER YEYZ </h1>
+    <tr>
+      <th>Votes</th>
+      <th>Neighborhood</th>
+      <th>Title</th>
+      <th>Bedrooms</th>
+      <th>Price</th>
+    </tr>
+    <tr ng-repeat='listing in listings'>
+      <td>{{ listing.votes }}</td>
+      <td>{{ listing.neighborhood }}</td>
+      <td>{{ listing.listingUrl }}</td>
+      <td>{{ listing.bedrooms }}</td>
+      <td>{{ listing.monthlyPrice }}</td>
+    </tr>
+  </table>
+
+<input type='text' placeholder='UrL to render' ng-model='listingUrl'/>
 <button ng-click='fetchListing()'>Fetch List Test</button>
+<p> {{ listingData.votes }}</p>
+<p> {{ listingData.listingUrl }} </p>
+<p> {{ listingData.coordinates }} </p>
+<p> {{ listingData.neighborhood }} </p>
+<p> {{ listingData.bedrooms }} </p>
+<p> {{ listingData.monthlyPrice }} </p>
 
