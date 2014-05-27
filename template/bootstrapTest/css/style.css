@@ -1,6 +1,5 @@
 html, body {
     font-family: 'Raleway', sans-serif;
-    background-color: #EEF4EE;
     width: 100%;
     height: 100%;
 }
@@ -11,56 +10,105 @@ html, body {
     min-height: 40px;
     background-color: #EEF4EE;
 }
+.navbar-main {
+    min-height: 60px;
+    background-color: #40BC98;
+}
+
+.splash, .main { height: 100%; }
 .splash {
     padding-top: 40px;
     background-color: #40BC98;
-    height: 100%;
+}
+.main {
+    padding-top: 60px;
+    background-color: #EEF4EE;
 }
 
 /* ========= HEADERS ========= */
 /* COMMON HEADER */
+.splash-pad-logo { padding-top: 4px; }
+.splash-pad-links { padding-top: 10px; }
+.main-pad-logo { padding-top: 9px; }
+.main-pad-links { padding-top: 20px; }
+.main-pad-submitter { padding-top: 14px; }
+
+.main-header-text { color: #E9F0E9; text-transform: uppercase; }
+.main-header-brand { line-height: 0.9; }
+.splash-header-brand { line-height: 1; }
 .logo {
-    font-size: 32px; line-height: 1;
-    font-weight: 200; 
-    color: #40BC98; 
-    height: 100%;
-    padding-top: 4px;
-    text-transform: uppercase;
+    font-size: 32px; font-weight: 300; 
+    letter-spacing: 0.5px;
 }
-.links { padding-top: 10px; }
-.link {
+.tagline {
+    font-size: 12px; font-weight: 100;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+    padding-left: 1px;
+}
+.link-main {
+    font-weight: 100;
+    padding-left: 12px;
+    letter-spacing: 0.5px;
+}
+
+.splash-header-text { color: #40BC98; text-transform: uppercase; }
+.link-splash {
     font-weight: 300;
-    color: #40BC98; 
-    text-transform: uppercase;
     padding-left: 12px;
 }
 
+/* SUBMISSION INPUT FIELD */
+.submitter { 
+    border: 1px solid #EEF4EE; border-radius: 7px;
+    height: 30px; width: 100%;
+    color: #787878; background-color: #cbe3b0;
+    font-weight: 200;
+    padding-left: 7px;
+}
+.submitter:focus { outline: none; box-shadow: none; }
+
 /* ========= BODY ========= */
+/* SUBHEADING */
+.subheading { 
+    border-width: 0px 0px 2px 0px;
+    border-color: #40BC98;
+    border-style: solid;
+    height: 32px;
+    padding-bottom: 0px;
+}
+.subheading-active, .subheading-text {
+    display: inline-block;
+    margin-top: 10px;
+    padding-left: 12px; padding-right: 4px;
+    font-size: 18px; font-weight: 200;
+}
+.subheading-text { color: #C0C8C0; }
+.subheading-active { color: #40BC98; }
+
 /* SPLASH PAGE */
-.title, .subtitle {
-    color: #E0E4E0;
-}
-.title {
-    font-size: 60px; font-weight: 100;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-.subtitle {
-    font-size: 18px; font-weight: 100;
-}
 .splash-pad-top { height: 40%; }
 .splash-pad-middle { height: 5%; }
-.splash-leading { line-height: 0.85;}
-.submitter-splash { 
-    border: 1px solid #EEF4EE;
-    color: #909090;
-    font-weight: 200;
-    border-radius: 7px;
-    height: 30px; width: 100%;
-    padding-left: 7px;
-    background-color: #cbe3b0;
+
+.splash-leading { line-height: 0.85; }
+.title, .subtitle { 
+    color: #E0E4E0; 
+    font-weight: 100; 
 }
-.submitter-splash:focus { outline: none; box-shadow: none; }
+.title { 
+    font-size: 60px; 
+    letter-spacing: 1px; 
+    text-transform: uppercase; 
+}
+.subtitle { 
+    font-size: 18px; 
+    letter-spacing: 0.5px;
+}
+
+/* LISTINGS PAGE */
+
+
+/* GROUPS PAGE */
 
 
 
