@@ -20,7 +20,6 @@ app.controller('ListController', function ($scope, List, properties, $window) {
   ];
 
 
-
   $scope.toggleGroupForm = function () {
     $scope.creatingGroup = !$scope.creatingGroup;
   };
