@@ -207,3 +207,18 @@ a:hover { text-decoration: none; }
 .profile-name { font-size: 48px; color: #808080; }
 .profile-budget, .profile-distance, .profile-location { font-size: 32px; color: #808080; }
 .profile-city { font-size: 18px; color: #C0C8C0; }
+
+.profile-inputs {
+    width: 300px; text-align: right;
+    box-shadow: none; border: none;
+    background-color: #EEF0EE;
+    box-sizing: border-box;
+}
+.profile-inputs:focus {
+    box-shadow: none; border: none;
+    outline: 0 none;
+    text-decoration: underline;
+}
+
+
+
