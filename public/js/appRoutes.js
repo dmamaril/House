@@ -13,13 +13,14 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 			resolve: {
 				accountInfo: function (Account) {
 					return Account.get()
-						.then (function (user, $window) {
+						.then (function (user) {
 							return user.data;
 						});
 				},
 				groupMembers: function (Account) {
 					return Account.getMembers()
 						.then(function (members) {
+							console.log('Members fetch success:', members.data);
 							return members.data;
 						});
 				}
@@ -33,7 +34,6 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 				properties: function (List) {
 					return List.get()
 						.then(function (property) {
-							console.log('Properties', property);
 							return property.data;
 						});
 				}
