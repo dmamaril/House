@@ -8,20 +8,21 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300' rel='stylesheet' type='text/css'>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
   </head>
 
   <body>
     <div class="navbar navbar-fixed-top navbar-main" role="navigation">
       <div class="container-fluid">
           <div class="row">
-            <div class="col-xs-3 main-pad-logo main-header-brand">
+            <div class="col-sm-3 main-pad-logo main-header-brand">
                 <span class="logo main-header-text">House</span><br>
                 <span class="tagline main-header-text">apartment hunting made easy</span>
             </div>
-            <div class="col-xs-6 main-pad-submitter">
+            <div class="col-sm-6 main-pad-submitter">
               <input type="text" class="submitter" placeholder="Enter an address or a Craigslist/AirBnB link to save a listing.">
             </div>
-            <div class="col-xs-3 main-pad-links text-right">
+            <div class="col-sm-3 main-pad-links text-right">
                 <span class="link-main main-header-text">Listings</span>
                 <span class="link-main main-header-text">Groups</span>
                 <span class="link-main main-header-text">Logout</span>
@@ -34,18 +35,90 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="subheading text-right">
-                <span class="subheading-text">Friends</span>
-                <span class="subheading-text">Hack Reactor 13</span>
-                <span class="subheading-text subheading-active">Private</span>
+                <span class="subheading-text">friends</span>
+                <span class="subheading-text">hack reactor 13</span>
+                <span class="subheading-text subheading-active">private</span>
+                <span class="subheading-add">+ add / join</span>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-4">map</div>
-            <div class="col-xs-8">
-              
+            <div class="col-sm-6 omega">
+              <div id="listings-canvas">testing</div>
+            </div>
+            <div class="col-sm-6 alpha">
+              <table class="listings-table alpha">
+              <tbody>
+                <tr class="listing">
+                  <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">1600</span></td>
+                  <td class="listing-main">
+                    <span class="listing-votes">7 votes</span><br>
+                    <span class="listing-address">cabbagetown</span><br>
+                    <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/4437058393.html</span>
+                  </td>
+                  <td class="listing-end">
+                    <span class="listing-rooms">2 BR</span><br>
+                    <span class="listing-distance">1.5 mi away</span>
+                  </td>
+                  <td class="listing-postfix">
+                    <span class="listing-delete">x</span>
+                  </td>
+                </tr>
+
+                <tr class="listing">
+                  <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">2300</span></td>
+                  <td class="listing-main">
+                    <span class="listing-votes">6 votes</span><br>
+                    <span class="listing-address">kensington market</span><br>
+                    <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/44724524703.html</span>
+                  </td>
+                  <td class="listing-end">
+                    <span class="listing-rooms">3 BR</span><br>
+                    <span class="listing-distance">2.0 mi away</span>
+                  </td>
+                  <td class="listing-postfix">
+                    <span class="listing-delete">x</span>
+                  </td>
+                </tr>
+
+                <tr class="listing">
+                  <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">1800</span></td>
+                  <td class="listing-main">
+                    <span class="listing-votes">4 votes</span><br>
+                    <span class="listing-address">the annex</span><br>
+                    <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/44370346295.html</span>
+                  </td>
+                  <td class="listing-end">
+                    <span class="listing-rooms">1 BR</span><br>
+                    <span class="listing-distance">1.0 mi away</span>
+                  </td>
+                  <td class="listing-postfix">
+                    <span class="listing-delete">x</span>
+                  </td>
+                </tr>
+
+                <tr class="listing">
+                  <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">2000</span></td>
+                  <td class="listing-main">
+                    <span class="listing-votes">3 votes</span><br>
+                    <span class="listing-address">bloor/yonge</span><br>
+                    <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/43705478346.html</span>
+                  </td>
+                  <td class="listing-end">
+                    <span class="listing-rooms">1 BR</span><br>
+                    <span class="listing-distance">0.8 mi away</span>
+                  </td>
+                  <td class="listing-postfix">
+                    <span class="listing-delete">x</span>
+                  </td>
+                </tr>
+
+              </tbody>
+              </table>
+            </div>
             </div>
           </div>
     </div>
+    <script src="maps.js"></script>
   </body>
 </html>
