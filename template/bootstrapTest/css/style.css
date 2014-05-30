@@ -142,7 +142,7 @@ a:hover { text-decoration: none; }
 .listing-cost { font-size: 32px; font-weight: 100; color: #40BC98;}
 
 .listing-votes { font-size: 12px; font-weight: 300; color: #C0C8C0;}
-.listing-votes:hover { cursor: pointer;}
+.listing-votes:hover { cursor: pointer; color: #808080; }
 .listing-address { font-size: 18px; font-weight: 400; color: #808080;}
 .listing-url { font-size: 12px; font-weight: 300; color: #C0C8C0;}
 
@@ -150,7 +150,7 @@ a:hover { text-decoration: none; }
 .listing-distance { font-size: 12px; font-weight: 300; color: #C0C8C0;}
 
 .listing-delete { font-size: 18px; font-weight: 300; color: #C0C8C0; }
-.listing-delete:hover { cursor: pointer;}
+.listing-delete:hover { cursor: pointer; color: #808080; }
 
 /* GROUPS PAGE */
 .groups-table { width: 100%;}
@@ -184,6 +184,9 @@ a:hover { text-decoration: none; }
 
 .group-dollar { font-size: 18px; }
 .group-price { font-size: 32px;}
+
+.group-delete { font-size: 18px; font-weight: 100; color: #C0C8C0; }
+.group-delete:hover { cursor: pointer; color: #808080; }
 
 /* PROFILE PAGE */
 .profile-table { 
