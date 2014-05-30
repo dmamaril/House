@@ -19,4 +19,10 @@ Upvote/downvote listings that you like to narrow down the search. View the gener
 The challenges you faced.
 
 ## Diving In
-A map of your codebase, and if appropriate, instructions on how to dive in and read the code.
+```
+$ git clone https://github.com/mamarildon/House.git
+$ cd House
+$ npm install
+$ bower install
+$ node server.js
+```
