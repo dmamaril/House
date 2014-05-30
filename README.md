@@ -1,13 +1,9 @@
-# MEAN Stack Single Page Application Starter
+# HOUSE: group apartment hunting made easy
+Produced at <a href='http://hackreactor.com'>Hack Reactor </a> by <a href='http://github.com/willwclo'>Will Lo</a>, <a href='http://github.com/vhalbwachs'>Vin Halbwachs</a> & <a href='http://github.com/mamarildon'>Don Mamaril </a>
 
-This is a repo for a starter appliation for a Single Page MEAN Stack application. Just download and install and you have a good foundation for building application. 
 
-## Installation
-1. Download the repository
-2. Install npm modules: `npm install`
-3. Install bower dependencies `bower install`
-4. Start up the server: `node server.js`
-5. View in browser at http://localhost:8080
+
+![Alt text](/public/assets/stack.jpg?raw=true)
 
 Use this starter kit to build any MEAN stack application you like.
 
