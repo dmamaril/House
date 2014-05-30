@@ -1,4 +1,5 @@
-app.controller('ListController', function ($scope, List, properties, $window) {
+angular.module('houseApp')
+.controller('ListController', function ($scope, List, properties, $window) {
   $scope.properties = properties;
   $scope.user = $window.sessionStorage.userData;
 
@@ -31,7 +32,7 @@ app.controller('ListController', function ($scope, List, properties, $window) {
       });
   };
 
-  $scope.fetchGroupListings();
+  // $scope.fetchGroupListings();
   
   $scope.logout = function () {
     delete $window.sessionStorage.token;

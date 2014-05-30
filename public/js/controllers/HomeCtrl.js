@@ -1,6 +1,5 @@
-// angular.module('HomeCtrl', []).controller('HomeController', function($scope, $http, $window) {
-
-app.controller('HomeController', function ($scope, $http, $window, $location) {
+angular.module('houseApp')
+.controller('HomeController', function ($scope, $http, $window, $location) {
   $scope.tagline = 'KillBnB';
   $scope.showSignUp = false;
 

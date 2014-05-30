@@ -1,3 +1,4 @@
-app.config(['$httpProvider', function ($httpProvider) {
+angular.module('houseApp')
+.config(['$httpProvider', function ($httpProvider) {
   $httpProvider.interceptors.push('authInterceptor');
 }]);

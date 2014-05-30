@@ -1,4 +1,5 @@
-app.factory('List', function ($http) {  
+angular.module('houseApp')
+.factory('List', function ($http) {  
   return {
     get: function () {
       return $http.get('/api/property')

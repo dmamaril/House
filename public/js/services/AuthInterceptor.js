@@ -1,6 +1,5 @@
-// angular.module('AuthInterceptor', []).factory('authInterceptor', function ($q, $window, $location) {
-
-app.factory('authInterceptor', function ($q, $window, $location) {
+angular.module('houseApp')
+.factory('authInterceptor', function ($q, $window, $location) {
   return {
     request: function (config) {
       config.headers = config.headers || {};
@@ -13,7 +12,4 @@ app.factory('authInterceptor', function ($q, $window, $location) {
     },
     login: function () { $location.path('/login'); }
   };
-})
-
-
-// });     
+});

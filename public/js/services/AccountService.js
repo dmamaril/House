@@ -1,5 +1,5 @@
-// angular.module('AccountService', []).factory('Account', ['$http', function($http) {
-app.factory('Account', function ($http) {
+angular.module('houseApp')
+.factory('Account', function ($http) {
   return {
     get: function () {
       return $http.get('/api/user')
