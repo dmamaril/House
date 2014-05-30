@@ -6,6 +6,7 @@ html, body {
 
 .alpha { margin-left: 0; padding-left: 0;}
 .omega { margin-right: 0; padding-right: 0;}
+a:hover { text-decoration: none; }
 
 /* ========= CONTAINERS ========= */
 /* HOME PAGE CONTAINERS */
