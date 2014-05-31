@@ -22,7 +22,3 @@ angular.module('houseApp')
     delete $window.sessionStorage.name;
   };
 })
-
-// });
-
-

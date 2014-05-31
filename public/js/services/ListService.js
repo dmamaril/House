@@ -9,7 +9,7 @@ angular.module('houseApp')
         })
         .error(function () {
           console.log('Error @ .get listService.js');
-        });
+        })
     },
     post: function(data, callback) {
       return $http.post('/api/property', data)

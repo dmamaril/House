@@ -2,7 +2,7 @@ angular.module('houseApp')
 .controller('ListController', function ($scope, List, properties, $window) {
   $scope.properties = properties;
   $scope.user = $window.sessionStorage.userData;
-
+  $scope.listings;
   $scope.tagline = 'Nothing beats a pocket protector!';
 
   $scope.toggleGroupForm = function () {
@@ -29,7 +29,7 @@ angular.module('houseApp')
     List.get()
       .success(function (groupListings) {
         $scope.listings = groupListings;
-      });
+      })
   };
 
   $scope.fetchGroupListings();
