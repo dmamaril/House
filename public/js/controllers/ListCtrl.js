@@ -32,7 +32,7 @@ angular.module('houseApp')
       });
   };
 
-  // $scope.fetchGroupListings();
+  $scope.fetchGroupListings();
   
   $scope.logout = function () {
     delete $window.sessionStorage.token;
@@ -40,5 +40,3 @@ angular.module('houseApp')
     delete $window.sessionStorage.name;
   };
 });
-
-

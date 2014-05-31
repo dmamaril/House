@@ -1,4 +1,3 @@
-// angular.module('appRoutes', ['AccountService', 'ListService']).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 angular.module('houseApp')
 .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 	$routeProvider
@@ -44,5 +43,3 @@ angular.module('houseApp')
 	$locationProvider.html5Mode(true);
 	
 }])
-
-// }]);
