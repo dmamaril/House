@@ -9,7 +9,7 @@ var jwt = require('jsonwebtoken');
 // configuration ===========================================
 
 // config files
-var db = require('./config/db');
+var db = require('./config/db.js');
 
 var port = process.env.PORT || 8000; // set our port
 mongoose.connect(db.url); // connect to our mongoDB database (commented out after you enter in your own credentials)
