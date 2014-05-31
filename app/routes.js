@@ -7,7 +7,6 @@ var User = require('./models/User.js');
 var Group = require('./models/Group.js');
 var Property = require('./models/Property.js');
 
-
 var parseBnB = function (toParse, listingUrl) {
   var start = toParse.indexOf('<table class="table table-bordered table-striped" id="description_details" itemprop="breadcrumb">');
   var stop = toParse.indexOf('<td>Cancellation:</td>');
@@ -96,8 +95,6 @@ var findCoordsCL = function (coordinates) {
     return { latitude: temp[0], longitude: temp[1] };
 };
 
-
-
 module.exports = function(app) {
 
 	// server routes ===========================================================
@@ -156,7 +153,6 @@ module.exports = function(app) {
   });
 
   app.post('/api/group', function (req, res) {
-    
     var updateUser = function (savedGroup, userId) {
       console.log('Searching for user...', userId);
       User.update({ _id: userId }, { $set: { groupId: savedGroup._id }}, function () {

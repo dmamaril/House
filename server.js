@@ -9,9 +9,9 @@ var jwt = require('jsonwebtoken');
 // configuration ===========================================
 
 // config files
-var db = require('./config/db');
-
+var db = require('./config/db.js');
 var port = process.env.PORT || 8000; // set our port
+console.log(db.url);
 mongoose.connect(db.url); // connect to our mongoDB database (commented out after you enter in your own credentials)
 
 app.configure(function() {
@@ -19,8 +19,7 @@ app.configure(function() {
 	app.use(express.logger('dev')); 					// log every request to the console
 	app.use(express.bodyParser()); 						// pull information from html in POST
 	app.use(express.methodOverride()); 					// simulate DELETE and PUT
-  app.use('/api', expressJwt({secret: 'houseApp'}));
-
+    app.use('/api', expressJwt({secret: 'houseApp'}));
 });
 
 // routes ==================================================
