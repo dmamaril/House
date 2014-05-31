@@ -11,8 +11,12 @@ var jwt = require('jsonwebtoken');
 // config files
 var db = require('./config/db.js');
 var port = process.env.PORT || 8000; // set our port
-console.log(db.url);
+
 mongoose.connect(db.url); // connect to our mongoDB database (commented out after you enter in your own credentials)
+mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+mongoose.connection.once('open', function callback() {
+  console.log("Mongo DB connected!");
+});
 
 app.configure(function() {
 	app.use(express.static(__dirname + '/public')); 	// set the static files location /public/img will be /img for users
