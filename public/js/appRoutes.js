@@ -1,4 +1,3 @@
-// angular.module('appRoutes', ['AccountService', 'ListService']).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 	$routeProvider
 
@@ -7,41 +6,32 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 			controller: 'HomeController'
 		})
 
-		.when('/account', {
-			templateUrl: 'views/account.html',
-			controller: 'AccountController',
+		.when('/groups', {
+			templateUrl: 'views/groups.html',
+			controller: 'GroupsController',
 			resolve: {
-				accountInfo: function (Account) {
-					return Account.get()
-						.then (function (user) {
-							return user.data;
-						});
-				},
-				groupMembers: function (Account) {
-					return Account.getMembers()
+				groupCache: function (Groups) {
+					return Groups.get()
 						.then(function (members) {
-							console.log('Members fetch success:', members.data);
-							return members.data;
+							console.log(members);
+							return members;
 						});
 				}
 			}
 		})
 
-		.when('/list', {
-			templateUrl: 'views/list.html',
-			controller: 'ListController',
+		.when('/listings', {
+			templateUrl: 'views/listings.html',
+			controller: 'ListingsController',
 			resolve: {
-				properties: function (List) {
-					return List.get()
-						.then(function (property) {
-							return property.data;
+				listingsCache: function (Listings) {
+					return Listings.get()
+						.then(function (listings) {
+							return listings;
 						});
 				}
 			}
 		});
 
 	$locationProvider.html5Mode(true);
-	
-}])
-
-// }]);
+}]);

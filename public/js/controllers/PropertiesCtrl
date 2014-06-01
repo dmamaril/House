@@ -1,0 +1,13 @@
+app.controller('PropertiesController', function ($scope, Listings, properties, $window) {
+
+    $scope.removeListing = function(listing) {
+
+    };
+
+    $scope.upvote = function(listing) {
+
+    };
+
+});
+
+

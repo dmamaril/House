@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<base href="/">
 
-	<title>Starter Node and Angular</title>
+	<title>House . Apartment Hunting Made Easy</title>
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/style.css"> <!-- custom styles -->
+	<link rel="stylesheet" href="css/style.css">
+	<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300' rel='stylesheet' type='text/css'>
 
 	<!-- JS -->
 	<script src="libs/angular/angular.js"></script>
@@ -17,13 +20,21 @@
 	<!-- ANGULAR CUSTOM -->
 	<script src="js/app.js"></script>
 	<script src="js/appRoutes.js"></script>
+
 	<script src="js/controllers/HomeCtrl.js"></script>
-	<script src="js/controllers/ListCtrl.js"></script>
+	<script src="js/controllers/NavCtrl.js"></script>
+
+	<script src="js/controllers/ListingsCtrl.js"></script>
+	<script src="js/controllers/MapCtrl.js"></script>
+	<script src="js/controllers/PropertiesCtrl.js"></script>
+
+	<script src="js/controllers/GroupsCtrl.js"></script>
 	<script src="js/controllers/AccountCtrl.js"></script>
-	<script src="js/services/AuthInterceptor.js"></script>
-	<script src="js/services/AccountService.js"></script>
-	<script src="js/services/ListService.js"></script>
-	<script src="js/authInterceptor.js"></script>
+	<script src="js/controllers/MembersCtrl.js"></script>
+
+	<script src="js/services/ListingService.js"></script>
+	<script src="js/services/GroupService.js"></script>
+	<script src="js/services/UserService.js"></script>
 </head>
 <body ng-app="houseApp">
 

@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');
 
 var groupSchema = mongoose.Schema({
-  members: Array,
-  groupName: String
+  name: String,
+  isPrivate: Boolean,
+  members: Array, // actual user objects
+  properties: Array // actual property objects
 });
 
 var Group = mongoose.model('Group', groupSchema);

@@ -1,49 +1,30 @@
-<div class="jumbotron text-center">
-  <h1>Welcome to House</h1>
-  <p>{{ tagline }}</p>
+    <div class="navbar navbar-fixed-top navbar-splash" role="navigation">
+      <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-4 splash-pad-logo splash-header-text splash-header-brand logo">House</div>
 
-  <div>
-      <div class="row" ng-hide='showSignUp'>
-          <div class="col-md-12">
-              <div class="wrap">
-                  <p class="form-title"></p>
-                  <form class="login" ng-submit='logInUser()'>
-                   
-                  <input type="text" ng-model='email' placeholder="e-mail" />
-                  <input type="password" ng-model='password' placeholder="Password" />
-                  <input type="submit" value="Sign In" class="btn btn-default btn-sm" />
-                  <small><a href='' ng-click='toggleSignUp()'>Not yet registered?</a></small>
-                  </form> 
-              </div>
+            <div class="col-xs-8 splash-pad-links text-right">
+                <a href="listings.html"><span class="link-splash splash-header-text">Listings</span></a>
+                <span class="link-splash splash-header-text">Logout</span>
+            </div>
           </div>
       </div>
-  </div>
+    </div>
 
-
-  <div ng-show='showSignUp'>
-    <form name="userForm" ng-submit="registerUser(userForm.$valid)" novalidate>
-      <div class="form-group">
-          <label>Name</label>
-          <input type="text" name="name" class="form-control" ng-model="name" required>
-          <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>
+    <div class="splash container-fluid">
+      <div class="row splash-pad-top"> </div>
+      <div class="row text-center">
+        <span class="splash-leading">
+          <span class="title txt-piccolo">House</span><br>
+          <span class="subtitle txt-piccolo">apartment hunting made easy</span>
+        </span>
       </div>
-
-      <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="email" class="form-control" ng-model="email">
-          <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+      <div class="row splash-pad-middle"> </div>
+      <div class="row">
+        <div class="col-md-3 col-sm-2"></div>
+        <div class="col-md-6 col-sm-8">
+          <input type="text" ng-keypress="login($event)" ng-model="userEmail" class="submitter" placeholder="Temporary identification. Enter your Google-verified email.">
+        </div>
+        <div class="col-md-3 col-sm-2"></div>
       </div>
-
-      <div class="form-group">
-          <label>Password</label>
-          <input type="password" name="password" class="form-control" ng-model="password">
-      </div>
-      <!-- ADD A CONFIRM PASSWORD -->
-      <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
-    </form>
-  </div> 
-
-
-</div>
-
-
+    </div>

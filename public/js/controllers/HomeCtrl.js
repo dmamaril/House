@@ -1,44 +1,16 @@
-// angular.module('HomeCtrl', []).controller('HomeController', function($scope, $http, $window) {
+app.controller('HomeController', function ($scope, $rootScope, $http, $location) {
+  $scope.userEmail = '';
 
-app.controller('HomeController', function ($scope, $http, $window, $location) {
-  $scope.tagline = 'KillBnB';
-  $scope.showSignUp = false;
-
-  $scope.toggleSignUp = function () {
-    $scope.showSignUp = true;
-  }
-
-  $scope.logInUser = function () {
-    $http.post('/login', { email: $scope.email, password: $scope.password })
-      .success(function (token, status, headers , config) {
-        console.log('Token', token);
-        $window.sessionStorage.token = token.token;
-        $window.sessionStorage.id = token._id;
-        $window.sessionStorage.name = token.name;
-        $location.path('/account');
-      });
-  };
-
-  $scope.registerUser = function (isValid) {
-    if (isValid) {
-      var userData = {
-        email: $scope.email, 
-        password: $scope.password, 
-        name: $scope.name
-      };
-      $http.post('/register', userData)
-        .success(function (registeredUser) {
-          $http.post('/login', { email: userData.email, password: userData.password })
-            .success(function (token, status, headers, config) {
-              $window.sessionStorage.token = token.token;
-              $window.sessionStorage.id = token._id;
-              $window.sessionStorage.name = token.name;
-              $location.path('/account');
-            });
-        });  
+  $scope.login = function(keyEvent) {
+    if (keyEvent.which === 13) {
+      $http.post('/login', { email: $scope.userEmail })
+        .success(function(user) {
+          console.log(user);
+          $rootScope.user = user;
+          $rootScope.id = user._id;
+          $rootScope.groupName = user.groups[0];
+          $location.path("/listings");
+        });
     }
   };
-})
-
-
-// });
+});
