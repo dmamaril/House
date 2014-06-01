@@ -20,7 +20,9 @@
   <a href='' ng-show='{{ user.groupId }}' ng-click='toggleGroupForm()' ng-hide='creatingGroup'>Create a new group</a>
 
   <form ng-submit='createGroup()' ng-show='creatingGroup'>
-    <input type='text' ng-model='groupName' placeholder='Enter group name' ></input>
+    <input type='text' ng-model='groupName' placeholder='Enter group name' />
+    <input type='text' ng-model='groupLocation' placeholder='Enter search zip code' />
+    <button type='submit'>Submit</button>
   </form>
 </div>
 

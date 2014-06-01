@@ -196,15 +196,18 @@ module.exports = function(app) {
       if (user.groupId) {
         Group.findOne({ _id: user.groupId }, function (err, group) {
           console.log(group.members.length, ' members found for this group');
-          var properties = [];
+          var propertiesAndGroupLocation = {
+            properties: [], 
+            groupLocation: group.groupLocation
+          };
           group.members.forEach(function (memberId) {
             console.log('Searching for user ', memberId);
             User.findOne({ _id: memberId }, function (err, user) {
                 console.log('Found user. Adding properties from', user.properties);
                 user.properties.forEach(function (property) {
-                  properties.push(property);
+                  propertiesAndGroupLocation.properties.push(property);
                 });
-                res.send(properties);
+                res.send(propertiesAndGroupLocation);
             });
           });
         });
@@ -293,6 +296,13 @@ module.exports = function(app) {
   app.get('*', function(req, res) {
     res.sendfile('./public/index.html');
   });
+
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Methods", "GET, POST","PUT");
+  next();
+});
 
 };
 

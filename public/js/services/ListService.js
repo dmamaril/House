@@ -15,8 +15,13 @@ angular.module('houseApp')
         .success(callback);
     },
     createNewGroup: function(data, callback) {
-      return $http.post('/api/group', data)
-        .success(callback);
+
+      return $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+data.groupLocation+'&sensor=false')
+           .success(function(data){console.log(data)})
+           .error(function(err){console.log(err)});
+
+      // return $http.post('/api/group', data)
+      //   .success(callback);
     } ,
     fetchListing: function(listingData, callback) {
       return $http.post('/api/fetchListing', listingData)
