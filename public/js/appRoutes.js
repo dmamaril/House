@@ -8,29 +8,12 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 
 		.when('/groups', {
 			templateUrl: 'views/groups.html',
-			controller: 'GroupsController',
-			resolve: {
-				groupCache: function (Groups) {
-					return Groups.get()
-						.then(function (members) {
-							console.log(members);
-							return members;
-						});
-				}
-			}
+			controller: 'GroupsController'
 		})
 
 		.when('/listings', {
 			templateUrl: 'views/listings.html',
-			controller: 'ListingsController',
-			resolve: {
-				listingsCache: function (Listings) {
-					return Listings.get()
-						.then(function (listings) {
-							return listings;
-						});
-				}
-			}
+			controller: 'ListingsController'
 		});
 
 	$locationProvider.html5Mode(true);
