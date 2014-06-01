@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var propertySchema = mongoose.Schema({
-  votes: Number,
+  votes: Array,
   title: String,
   url: String,
   location: Array, // long, lat

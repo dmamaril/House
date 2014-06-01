@@ -92,13 +92,23 @@ module.exports = function(app) {
             group.properties.push(req.body.listing);
             group.save();
         })
+    });
 
+    app.put('/api/listings', function (req, res) {
+        Group.findOne({name: req.body.groupName}, function (err, group) {
+            group.properties.forEach(function(listing, i) {
+                if (listing.id === req.body.listing.id) {
+                    group.properties[i] = req.body.listing;
+                }
+            });
+            group.save();
+        });
     });
 
     app.delete('/api/listings', function (req, res) {
         Group.findOne({name: req.body.groupName}, function (err, group) {
             group.properties.forEach(function (listing, i) {
-                if (listing.url === req.body.listing.url) { group.properties.splice(i, 1); }
+                if (listing.id === req.body.listing._id) { group.properties.splice(i, 1); }
                 group.save();
             });
         });
