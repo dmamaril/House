@@ -1,4 +1,4 @@
-app.factory('Members', function ($rootScope, $http) {
+app.factory('Groups', function ($rootScope, $http) {
     var methods = {};
 
     methods.get = function () {
@@ -19,10 +19,10 @@ app.factory('Members', function ($rootScope, $http) {
         });
     };
 
-    methods.delete = function () {
+    methods.delete = function (groupName) {
         return $http.get('/api/group', {
             _id: $rootScope.id, 
-            groupName: $rootScope.groupName
+            groupName: groupName
         }).success(function (members) {
             return members;
         });

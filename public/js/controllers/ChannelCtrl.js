@@ -1,14 +1,20 @@
-app.controller('ChannelController', function ($scope, $window, Groups, groupMembers, Account) {
-  $scope.removeGroup = function (groupName) {
+app.controller('ChannelController', function ($scope, Groups) {
+    $scope.groupName = $rootScope.groupName;
 
-  };
+    $scope.remove = function (groupName) {
+        Groups.delete(groupName);
+    };
 
-  $scope.joinGroup = function (groupName) {
+    $scope.join = function (groupName) {
+        Groups.post(groupName);
+    };
 
-  };
+    $scope.switch = function (groupName) {
+        $rootScope.groupName = groupName;
+        $rootScope.$emit('channelchange', $rootScope.groupName);
+    };
 
-  $scope.switchGroups = function (groupName) {
-
-  };
+    $rootScope.$on('channelchange', function(event, data) {
+        $scope.groupName = data;
+    });
 });
-
