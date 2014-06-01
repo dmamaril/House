@@ -14,7 +14,7 @@ angular.module('houseApp')
       console.log('Successfully saved user info.');
     });
     $scope.showInput = !$scope.showInput;
-  };  
+  };
 
   $scope.logout = function () {
     delete $window.sessionStorage.token;

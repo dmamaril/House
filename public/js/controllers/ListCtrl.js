@@ -1,6 +1,10 @@
 angular.module('houseApp')
 .controller('ListController', function ($scope, List, properties, $window) {
   $scope.properties = properties;
+// =======
+// app.controller('ListController', function ($scope, List, properties, $window) {
+//   $scope.listings = properties;
+// >>>>>>> master
   $scope.user = $window.sessionStorage.userData;
   $scope.listings;
   $scope.tagline = 'Nothing beats a pocket protector!';

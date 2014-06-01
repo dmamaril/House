@@ -9,6 +9,27 @@
     "express-jwt": "^0.2.1",
     "jsonwebtoken": "^0.4.0",
     "http-request": "^0.6.2",
-    "xml2js": "^0.4.3"
-  }
+    "xml2js": "^0.4.2"
+  },
+  "devDependencies": {
+    "karma": "^0.12.16",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-jasmine": "^0.1.5"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "This is a repo for a starter appliation for a Single Page MEAN Stack application. Just download and install and you have a good foundation for building application.",
+  "version": "0.0.0",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/willwclo/House.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/willwclo/House/issues"
+  },
+  "homepage": "https://github.com/willwclo/House"
 }

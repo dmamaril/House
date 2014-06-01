@@ -33,12 +33,12 @@
       <th>Bedrooms</th>
       <th>Price</th>
     </tr>
-    <tr ng-repeat='listing in listings'>
-      <td>{{ listing.votes }}</td>
-      <td>{{ listing.neighborhood }}</td>
-      <td>{{ listing.listingUrl }}</td>
-      <td>{{ listing.bedrooms }}</td>
-      <td>{{ listing.monthlyPrice }}</td>
+    <tr ng-repeat='property in properties'>
+      <td>{{ property.votes }}</td>
+      <td>{{ property.neighborhood }}</td>
+      <td>{{ property.listingUrl }}</td>
+      <td>{{ property.bedrooms }}</td>
+      <td>{{ property.monthlyPrice }}</td>
     </tr>
   </table>
 

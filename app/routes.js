@@ -143,6 +143,7 @@ module.exports = function(app) {
             members.forEach(function (member) {
               delete member.password;
             });
+            console.log('Sending members: ', members);
             res.send(members);
           } else {
             res.send(501, err);

@@ -2,9 +2,12 @@
 Home.html
   - Add confirm password
 
+Group List & Cohort List on Account page
+
 Create Group
   - /api/property
     - currently errors when user does not have any properties
+  - think about saving groupName instead of gorupId
 
 Public View
   - addListingToUserProperty on click

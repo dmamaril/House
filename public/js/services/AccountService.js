@@ -17,6 +17,7 @@ angular.module('houseApp')
     getMembers: function () {
       return $http.get('/api/group')
         .success(function (groupMembers) {
+          console.log(groupMembers, 'Group members');
           return groupMembers.data;
         });
     }

@@ -4,7 +4,6 @@ angular.module('houseApp')
     get: function () {
       return $http.get('/api/property')
         .success(function (properties) {
-          console.log('List Service returned properties', properties);
           return properties.data;
         })
         .error(function () {

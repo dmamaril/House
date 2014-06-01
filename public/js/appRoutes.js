@@ -13,13 +13,14 @@ angular.module('houseApp')
 			resolve: {
 				accountInfo: function (Account) {
 					return Account.get()
-						.then (function (user, $window) {
+						.then (function (user) {
 							return user.data;
 						});
 				},
 				groupMembers: function (Account) {
 					return Account.getMembers()
 						.then(function (members) {
+							console.log('Members fetch success:', members.data);
 							return members.data;
 						});
 				}
@@ -31,9 +32,8 @@ angular.module('houseApp')
 			controller: 'ListController',
 			resolve: {
 				properties: function (List) {
-					return List.get('/api/property')
+					return List.get()
 						.then(function (property) {
-							console.log('Property', property);
 							return property.data;
 						});
 				}
