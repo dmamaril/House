@@ -17,25 +17,28 @@
 
 </div>
 
-  <a href='' ng-click='toggleGroupForm()' ng-hide='creatingGroup'>Create a new group</a>
+  <a href='' ng-show='{{ user.groupId }}' ng-click='toggleGroupForm()' ng-hide='creatingGroup'>Create a new group</a>
 
   <form ng-submit='createGroup()' ng-show='creatingGroup'>
     <input type='text' ng-model='groupName' placeholder='Enter group name' ></input>
   </form>
+</div>
 
-
-  <table ng-show='properties'>
+  <table>
+    <h1> THIS IS FROM THE SERVER YEYZ </h1>
     <tr>
       <th>Votes</th>
+      <th>Neighborhood</th>
       <th>Title</th>
-      <th>Location</th>
+      <th>Bedrooms</th>
       <th>Price</th>
     </tr>
     <tr ng-repeat='property in properties'>
       <td>{{ property.votes }}</td>
-      <td>{{ property.title }}</td>
-      <td>{{ property.location }}</td>
-      <td>{{ property.price }}</td>
+      <td>{{ property.neighborhood }}</td>
+      <td>{{ property.listingUrl }}</td>
+      <td>{{ property.bedrooms }}</td>
+      <td>{{ property.monthlyPrice }}</td>
     </tr>
   </table>
 

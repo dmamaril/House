@@ -1,6 +1,8 @@
-app.controller('ListController', function ($scope, List, properties, $window) {
+angular.module('houseApp')
+.controller('ListController', function ($scope, List, properties, $window) {
   $scope.properties = properties;
-
+  $scope.user = $window.sessionStorage.userData;
+  $scope.listings;
   $scope.tagline = 'Nothing beats a pocket protector!';
   
   $scope.map = {
@@ -29,15 +31,23 @@ app.controller('ListController', function ($scope, List, properties, $window) {
   };
 
   $scope.fetchListing = function () {
-    List.fetchListing({ listingUrl: $scope.listingUrl }, function (expectListingData) {
-      console.log(expectListingData, 'Received');
+    List.fetchListing({ listingUrl: $scope.listingUrl }, function (listingData) {
+      $scope.listingData = listingData;
+      console.log(listingData);
+      List.addListingToUserProperties(listingData, function (userProperties) {
+        console.log(userProperties, ' has been saved to user.');
+      });
     });
-  }
+  };
 
-  $scope.logout = function () {
-    delete $window.sessionStorage.token;
-    delete $window.sessionStorage.id;
-    delete $window.sessionStorage.name;
+  $scope.fetchGroupListings = function () {
+    List.get()
+      .success(function (groupListings) {
+        $scope.listings = groupListings;
+      })
+  };
+
+  $scope.fetchGroupListings();
 
   console.log(div);
   };

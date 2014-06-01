@@ -13,7 +13,8 @@ results
 
 npm-debug.log
 node_modules
-config/*
+config
 public/libs
 patchnotes.md
-.DS_Store
+
+*.DS_Store

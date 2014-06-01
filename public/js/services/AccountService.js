@@ -1,5 +1,5 @@
-// angular.module('AccountService', []).factory('Account', ['$http', function($http) {
-app.factory('Account', function ($http) {
+angular.module('houseApp')
+.factory('Account', function ($http) {
   return {
     get: function () {
       return $http.get('/api/user')
@@ -17,9 +17,9 @@ app.factory('Account', function ($http) {
     getMembers: function () {
       return $http.get('/api/group')
         .success(function (groupMembers) {
+          console.log(groupMembers, 'Group members');
           return groupMembers.data;
         });
     }
   };
 })
-// }]);
