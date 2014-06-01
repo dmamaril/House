@@ -1,7 +1,12 @@
-app.controller('ListController', function ($scope, List, properties, $window) {
-  $scope.listings = properties;
+angular.module('houseApp')
+.controller('ListController', function ($scope, List, properties, $window) {
+  $scope.properties = properties;
+// =======
+// app.controller('ListController', function ($scope, List, properties, $window) {
+//   $scope.listings = properties;
+// >>>>>>> master
   $scope.user = $window.sessionStorage.userData;
-
+  $scope.listings;
   $scope.tagline = 'Nothing beats a pocket protector!';
 
   $scope.toggleGroupForm = function () {
@@ -23,6 +28,15 @@ app.controller('ListController', function ($scope, List, properties, $window) {
       });
     });
   };
+
+  $scope.fetchGroupListings = function () {
+    List.get()
+      .success(function (groupListings) {
+        $scope.listings = groupListings;
+      })
+  };
+
+  $scope.fetchGroupListings();
   
   $scope.logout = function () {
     delete $window.sessionStorage.token;
@@ -30,5 +44,3 @@ app.controller('ListController', function ($scope, List, properties, $window) {
     delete $window.sessionStorage.name;
   };
 });
-
-

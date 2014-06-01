@@ -1,4 +1,5 @@
-app.factory('List', function ($http) {  
+angular.module('houseApp')
+.factory('List', function ($http) {  
   return {
     get: function () {
       return $http.get('/api/property')
@@ -7,7 +8,7 @@ app.factory('List', function ($http) {
         })
         .error(function () {
           console.log('Error @ .get listService.js');
-        });
+        })
     },
     post: function(data, callback) {
       return $http.post('/api/property', data)

@@ -16,3 +16,5 @@ node_modules
 config
 public/libs
 patchnotes.md
+
+*.DS_Store
