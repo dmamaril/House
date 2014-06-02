@@ -14,9 +14,13 @@ Upvote/downvote listings that you like to narrow down the search. View the gener
 
 ## Tech Stack
 ![Alt text](/public/assets/stack.jpg?raw=true)
++ Passport & OAuth
++ Google Maps
++ Karma / Jasmine Test Suite
 
 ## Challenges
-The challenges you faced.
+* Custom CraigsList & AirBnB parsers
+* Transition from local login/authentication to OAuth 2.0 with Google passport strategy
 
 ## Diving In
 ```
