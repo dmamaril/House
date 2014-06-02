@@ -32,80 +32,31 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-6 omega">
+    <div ng-controller="MapController" class="col-sm-6 omega">
       <div id="listings-canvas">maps!</div>
     </div>
-    <div class="col-sm-6 alpha">
+    <div ng-controller="PropertiesController" class="col-sm-6 alpha">
       <table class="listings-table alpha">
       <tbody>
-        <tr class="listing">
-          <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">1600</span></td>
+        <tr ng-repeat="listing in listings" class="listing">
+          <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">{{ listing.price }}</span></td>
           <td class="listing-main">
-            <span class="listing-votes">7 votes</span><br>
-            <span class="listing-address">cabbagetown</span><br>
-            <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/4437058393.html</span>
+            <span ng-click="toggleVote(listing)" class="listing-votes">{{ listing.votes.length }}</span><br>
+            <span class="listing-address">{{ listing.title }}</span><br>
+            <span class="listing-url">{{ listing.url }}</span>
           </td>
           <td class="listing-end">
-            <span class="listing-rooms">2 BR</span><br>
+            <span class="listing-rooms">{{ listing.rooms }} BR</span><br>
             <span class="listing-distance">1.5 mi away</span>
           </td>
           <td class="listing-postfix">
-            <span class="listing-delete">x</span>
+            <span ng-click="delete(listing)" class="listing-delete">x</span>
           </td>
         </tr>
-
-        <tr class="listing">
-          <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">2300</span></td>
-          <td class="listing-main">
-            <span class="listing-votes">6 votes</span><br>
-            <span class="listing-address">kensington market</span><br>
-            <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/44724524703.html</span>
-          </td>
-          <td class="listing-end">
-            <span class="listing-rooms">3 BR</span><br>
-            <span class="listing-distance">2.0 mi away</span>
-          </td>
-          <td class="listing-postfix">
-            <span class="listing-delete">x</span>
-          </td>
-        </tr>
-
-        <tr class="listing">
-          <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">1800</span></td>
-          <td class="listing-main">
-            <span class="listing-votes">4 votes</span><br>
-            <span class="listing-address">the annex</span><br>
-            <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/44370346295.html</span>
-          </td>
-          <td class="listing-end">
-            <span class="listing-rooms">1 BR</span><br>
-            <span class="listing-distance">1.0 mi away</span>
-          </td>
-          <td class="listing-postfix">
-            <span class="listing-delete">x</span>
-          </td>
-        </tr>
-
-        <tr class="listing">
-          <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">2000</span></td>
-          <td class="listing-main">
-            <span class="listing-votes">3 votes</span><br>
-            <span class="listing-address">bloor/yonge</span><br>
-            <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/43705478346.html</span>
-          </td>
-          <td class="listing-end">
-            <span class="listing-rooms">1 BR</span><br>
-            <span class="listing-distance">0.8 mi away</span>
-          </td>
-          <td class="listing-postfix">
-            <span class="listing-delete">x</span>
-          </td>
-        </tr>
-
       </tbody>
       </table>
     </div>
     </div>
   </div>
 </div>
-<script src="libs/maps.js"></script>
+<!--script src="libs/maps.js"></script>

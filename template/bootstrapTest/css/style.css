@@ -98,6 +98,18 @@ a:hover { text-decoration: none; }
 }
 .subheading-text { color: #C0C8C0; }
 .subheading-active { color: #40BC98; }
+.subheading-inputs {
+    width: 75px; text-align: right;
+    box-shadow: none; border: none;
+    background-color: transparent;
+    box-sizing: border-box;
+    color: #40BC98;
+    font-size: 14px; font-weight: 300;
+}
+.subheading-inputs:focus {
+    box-shadow: none; border: none;
+    outline: 0 none;
+}
 
 /* SPLASH PAGE */
 .splash-pad-top { height: 40%; }

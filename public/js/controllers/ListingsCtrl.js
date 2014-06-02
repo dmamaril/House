@@ -6,5 +6,3 @@ app.controller('ListingsController', function ($scope, Listings) {
     });
     Listings.get($rootScope.groupName);
 });
-
-
