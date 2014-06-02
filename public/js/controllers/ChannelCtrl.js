@@ -20,7 +20,8 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
     };
 
     $scope.join = function () {
-        User.addGroup(toJoin);
+        User.addGroup($scope.toJoin);
+        $scope.toJoin = '';
     };
 
     $scope.switch = function (groupName) {

@@ -27,7 +27,7 @@
         </span>
         <span class="subheading-add">(+)</span>
         <input ng-model="toJoin" class="subheading-inputs">
-        <span class="subheading-add">: join</span>
+        <span ng-click="join()" class="subheading-add">: join</span>
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@
           </td>
           <td class="listing-end">
             <span class="listing-rooms">{{ listing.rooms }} BR</span><br>
-            <span class="listing-distance">1.5 mi away</span>
+            <span class="listing-distance"><!-- 1.5 mi away--></span>
           </td>
           <td class="listing-postfix">
             <span ng-click="remove(listing)" class="listing-delete">x</span>

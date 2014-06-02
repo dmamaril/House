@@ -1,4 +1,9 @@
-app.controller('MapController', function ($scope, User) {
+app.controller('MapController', function ($scope, $rootScope, User) {
+    $scope.properties = $scope.listings;
+    $rootScope.$on('change:listings', function(event, listings) {
+        $scope.properties = listings;
+    });
+
     var mapSettings = [
         {
             "featureType": "poi",
