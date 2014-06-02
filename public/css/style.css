@@ -8,6 +8,8 @@ html, body {
 .omega { margin-right: 0; padding-right: 0;}
 a:hover { text-decoration: none; }
 
+.angular-google-map-container { height: 400px; }
+
 /* ========= CONTAINERS ========= */
 /* HOME PAGE CONTAINERS */
 .navbar-splash {

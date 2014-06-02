@@ -2,7 +2,10 @@ app.factory('Listings', function ($http, $rootScope) {
     var methods = {};
 
     var broadcast = function (listings) {
-        $rootScope.$emit('change:listings', listings);
+        var mapped = listings.map(function(listing, i) {
+            listing.id = i;
+        }); // google maps plugin requires object.id to be present
+        $rootScope.$emit('change:listings', mapped);
     };
 
     methods.get = function(groupName) {

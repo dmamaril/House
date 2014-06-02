@@ -1,4 +1,4 @@
-var app = angular.module('houseApp', ['ngRoute']);
+var app = angular.module('houseApp', ['ngRoute', 'google-maps']);
 
 app.config(function($httpProvider) {
   $httpProvider.defaults.useXDomain = true; //Enable cross domain calls
