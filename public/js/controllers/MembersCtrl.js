@@ -1,5 +1,4 @@
 app.controller('MembersController', function ($scope) {
-    // Empty controller for now...
-    // But may be useful for functionality later on
-        // e.g. Sorting, 
+    $scope.groupMembers = $scope.members;
+    console.log($scope.groupMembers);
 });

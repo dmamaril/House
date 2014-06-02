@@ -1,4 +1,9 @@
-app.controller('PropertiesController', function ($scope, Listings) {
+app.controller('PropertiesController', function ($scope, $rootScope, Listings) {
+
+    $scope.properties = $scope.listings;
+    $rootScope.$on('change:listings', function(event, listings) {
+        $scope.properties = listings;
+    });
 
     $scope.isUpvoted = function(listing) {
         return listing.votes.some(function(userID) {
@@ -21,8 +26,8 @@ app.controller('PropertiesController', function ($scope, Listings) {
     };
 
     $scope.remove = function (listing) {
+        console.log("Removing: " + listing.url);
         Listings.delete(listing);
     };
 
-    console.log($scope.listings);
 });

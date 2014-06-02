@@ -30,14 +30,19 @@ module.exports = function(app) {
             user.prefDistance = req.body.prefDistance;
             user.groups = req.body.groups;
             user.save(function (err, savedUser) {
-                console.log (savedUser, 'Successfully saved!');
+                console.log(savedUser, 'Successfully saved!');
+            });
+            Group.findOne({name: req.body.groupName}, function (err, group) {
+                
             });
             res.send(user);
         });
     });
 
     app.get('/api/group', function (req, res) {
-        Group.findOne({name: req.body.groupName}, function (err, group) {
+        console.log(req.query);
+        Group.findOne({name: req.query.groupName}, function (err, group) {
+            console.log("Sending back group...", group);
             res.send(group);
         });
     });
@@ -86,7 +91,6 @@ module.exports = function(app) {
 
     app.get('/api/listings', function (req, res) {
         Group.findOne({name: req.query.groupName}, function (err, group) {
-            console.log(req.query);
             res.send(group.properties);
         });
     });
@@ -105,6 +109,7 @@ module.exports = function(app) {
                 }
                 group.properties.push(listing);
                 group.save();
+                res.send(group.properties);
             });
         })
     });
@@ -117,6 +122,7 @@ module.exports = function(app) {
                 }
             });
             group.save();
+            res.send(group.properties);
         });
     });
 
@@ -126,6 +132,7 @@ module.exports = function(app) {
                 if (listing.id === req.query.listing._id) { group.properties.splice(i, 1); }
                 group.save();
             });
+            res.send(group.properties);
         });
     });
 
@@ -135,8 +142,9 @@ module.exports = function(app) {
                 res.send(user);
             } else {
                 var groupName = "(private) " + req.body.email;
+                var name = req.body.email.split('@')[0];
                 var newUser = new User({
-                    name: req.body.name,
+                    name: name,
                     email: req.body.email,
                     prefDistance: 0,
                     budget: 0,

@@ -10,7 +10,10 @@ app.controller('HeaderController', function ($scope, $location, Listings) {
     };
 
     $scope.post = function (keyEvent, groupName) {
-        if (keyEvent.which === 13) { Listings.post($scope.url); }
+        if (keyEvent.which === 13) { 
+            Listings.post($scope.url); 
+            $scope.url = '';
+        }
     };
 
     $scope.logout = function (groupName) {

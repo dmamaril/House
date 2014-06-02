@@ -4,6 +4,7 @@ app.factory('Listings', function ($http, $rootScope) {
     var broadcast = function (listings) {
         var mapped = listings.map(function(listing, i) {
             listing.id = i;
+            return listing;
         }); // google maps plugin requires object.id to be present
         $rootScope.$emit('change:listings', mapped);
     };

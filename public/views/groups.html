@@ -45,7 +45,7 @@
           <td class="profile-item">
             <span class="profile-subtitle">preferred budget</span><br>
             <span class="profile-budget">
-              <input class="profile-inputs" ng-keypress="save('budget')" ng-model="user.budget">
+              <input class="profile-inputs" ng-keypress="save($event)" ng-model="user.budget">
             </span>
             <span class="profile-unit"> USD</span>
           </td>
@@ -54,7 +54,7 @@
           <td class="profile-item">
             <span class="profile-subtitle">preferred distance</span><br>
             <span class="profile-distance">
-              <input class="profile-inputs" ng-keypress="save('prefDistance')" ng-model="user.prefDistance">
+              <input class="profile-inputs" ng-keypress="save($event)" ng-model="user.prefDistance">
             </span>
             <span class="profile-unit"> mi</span>                    
           </td>

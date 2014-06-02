@@ -28,7 +28,7 @@ app.factory('User', function($http, $rootScope, $location) {
             .success(function(user) {
                 console.log(user);
                 $rootScope.user = user;
-                $rootScope.groupName = user.groups[0];
+                $rootScope.groupName =  user.groups[0];
                 $location.path("/listings");
             });
     };
