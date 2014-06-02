@@ -1,5 +1,6 @@
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-		.when('/', {
+		
+		$routeProvider.when('/', {
 			templateUrl: 'views/home.html',
 			controller: 'HomeController'
 		})
