@@ -1,9 +1,11 @@
 {
-	"name": "nagular",
-	"version": "1.0.0",
-	"dependencies": {
-		"bootstrap": "latest",
-		"angular": "latest",
-		"angular-route": "latest"	
-	}
+  "name": "nagular",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "latest",
+    "angular": "latest",
+    "angular-route": "latest",
+    "underscore": "~1.6.0",
+    "angular-google-maps": "~1.1.0"
+  }
 }

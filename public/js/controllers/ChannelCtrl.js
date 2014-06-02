@@ -28,5 +28,4 @@ app.controller('ChannelController', function ($scope, $location, Groups, User) {
         $rootScope.$emit('change:channel', $rootScope.groupName);
         $location.path('/groups'); // force reinstantiation of controller
     };
-
 });

@@ -34,25 +34,29 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-4 omega text-right">
+    <div ng-controller="AccountCtrl" class="col-sm-4 omega text-right">
       <table class="profile-table">
         <tr class="profile-row">
           <td class="profile-item">
-            <span class="profile-email">mamarildon@gmail.com</span><br>
-            <span class="profile-name">Don Mamaril</span>
+            <span class="profile-email">{{ user.email }}</span><br>
+            <span class="profile-name">{{ user.name }}</span>
           </td>
         </tr>
         <tr class="profile-row">
           <td class="profile-item">
             <span class="profile-subtitle">preferred budget</span><br>
-            <span class="profile-budget"><input class="profile-inputs" value="800" disabled></span>
+            <span class="profile-budget">
+              <input class="profile-inputs" ng-keypress="save('budget')" ng-model="user.budget">
+            </span>
             <span class="profile-unit"> USD</span>
           </td>
         </tr>
         <tr class="profile-row">
           <td class="profile-item">
             <span class="profile-subtitle">preferred distance</span><br>
-            <span class="profile-distance"><input class="profile-inputs" value="1.75" disabled></span>
+            <span class="profile-distance">
+              <input class="profile-inputs" ng-keypress="save('prefDistance')" ng-model="user.prefDistance">
+            </span>
             <span class="profile-unit"> mi</span>                    
           </td>
         </tr>
@@ -65,7 +69,7 @@
         </tr>                
       </table>
     </div>
-    <div class="col-sm-8 alpha">
+    <div ng-controller="MembersController" class="col-sm-8 alpha">
       <table class="groups-table alpha">
       <thead class="text-center">
         <tr class="group-header">
@@ -75,66 +79,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="group-member">
+        <tr ng-repeat="member in members" class="group-member">
           <td class="group-cell text-left">
-            <span class="group-name">Don Mamaril</span><br>
-            <span class="group-email">mamarildon@gmail.com</span>
+            <span class="group-name">{{ member.name }}</span><br>
+            <span class="group-email">{{ member.email }}</span>
           </td>
           <td class="group-cell text-center">
-            <span class="group-location">944 Market St</span><br>
+            <span class="group-location">{{ member.location }}</span><br>
             <span class="group-city">San Francisco . CA . 94102</span>
           </td>
           <td class="group-cell text-center">
             <span class="group-dollar">$ </span>
-            <span class="group-price">800</span>
-            <span class="group-dollar">/person</span>
-          </td>
-        </tr>
-
-        <tr class="group-member">
-          <td class="group-cell text-left">
-            <span class="group-name">Don Mamaril</span><br>
-            <span class="group-email">mamarildon@gmail.com</span>
-          </td>
-          <td class="group-cell text-center">
-            <span class="group-location">944 Market St</span><br>
-            <span class="group-city">San Francisco . CA . 94102</span>
-          </td>
-          <td class="group-cell text-center">
-            <span class="group-dollar">$ </span>
-            <span class="group-price">800</span>
-            <span class="group-dollar">/person</span>
-          </td>
-        </tr>
-
-        <tr class="group-member">
-          <td class="group-cell text-left">
-            <span class="group-name">Don Mamaril</span><br>
-            <span class="group-email">mamarildon@gmail.com</span>
-          </td>
-          <td class="group-cell text-center">
-            <span class="group-location">944 Market St</span><br>
-            <span class="group-city">San Francisco . CA . 94102</span>
-          </td>
-          <td class="group-cell text-center">
-            <span class="group-dollar">$ </span>
-            <span class="group-price">800</span>
-            <span class="group-dollar">/person</span>
-          </td>
-        </tr>
-
-        <tr class="group-member">
-          <td class="group-cell text-left">
-            <span class="group-name">Don Mamaril</span><br>
-            <span class="group-email">mamarildon@gmail.com</span>
-          </td>
-          <td class="group-cell text-center">
-            <span class="group-location">944 Market St</span><br>
-            <span class="group-city">San Francisco . CA . 94102</span>
-          </td>
-          <td class="group-cell text-center">
-            <span class="group-dollar">$ </span>
-            <span class="group-price">800</span>
+            <span class="group-price">{{ member.budget }}</span>
             <span class="group-dollar">/person</span>
           </td>
         </tr>

@@ -6,9 +6,9 @@ app.controller('AccountController', function ($scope, User) {
     });
     User.get();
 
-    $scope.save = function (key, value) {
+    $scope.save = function (key) {
         if (keyEvent.which === 13) {
-            $rootScope.user[key] = value;
+            $rootScope.user = $scope.user;
             User.edit($rootScope.user);
         }
     };
