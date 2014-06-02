@@ -86,7 +86,14 @@ methods.craigslist = function (toParse, listingUrl) {
   var bedrooms = mapAndAttrs.slice(mapAndAttrs.lastIndexOf('>')+1);
 
   // MONTHLY PRICE
-  var monthlyPrice = toParse.substring(toParse.indexOf('&#x0024;'), toParse.indexOf('&#x0024;') + 20);
+  var monthlyPrice = toParse.substring(toParse.indexOf('&#x0024;'), toParse.indexOf('&#x0024;') + 15);
+  
+  if (monthlyPrice.indexOf('/') === -1) {
+    stop = monthlyPrice.indexOf(' ');
+  } else {
+    stop = monthlyPrice.indexOf('/')-1;
+  }
+  
   monthlyPrice = monthlyPrice.substring(monthlyPrice.indexOf(';')+1, monthlyPrice.indexOf('/')-1);
  
   console.log({ listingUrl: listingUrl, coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice, votes: 0 });
