@@ -1,4 +1,4 @@
-app.controller('HomeController', function ($scope, $rootScope, User) {
+app.controller('HomeController', function ($scope, User) {
     $scope.userEmail = '';
 
     $scope.login = function(keyEvent) {

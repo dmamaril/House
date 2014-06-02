@@ -13,7 +13,7 @@ module.exports = function(app) {
     }),
 
     app.get('/api/user', function (req, res) {
-        User.findOne({_id: req.body.id}, function (err, user) {
+        User.findOne({_id: req.query.id}, function (err, user) {
             if (user) {
                 res.send(user);
             } else {
@@ -69,13 +69,13 @@ module.exports = function(app) {
     // TODO: API Endpoint returns user, and mucks with user info...
     // RESTful-ize the API
     app.delete('/api/group', function (req, res) {
-        User.findOne({_id: req.body.id}, function (err, user) {
+        User.findOne({_id: req.query.id}, function (err, user) {
             user.groups.forEach(function(groupName, i) {
-                if (groupName === req.body.groupName) { user.groups.splice(i, 1); }
+                if (groupName === req.query.groupName) { user.groups.splice(i, 1); }
             });
-            Group.findOne({name: req.body.groupName}, function (err, group) {
+            Group.findOne({name: req.query.groupName}, function (err, group) {
                 group.members.forEach(function(user, i) {
-                    if (user._id === req.body.id) { group.members.splice(i, 1); }
+                    if (user.id === req.query.id) { group.members.splice(i, 1); }
                 });
                 group.save();
                 user.save();
@@ -85,7 +85,8 @@ module.exports = function(app) {
     });
 
     app.get('/api/listings', function (req, res) {
-        Group.findOne({name: req.body.groupName}, function (err, group) {
+        Group.findOne({name: req.query.groupName}, function (err, group) {
+            console.log(req.query);
             res.send(group.properties);
         });
     });
@@ -95,9 +96,9 @@ module.exports = function(app) {
             http.get(req.body.url, function (err, response) {
                 var listing;
                 if (req.body.url.indexOf('craigslist') > -1) { 
-                    listing = LinkParser.craigslist(response.buffer.toString(), req.body.url)); 
+                    listing = LinkParser.craigslist(response.buffer.toString(), req.body.url); 
                 } else if (req.body.url.indexOf('airbnb') > -1) {
-                    listing = LinkParser.airbnb(response.buffer.toString(), req.body.url));
+                    listing = LinkParser.airbnb(response.buffer.toString(), req.body.url);
                 } else {
                     res.send(501);
                     return null;
@@ -109,10 +110,10 @@ module.exports = function(app) {
     });
 
     app.put('/api/listings', function (req, res) {
-        Group.findOne({name: req.body.groupName}, function (err, group) {
+        Group.findOne({name: req.query.groupName}, function (err, group) {
             group.properties.forEach(function(listing, i) {
-                if (listing.id === req.body.listing.id) {
-                    group.properties[i] = req.body.listing;
+                if (listing.id === req.query.listing._id) {
+                    group.properties[i] = req.query.listing;
                 }
             });
             group.save();
@@ -120,9 +121,9 @@ module.exports = function(app) {
     });
 
     app.delete('/api/listings', function (req, res) {
-        Group.findOne({name: req.body.groupName}, function (err, group) {
+        Group.findOne({name: req.query.groupName}, function (err, group) {
             group.properties.forEach(function (listing, i) {
-                if (listing.id === req.body.listing._id) { group.properties.splice(i, 1); }
+                if (listing.id === req.query.listing._id) { group.properties.splice(i, 1); }
                 group.save();
             });
         });

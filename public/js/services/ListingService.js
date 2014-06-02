@@ -10,7 +10,7 @@ app.factory('Listings', function ($http, $rootScope) {
 
     methods.get = function(groupName) {
         return $http.get('/api/listings', {
-            groupName: groupName
+            params: {groupName: groupName}
         }).success(broadcast);
     };
 
@@ -23,15 +23,19 @@ app.factory('Listings', function ($http, $rootScope) {
 
     methods.put = function(listing) {
         return $http.put('/api/listings', {
-            groupName: $rootScope.groupName,
-            listing: listing
+            params: {
+                groupName: $rootScope.groupName,
+                listing: listing
+            }
         }).success(broadcast);
     };
 
     methods.delete = function(listing) {
         return $http.delete('/api/listings', {
-            groupName: $rootScope.groupName,
-            listing: listing
+            params: {
+                groupName: $rootScope.groupName,
+                listing: listing
+            }
         }).success(broadcast);
     };
 

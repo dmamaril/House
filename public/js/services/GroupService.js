@@ -7,8 +7,10 @@ app.factory('Groups', function ($rootScope, $http) {
 
     methods.get = function () {
         return $http.get('/api/group', {
-            _id: $rootScope.user._id, 
-            groupName: $rootScope.groupName
+            params: {
+                id: $rootScope.user._id, 
+                groupName: $rootScope.groupName
+            }
         }).success(broadcast);
     };
 

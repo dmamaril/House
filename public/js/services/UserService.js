@@ -1,4 +1,4 @@
-app.factory('User', function($http, $rootScope) {
+app.factory('User', function($http, $rootScope, $location) {
     var methods = {};
 
     var broadcast = function (user) {
@@ -8,16 +8,16 @@ app.factory('User', function($http, $rootScope) {
 
     methods.get = function() {
         return $http.get('/api/user', {
-            _id: $rootScope.user._id
+            params: {id: $rootScope.user._id}
         }).success(broadcast);
     };
 
     methods.edit = function(user) {
         return $http.post('/api/user', {
-            _id: $rootScope.user._id,
+            id: $rootScope.user._id,
             name: user.name,
             budget: user.budget,
-            location: user.location
+            location: user.location,
             prefDistance: user.prefDistance,
             groups: user.groups
         }).success(broadcast);
@@ -35,15 +35,17 @@ app.factory('User', function($http, $rootScope) {
 
     methods.addGroup = function (groupName) {
         return $http.post('/api/group', {
-            _id: $rootScope.user._id, 
+            id: $rootScope.user._id, 
             groupName: groupName
         }).success(broadcast);
     };
 
     methods.removeGroup = function (groupName) {
         return $http.get('/api/group', {
-            _id: $rootScope.user._id, 
-            groupName: groupName
+            params: {
+                id: $rootScope.user._id, 
+                groupName: groupName
+            }
         }).success(broadcast);
     };
 

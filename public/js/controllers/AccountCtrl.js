@@ -1,7 +1,7 @@
-app.controller('AccountController', function ($scope, User) {
+app.controller('AccountController', function ($scope, $rootScope, User) {
     $scope.user = $rootScope.user;
 
-    $rootScope.on('change:user', function(event, user) {
+    $rootScope.on('change:user', function (event, user) {
         $scope.user = $rootScope.user;
     });
     User.get();

@@ -1,4 +1,4 @@
-app.controller('GroupsController', function ($scope, $window, Groups) {
+app.controller('GroupsController', function ($scope, $rootScope, Groups) {
     $scope.members = [];
 
     $rootScope.$on('change:group', function(event, members) {

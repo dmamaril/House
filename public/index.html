@@ -14,16 +14,18 @@
 	<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300' rel='stylesheet' type='text/css'>
 
 	<!-- JS -->
+	<script src="libs/underscore/underscore.js"></script>
 	<script src="libs/angular/angular.js"></script>
 	<script src="libs/angular-route/angular-route.js"></script>
-	<script src="libs/angular-google-maps/dist/angular-google-maps.min.js"></script>
 	<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script src="libs/angular-google-maps/dist/angular-google-maps.min.js"></script>
 
 	<!-- ANGULAR CUSTOM -->
 	<script src="js/app.js"></script>
 	<script src="js/appRoutes.js"></script>
 
 	<script src="js/controllers/HomeCtrl.js"></script>
+	<script src="js/controllers/HeaderCtrl.js"></script>
 	<script src="js/controllers/ChannelCtrl.js"></script>
 
 	<script src="js/controllers/ListingsCtrl.js"></script>
@@ -41,7 +43,7 @@
 <body ng-app="houseApp">
 
 	<!-- ANGULAR DYNAMIC CONTENT -->
-	<div ng-view></div>
+	<div ng-view class="content"></div>
 
 </div>
 </body>

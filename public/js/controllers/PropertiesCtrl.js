@@ -23,4 +23,6 @@ app.controller('PropertiesController', function ($scope, Listings) {
     $scope.remove = function (listing) {
         Listings.delete(listing);
     };
+
+    console.log($scope.listings);
 });

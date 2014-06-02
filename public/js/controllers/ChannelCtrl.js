@@ -1,4 +1,4 @@
-app.controller('ChannelController', function ($scope, $location, Groups, User) {
+app.controller('ChannelController', function ($scope, $rootScope, $location, Groups, User) {
     $scope.groupName = $rootScope.groupName;
     $scope.groups = $rootScope.user.groups;
     $scope.toJoin = '';

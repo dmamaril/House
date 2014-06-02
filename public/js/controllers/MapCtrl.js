@@ -63,6 +63,6 @@ app.controller('MapController', function ($scope, User) {
         panControl: false,
         zoomControl: false,
         mapTypeControl: false,
-        styles: mapSettings
+        styles: mapSettings,
     };
 });

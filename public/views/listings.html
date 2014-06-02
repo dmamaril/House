@@ -17,7 +17,7 @@
   </div>
 </div>
 
-<div ng-controller="ListingsController" class="main container-fluid">
+<div ng-controller="ListingsController as Listings" class="main container-fluid">
   <div ng-controller="ChannelController" class="row">
     <div class="col-xs-12">
       <div class="subheading text-right">
@@ -25,15 +25,16 @@
           {{ groupName }}
           <span ng-click="remove(groupName)" class="group-delete">(-)</span>
         </span>
-        <input ng-model="toJoin">
-        <span ng-click="join()" class="subheading-add">+ add / join</span>
+        <span class="subheading-add">(+)</span>
+        <input ng-model="toJoin" class="subheading-inputs">
+        <span class="subheading-add">: join</span>
       </div>
     </div>
   </div>
 
   <div class="row">
     <div ng-controller="MapController" class="col-sm-6 omega">
-      <google-map center="map.center" zoom="map.zoom" options="map.options">
+      <google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options">
         <markers 
           models="listings"
           fit="true"
@@ -45,19 +46,19 @@
     <div ng-controller="PropertiesController" class="col-sm-6 alpha">
       <table class="listings-table alpha">
       <tbody>
-        <tr ng-repeat="listing in listings" class="listing">
-          <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">{{ listing.price }}</span></td>
+        <tr ng-repeat="listing in Listings.listings" class="listing">
+          <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">{{ Listings.listing.price }}</span></td>
           <td class="listing-main">
-            <span ng-click="toggleVote(listing)" class="listing-votes">{{ listing.votes.length }}</span><br>
-            <span class="listing-address">{{ listing.title }}</span><br>
-            <span class="listing-url">{{ listing.url }}</span>
+            <span ng-click="toggleVote(Listings.listing)" class="listing-votes">{{ Listings.listing.votes.length }}</span><br>
+            <span class="listing-address">{{ Listings.listing.title }}</span><br>
+            <span class="listing-url">{{ Listings.listing.url }}</span>
           </td>
           <td class="listing-end">
-            <span class="listing-rooms">{{ listing.rooms }} BR</span><br>
+            <span class="listing-rooms">{{ Listings.listing.rooms }} BR</span><br>
             <span class="listing-distance">1.5 mi away</span>
           </td>
           <td class="listing-postfix">
-            <span ng-click="delete(listing)" class="listing-delete">x</span>
+            <span ng-click="delete(Listings.listing)" class="listing-delete">x</span>
           </td>
         </tr>
       </tbody>

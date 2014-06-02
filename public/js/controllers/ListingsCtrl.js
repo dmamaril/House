@@ -1,4 +1,4 @@
-app.controller('ListingsController', function ($scope, Listings) {
+app.controller('ListingsController', function ($scope, $rootScope, Listings) {
     $scope.listings = [];
 
     $rootScope.$on('change:listings', function(event, listings) {

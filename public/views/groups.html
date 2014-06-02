@@ -25,16 +25,15 @@
           {{ groupName }}
           <span ng-click="remove(groupName)" class="group-delete">(-)</span>
         </span>
-        <input ng-model="toJoin">
         <span class="subheading-add">(+)</span>
-        <input class="subheading-inputs" width="50">
-        <span class="subheading-add">: join</span>
+        <input ng-model="toJoin" class="subheading-inputs">
+        <span ng-click="join()" class="subheading-add">: join</span>
       </div>
     </div>
   </div>
 
   <div class="row">
-    <div ng-controller="AccountCtrl" class="col-sm-4 omega text-right">
+    <div ng-controller="AccountController" class="col-sm-4 omega text-right">
       <table class="profile-table">
         <tr class="profile-row">
           <td class="profile-item">
