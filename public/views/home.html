@@ -1,30 +1,30 @@
-    <div class="navbar navbar-fixed-top navbar-splash" role="navigation">
-      <div class="container-fluid">
-          <div class="row">
-            <div class="col-xs-4 splash-pad-logo splash-header-text splash-header-brand logo">House</div>
+<div class="navbar navbar-fixed-top navbar-splash" role="navigation">
+  <div class="container-fluid">
+      <div class="row" ng-controller="HeaderController">
+        <div ng-click="home()" class="col-xs-4 splash-pad-logo splash-header-text splash-header-brand logo">House</div>
 
-            <div class="col-xs-8 splash-pad-links text-right">
-                <a href="listings.html"><span class="link-splash splash-header-text">Listings</span></a>
-                <span class="link-splash splash-header-text">Logout</span>
-            </div>
-          </div>
-      </div>
-    </div>
-
-    <div class="splash container-fluid">
-      <div class="row splash-pad-top"> </div>
-      <div class="row text-center">
-        <span class="splash-leading">
-          <span class="title txt-piccolo">House</span><br>
-          <span class="subtitle txt-piccolo">apartment hunting made easy</span>
-        </span>
-      </div>
-      <div class="row splash-pad-middle"> </div>
-      <div class="row">
-        <div class="col-md-3 col-sm-2"></div>
-        <div class="col-md-6 col-sm-8">
-          <input type="text" ng-keypress="login($event)" ng-model="userEmail" class="submitter" placeholder="Temporary identification. Enter your Google-verified email.">
+        <div class="col-xs-8 splash-pad-links text-right">
+            <span ng-click="navigate('listings')" class="link-splash splash-header-text">Listings</span>
+            <span ng-click="logout()" class="link-splash splash-header-text">Logout</span>
         </div>
-        <div class="col-md-3 col-sm-2"></div>
       </div>
+  </div>
+</div>
+
+<div class="splash container-fluid">
+  <div class="row splash-pad-top"> </div>
+  <div class="row text-center">
+    <span class="splash-leading">
+      <span class="title txt-piccolo">House</span><br>
+      <span class="subtitle txt-piccolo">apartment hunting made easy</span>
+    </span>
+  </div>
+  <div class="row splash-pad-middle"> </div>
+  <div class="row">
+    <div class="col-md-3 col-sm-2"></div>
+    <div class="col-md-6 col-sm-8">
+      <input type="text" ng-keypress="login($event)" ng-model="userEmail" class="submitter" placeholder="Temporary identification. Enter your Google-verified email.">
     </div>
+    <div class="col-md-3 col-sm-2"></div>
+  </div>
+</div>

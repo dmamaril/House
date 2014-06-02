@@ -1,41 +1,144 @@
-<div class="container">
-  <nav class="navbar navbar-inverse">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">Stencil: Node and Angular</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a href="/account">Account</a></li>
-      <li><a href="/list">List</a></li>
-      <li><a href='/' ng-click='logout()'>Logout</a></li>
-    </ul>
-  </nav>
+<div class="navbar navbar-fixed-top navbar-main" role="navigation">
+  <div class="container-fluid">
+      <div class="row" ng-controller="HeaderController">
+        <div ng-click="home()" class="col-sm-3 main-pad-logo main-header-brand">
+            <span class="logo main-header-text">House</span><br>
+            <span class="tagline main-header-text">apartment hunting made easy</span>
+        </div>
+        <div class="col-sm-6 main-pad-submitter">
+          <input type="text" class="submitter" ng-model="url" ng-keypress="post($event)" placeholder="Enter an address or a Craigslist/AirBnB link to save a listing.">
+        </div>
+        <div class="col-sm-3 main-pad-links text-right">
+            <span ng-click="navigate('listings')" class="link-main main-header-text">Listings</span>
+            <span ng-click="navigate('groups')" class="link-main main-header-text">Groups</span>
+            <span ng-click="logout()" class="link-main main-header-text">Logout</span>
+        </div>
+      </div>
+  </div>
 </div>
 
-<div class="jumbotron text-center">
-	<h1>Geek City</h1>
+<div ng-controller="GroupsController" class="main container-fluid">
+  <div ng-controller="ChannelController" class="row">
+    <div class="col-xs-12">
+      <div class="subheading text-right">
+        <span ng-click="switch(groupName)" ng-repeat="groupName in groups" ng-class="checkActive(groupName)" class="subheading-text">
+          {{ groupName }}
+          <span ng-click="remove(groupName)" class="group-delete">(-)</span>
+        </span>
+        <input ng-model="toJoin">
+        <span ng-click="join()" class="subheading-add">+ add / join</span>
+      </div>
+    </div>
+  </div>
 
-	<p>{{ tagline }}</p>
+  <div class="row">
+    <div class="col-sm-4 omega text-right">
+      <table class="profile-table">
+        <tr class="profile-row">
+          <td class="profile-item">
+            <span class="profile-email">mamarildon@gmail.com</span><br>
+            <span class="profile-name">Don Mamaril</span>
+          </td>
+        </tr>
+        <tr class="profile-row">
+          <td class="profile-item">
+            <span class="profile-subtitle">preferred budget</span><br>
+            <span class="profile-budget"><input class="profile-inputs" value="800" disabled></span>
+            <span class="profile-unit"> USD</span>
+          </td>
+        </tr>
+        <tr class="profile-row">
+          <td class="profile-item">
+            <span class="profile-subtitle">preferred distance</span><br>
+            <span class="profile-distance"><input class="profile-inputs" value="1.75" disabled></span>
+            <span class="profile-unit"> mi</span>                    
+          </td>
+        </tr>
+        <tr class="profile-row">
+          <td class="profile-item">
+            <span class="profile-subtitle">commute location</span><br>
+            <span class="profile-location"><input class="profile-inputs" value="944 Market St" disabled></span><br>
+            <span class="profile-city">San Francisco . CA . 94102</span>                    
+          </td>
+        </tr>                
+      </table>
+    </div>
+    <div class="col-sm-8 alpha">
+      <table class="groups-table alpha">
+      <thead class="text-center">
+        <tr class="group-header">
+          <td class="text-left group-col-contact">contact info</td>
+          <td class="group-col-location">commute location</td>
+          <td class="group-col-budget">preferred budget</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="group-member">
+          <td class="group-cell text-left">
+            <span class="group-name">Don Mamaril</span><br>
+            <span class="group-email">mamarildon@gmail.com</span>
+          </td>
+          <td class="group-cell text-center">
+            <span class="group-location">944 Market St</span><br>
+            <span class="group-city">San Francisco . CA . 94102</span>
+          </td>
+          <td class="group-cell text-center">
+            <span class="group-dollar">$ </span>
+            <span class="group-price">800</span>
+            <span class="group-dollar">/person</span>
+          </td>
+        </tr>
 
-  
-  <div ng-hide='showInput'>
-    <p> {{ user.name }} </p>
-    <p> {{ user.budget }} </p>
-    <p> {{ user.prefDistance }} </p>
-    <p> {{ user.location }} </p>
-    <button ng-click='toggleInput()'>Edit</button>
-  </div>  
+        <tr class="group-member">
+          <td class="group-cell text-left">
+            <span class="group-name">Don Mamaril</span><br>
+            <span class="group-email">mamarildon@gmail.com</span>
+          </td>
+          <td class="group-cell text-center">
+            <span class="group-location">944 Market St</span><br>
+            <span class="group-city">San Francisco . CA . 94102</span>
+          </td>
+          <td class="group-cell text-center">
+            <span class="group-dollar">$ </span>
+            <span class="group-price">800</span>
+            <span class="group-dollar">/person</span>
+          </td>
+        </tr>
 
-  <!-- SHOWS ONLY ON CLICK OF EDIT -->
-  <form ng-submit='saveAccount()' ng-show='showInput'>
-    <input type='text' ng-model='user.name' placeholder='user.name'/>
-    <input type='text' ng-model='user.budget' placeholder='Budget'/>
-    <input type='text' ng-model='user.prefDistance' placeholder='Preferred max distance'/>
-    <input type='text' ng-model='user.location' placeholder='Daily Commute'/>
-    <button type='submit'>Make me pretty pls</button>
-  </form>
+        <tr class="group-member">
+          <td class="group-cell text-left">
+            <span class="group-name">Don Mamaril</span><br>
+            <span class="group-email">mamarildon@gmail.com</span>
+          </td>
+          <td class="group-cell text-center">
+            <span class="group-location">944 Market St</span><br>
+            <span class="group-city">San Francisco . CA . 94102</span>
+          </td>
+          <td class="group-cell text-center">
+            <span class="group-dollar">$ </span>
+            <span class="group-price">800</span>
+            <span class="group-dollar">/person</span>
+          </td>
+        </tr>
 
-  <ul>
-    <li ng-repeat='member in groupMembers'>{{ member.name }}, {{ member.budget }}, {{ member.prefDistance }}, {{ member.location }}</li>
-  </ul>
-
+        <tr class="group-member">
+          <td class="group-cell text-left">
+            <span class="group-name">Don Mamaril</span><br>
+            <span class="group-email">mamarildon@gmail.com</span>
+          </td>
+          <td class="group-cell text-center">
+            <span class="group-location">944 Market St</span><br>
+            <span class="group-city">San Francisco . CA . 94102</span>
+          </td>
+          <td class="group-cell text-center">
+            <span class="group-dollar">$ </span>
+            <span class="group-price">800</span>
+            <span class="group-dollar">/person</span>
+          </td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
 </div>

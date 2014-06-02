@@ -1,6 +1,5 @@
-var jwt = require('jsonwebtoken');
 var http = require('http-request');
-var xml2js = require('xml2js');
+var LinkParser = require('./linkParser.js')
 
 // Mongoose Models
 var User = require('./models/User.js');
@@ -39,10 +38,12 @@ module.exports = function(app) {
 
     app.get('/api/group', function (req, res) {
         Group.findOne({name: req.body.groupName}, function (err, group) {
-            res.send(group.members);
+            res.send(group);
         });
     });
 
+    // TODO: API Endpoint returns user, and mucks with user info...
+    // RESTful-ize the API
     app.post('/api/group', function (req, res) {
         User.findOne({_id: req.body.id}, function (err, user) {
             user.groups.push(req.body.groupName);
@@ -51,7 +52,7 @@ module.exports = function(app) {
                     group.members.push(user);
                     group.save();
                     user.save();
-                    res.send(group.members);
+                    res.send(user);
                 } else {
                     var newGroup = new Group({ 
                         name: req.body.groupName,
@@ -59,12 +60,14 @@ module.exports = function(app) {
                         properties: []
                     });
                     newGroup.save();
-                    res.send(newGroup.members);
+                    res.send(user);
                 }
             });
         });
     });
 
+    // TODO: API Endpoint returns user, and mucks with user info...
+    // RESTful-ize the API
     app.delete('/api/group', function (req, res) {
         User.findOne({_id: req.body.id}, function (err, user) {
             user.groups.forEach(function(groupName, i) {
@@ -76,7 +79,7 @@ module.exports = function(app) {
                 });
                 group.save();
                 user.save();
-                res.send(group.members);
+                res.send(user);
             });
         });
     });
@@ -89,8 +92,19 @@ module.exports = function(app) {
 
     app.post('/api/listings', function (req, res) {
         Group.findOne({name: req.body.groupName}, function (err, group) {
-            group.properties.push(req.body.listing);
-            group.save();
+            http.get(req.body.url, function (err, response) {
+                var listing;
+                if (req.body.url.indexOf('craigslist') > -1) { 
+                    listing = LinkParser.craigslist(response.buffer.toString(), req.body.url)); 
+                } else if (req.body.url.indexOf('airbnb') > -1) {
+                    listing = LinkParser.airbnb(response.buffer.toString(), req.body.url));
+                } else {
+                    res.send(501);
+                    return null;
+                }
+                group.properties.push(listing);
+                group.save();
+            });
         })
     });
 
@@ -119,7 +133,7 @@ module.exports = function(app) {
             if (user) {
                 res.send(user);
             } else {
-                var groupName = "_priv_" + req.body.email;
+                var groupName = "(private) " + req.body.email;
                 var newUser = new User({
                     name: req.body.name,
                     email: req.body.email,

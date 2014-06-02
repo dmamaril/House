@@ -1,53 +1,111 @@
-<div class="container">
-  <nav class="navbar navbar-inverse">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">Stencil: Node and Angular</a>
+<div class="navbar navbar-fixed-top navbar-main" role="navigation">
+  <div class="container-fluid">
+      <div class="row" ng-controller="HeaderController">
+        <div ng-click="home()" class="col-sm-3 main-pad-logo main-header-brand">
+            <span class="logo main-header-text">House</span><br>
+            <span class="tagline main-header-text">apartment hunting made easy</span>
+        </div>
+        <div class="col-sm-6 main-pad-submitter">
+          <input type="text" class="submitter" ng-model="url" ng-keypress="post($event)" placeholder="Enter an address or a Craigslist/AirBnB link to save a listing.">
+        </div>
+        <div class="col-sm-3 main-pad-links text-right">
+            <span ng-click="navigate('listings')" class="link-main main-header-text">Listings</span>
+            <span ng-click="navigate('groups')" class="link-main main-header-text">Groups</span>
+            <span ng-click="logout()" class="link-main main-header-text">Logout</span>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div ng-controller="ListingsController" class="main container-fluid">
+  <div ng-controller="ChannelController" class="row">
+    <div class="col-xs-12">
+      <div class="subheading text-right">
+        <span ng-click="switch(groupName)" ng-repeat="groupName in groups" ng-class="checkActive(groupName)" class="subheading-text">
+          {{ groupName }}
+          <span ng-click="remove(groupName)" class="group-delete">(-)</span>
+        </span>
+        <input ng-model="toJoin">
+        <span ng-click="join()" class="subheading-add">+ add / join</span>
+      </div>
     </div>
-    <ul class="nav navbar-nav">
-      <li><a href="/account">Account</a></li>
-      <li><a href="/list">List</a></li>
-      <li><a href='/' ng-click='logout()'>Logout</a></li>
-    </ul>
-  </nav>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 omega">
+      <div id="listings-canvas">maps!</div>
+    </div>
+    <div class="col-sm-6 alpha">
+      <table class="listings-table alpha">
+      <tbody>
+        <tr class="listing">
+          <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">1600</span></td>
+          <td class="listing-main">
+            <span class="listing-votes">7 votes</span><br>
+            <span class="listing-address">cabbagetown</span><br>
+            <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/4437058393.html</span>
+          </td>
+          <td class="listing-end">
+            <span class="listing-rooms">2 BR</span><br>
+            <span class="listing-distance">1.5 mi away</span>
+          </td>
+          <td class="listing-postfix">
+            <span class="listing-delete">x</span>
+          </td>
+        </tr>
+
+        <tr class="listing">
+          <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">2300</span></td>
+          <td class="listing-main">
+            <span class="listing-votes">6 votes</span><br>
+            <span class="listing-address">kensington market</span><br>
+            <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/44724524703.html</span>
+          </td>
+          <td class="listing-end">
+            <span class="listing-rooms">3 BR</span><br>
+            <span class="listing-distance">2.0 mi away</span>
+          </td>
+          <td class="listing-postfix">
+            <span class="listing-delete">x</span>
+          </td>
+        </tr>
+
+        <tr class="listing">
+          <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">1800</span></td>
+          <td class="listing-main">
+            <span class="listing-votes">4 votes</span><br>
+            <span class="listing-address">the annex</span><br>
+            <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/44370346295.html</span>
+          </td>
+          <td class="listing-end">
+            <span class="listing-rooms">1 BR</span><br>
+            <span class="listing-distance">1.0 mi away</span>
+          </td>
+          <td class="listing-postfix">
+            <span class="listing-delete">x</span>
+          </td>
+        </tr>
+
+        <tr class="listing">
+          <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">2000</span></td>
+          <td class="listing-main">
+            <span class="listing-votes">3 votes</span><br>
+            <span class="listing-address">bloor/yonge</span><br>
+            <span class="listing-url">https://sfbay.craigslist.org/sfc/apa/43705478346.html</span>
+          </td>
+          <td class="listing-end">
+            <span class="listing-rooms">1 BR</span><br>
+            <span class="listing-distance">0.8 mi away</span>
+          </td>
+          <td class="listing-postfix">
+            <span class="listing-delete">x</span>
+          </td>
+        </tr>
+
+      </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
 </div>
-
-
-<div class="jumbotron text-center">
-	<h1>Nerds and Proud</h1>
-
-	<p>{{ tagline }}</p>
-
-  <a href='' ng-show='{{ user.groupId }}' ng-click='toggleGroupForm()' ng-hide='creatingGroup'>Create a new group</a>
-
-  <form ng-submit='createGroup()' ng-show='creatingGroup'>
-    <input type='text' ng-model='groupName' placeholder='Enter group name' ></input>
-  </form>
-</div>
-
-  <table>
-    <h1> THIS IS FROM THE SERVER YEYZ </h1>
-    <tr>
-      <th>Votes</th>
-      <th>Neighborhood</th>
-      <th>Title</th>
-      <th>Bedrooms</th>
-      <th>Price</th>
-    </tr>
-    <tr ng-repeat='listing in listings'>
-      <td>{{ listing.votes }}</td>
-      <td>{{ listing.neighborhood }}</td>
-      <td>{{ listing.listingUrl }}</td>
-      <td>{{ listing.bedrooms }}</td>
-      <td>{{ listing.monthlyPrice }}</td>
-    </tr>
-  </table>
-
-<input type='text' placeholder='UrL to render' ng-model='listingUrl'/>
-<button ng-click='fetchListing()'>Fetch List Test</button>
-<p> {{ listingData.votes }}</p>
-<p> {{ listingData.listingUrl }} </p>
-<p> {{ listingData.coordinates }} </p>
-<p> {{ listingData.neighborhood }} </p>
-<p> {{ listingData.bedrooms }} </p>
-<p> {{ listingData.monthlyPrice }} </p>
-
+<script src="libs/maps.js"></script>

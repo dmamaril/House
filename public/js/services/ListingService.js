@@ -11,10 +11,10 @@ app.factory('Listings', function ($http, $rootScope) {
         }).success(broadcast);
     };
 
-    methods.post = function(listing) {
+    methods.post = function(url) {
         return $http.post('/api/listings', {
             groupName: $rootScope.groupName,
-            listing: listing
+            url: url
         }).success(broadcast);
     };
 
