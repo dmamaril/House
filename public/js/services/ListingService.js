@@ -35,7 +35,7 @@ app.factory('Listings', function ($http, $rootScope) {
         return $http.delete('/api/listings', {
             params: {
                 groupName: $rootScope.groupName,
-                listing: listing
+                listingURL: listing.url
             }
         }).success(broadcast);
     };

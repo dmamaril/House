@@ -111,7 +111,6 @@ module.exports = function(app, passport, User, Group, Property) {
     });
 
     app.get('/api/listings', isLoggedIn, function (req, res) {
-        console.log(req.query.groupName, 'req.query.groupName /api/listings GET');
         Group.findOne({name: req.query.groupName}, function (err, group) {
             res.send(group.properties);
         });
@@ -151,7 +150,10 @@ module.exports = function(app, passport, User, Group, Property) {
     app.delete('/api/listings', isLoggedIn, function (req, res) {
         Group.findOne({name: req.query.groupName}, function (err, group) {
             group.properties.forEach(function (listing, i) {
-                if (listing.id === req.query.listing._id) { group.properties.splice(i, 1); }
+                if (listing.url === req.query.listingURL) {
+                    console.log('Found match. Removing ' + listing.url + ' from ' + req.query.groupName + "'s properties."); 
+                    group.properties.splice(i, 1); 
+                }
                 group.save();
             });
             res.send(group.properties);
