@@ -9,8 +9,6 @@ var userSchema = mongoose.Schema({
         email        : String,
         name         : String
     },
-    name: String,
-    email: String,
     prefDistance: String,
     budget: Number,
     groups: Array, // names, not group objects

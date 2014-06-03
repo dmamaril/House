@@ -7,9 +7,7 @@ app.factory('User', function($http, $rootScope, $location) {
     };
 
     methods.get = function() {
-        return $http.get('/api/user', {
-            params: {id: $rootScope.user._id}
-        }).success(broadcast);
+        return $http.get('/api/user').success(broadcast);
     };
 
     methods.edit = function(user) {

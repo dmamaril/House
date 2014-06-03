@@ -7,7 +7,16 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 
 		.when('/groups', {
 			templateUrl: 'views/groups.html',
-			controller: 'GroupsController'
+			controller: 'GroupsController',
+			resolve: {
+				userData: function (User) {
+					return User.get()
+						.then(function (data) {
+							console.log('data resolved ', data);
+							return data;
+						});
+				}
+			}
 		})
 
 		.when('/listings', {
