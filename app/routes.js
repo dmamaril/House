@@ -36,15 +36,15 @@ module.exports = function(app, passport, User, Group, Property) {
     });
 
     // prevent unauthorized access to assets 
-    app.get('/groups', isLoggedIn);
-    app.get('/listings', isLoggedIn);
+    app.get('/groups');
+    app.get('/listings');
 
-    app.get('/api/test', isLoggedIn, function (req, res) {
+    app.get('/api/test', function (req, res) {
         console.log(req);
         res.send(req);
     }),
 
-    app.get('/api/user', isLoggedIn, function (req, res) {
+    app.get('/api/user', function (req, res) {
         User.findOne({_id: req.query.id}, function (err, user) {
             if (user) {
                 res.send(user);
@@ -54,7 +54,7 @@ module.exports = function(app, passport, User, Group, Property) {
         });
     });
 
-    app.post('/api/user', isLoggedIn, function (req, res) {
+    app.post('/api/user', function (req, res) {
         User.findOne({_id: req.body.id}, function (err, user) {
             user.name = req.body.name;
             user.budget = req.body.budget;
@@ -71,7 +71,7 @@ module.exports = function(app, passport, User, Group, Property) {
         });
     });
 
-    app.get('/api/group', isLoggedIn, function (req, res) {
+    app.get('/api/group', function (req, res) {
         console.log(req.query);
         Group.findOne({name: req.query.groupName}, function (err, group) {
             console.log("Sending back group...", group);
@@ -81,7 +81,7 @@ module.exports = function(app, passport, User, Group, Property) {
 
     // TODO: API Endpoint returns user, and mucks with user info...
     // RESTful-ize the API
-    app.post('/api/group', isLoggedIn, function (req, res) {
+    app.post('/api/group', function (req, res) {
         User.findOne({_id: req.body.id}, function (err, user) {
             user.groups.push(req.body.groupName);
             Group.findOne({name: req.body.groupName}, function (err, group) {
@@ -105,7 +105,7 @@ module.exports = function(app, passport, User, Group, Property) {
 
     // TODO: API Endpoint returns user, and mucks with user info...
     // RESTful-ize the API
-    app.delete('/api/group', isLoggedIn, function (req, res) {
+    app.delete('/api/group', function (req, res) {
         User.findOne({_id: req.query.id}, function (err, user) {
             user.groups.forEach(function(groupName, i) {
                 if (groupName === req.query.groupName) { user.groups.splice(i, 1); }
@@ -121,13 +121,13 @@ module.exports = function(app, passport, User, Group, Property) {
         });
     });
 
-    app.get('/api/listings', isLoggedIn, function (req, res) {
+    app.get('/api/listings', function (req, res) {
         Group.findOne({name: req.query.groupName}, function (err, group) {
             res.send(group.properties);
         });
     });
 
-    app.post('/api/listings', isLoggedIn, function (req, res) {
+    app.post('/api/listings', function (req, res) {
         Group.findOne({name: req.body.groupName}, function (err, group) {
             http.get(req.body.url, function (err, response) {
                 var listing;
@@ -146,7 +146,7 @@ module.exports = function(app, passport, User, Group, Property) {
         })
     });
 
-    app.put('/api/listings', isLoggedIn, function (req, res) {
+    app.put('/api/listings', function (req, res) {
         Group.findOne({name: req.query.groupName}, function (err, group) {
             group.properties.forEach(function(listing, i) {
                 if (listing.id === req.query.listing._id) {
@@ -158,7 +158,7 @@ module.exports = function(app, passport, User, Group, Property) {
         });
     });
 
-    app.delete('/api/listings', isLoggedIn, function (req, res) {
+    app.delete('/api/listings', function (req, res) {
         Group.findOne({name: req.query.groupName}, function (err, group) {
             group.properties.forEach(function (listing, i) {
                 if (listing.id === req.query.listing._id) { group.properties.splice(i, 1); }
