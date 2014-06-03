@@ -4,6 +4,8 @@ app.controller('MapController', function ($scope, $rootScope, User) {
         $scope.properties = listings;
     });
 
+    document.getElementById('')
+
     var mapSettings = [
         {
             "featureType": "poi",

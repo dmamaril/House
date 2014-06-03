@@ -1,4 +1,4 @@
-app.factory('Listings', function ($http, $rootScope) {    
+app.factory('Listings', function ($http, $rootScope, Maps) {    
     var methods = {};
 
     var broadcast = function (listings) {
