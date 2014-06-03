@@ -2,26 +2,47 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
+var passport = require('passport');
+var flash = require('connect-flash');
+
+var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+var methodOverride = require('method-override');
 
 /* ==== CONFIG ==== */
-// database
-var dbConfig = require('./config/db.js');
-var port = process.env.PORT || 8000;
+var dbConfig = require('./app/config/db.js');
+var port = process.env.PORT || 8080;
+
+/* ==== MONGODB ==== */
+var User = require('./app/models/User.js');
+var Group = require('./app/models/Group.js');
+var Property = require('./app/models/Property.js');
+
 
 mongoose.connect(dbConfig.url);
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', function() { console.log("Mongo DB connected!"); });
 
-// express
-app.configure(function() {
-    app.use(express.static(__dirname + '/public'));     // set the static files location /public/img will be /img for users
-    app.use(express.logger('dev'));                     // log every request to the console
-    app.use(express.bodyParser());                      // pull information from html in POST
-    app.use(express.methodOverride());                  // simulate DELETE and PUT
-});
+require('./app/config/passport')(passport, User); // pass passport for configuration
+
+app.use(express.static(__dirname + '/public'));     // set the static files location /public/img will be /img for users
+
+// set up our express application
+app.use(morgan('dev'));                     // log every request to the console
+app.use(cookieParser());                    // read cookies (needed for auth)
+app.use(bodyParser());                      // get information from html forms
+
+// required for passport
+app.use(session({ secret: 'houseApp' }));   // session secret
+app.use(passport.initialize());
+app.use(passport.session());                // persistent login sessions
+app.use(flash());                           // use connect-flash for flash messages stored in session
+app.use(methodOverride());                  // simulate DELETE and PUT
 
 // routes
-require('./app/routes')(app);                           // pass our application into our routes
+require('./app/routes.js')(app, passport, User, Group, Property, dbConfig); // load our routes and pass in our app and fully configured passport
 
 // start app
 app.listen(port);
