@@ -12,7 +12,7 @@ var session = require('express-session');
 var methodOverride = require('method-override');
 
 /* ==== CONFIG ==== */
-var dbConfig = require('./app/config/db.js');
+var db = require('./app/config/db.js');
 var port = process.env.PORT || 8080;
 
 /* ==== MONGODB ==== */
@@ -21,7 +21,7 @@ var Group = require('./app/models/Group.js');
 var Property = require('./app/models/Property.js');
 
 
-mongoose.connect(dbConfig.url);
+mongoose.connect(db.url);
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', function() { console.log("Mongo DB connected!"); });
 
@@ -42,7 +42,7 @@ app.use(flash());                           // use connect-flash for flash messa
 app.use(methodOverride());                  // simulate DELETE and PUT
 
 // routes
-require('./app/routes.js')(app, passport, User, Group, Property, dbConfig); // load our routes and pass in our app and fully configured passport
+require('./app/routes.js')(app, passport, User, Group, Property); // load our routes and pass in our app and fully configured passport
 
 // start app
 app.listen(port);

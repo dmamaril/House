@@ -6,7 +6,42 @@ var User = require('./models/User.js');
 var Group = require('./models/Group.js');
 var Property = require('./models/Property.js');
 
-module.exports = function(app) {
+// route middleware to ensure user is logged in
+var isLoggedIn = function (req, res, next) {
+    req.isAuthenticated() ? next() : res.redirect('/');
+  // if (req.isAuthenticated()) 
+  //   return next();
+  // res.redirect('/');
+};
+
+module.exports = function(app, passport, User, Group, Property) {
+
+    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+    // the callback after google has authenticated the user
+    app.get('/auth/google/callback',
+      passport.authenticate('google', {
+        successRedirect : '/listings',
+        failureRedirect : '/'
+      }));
+
+    // used to unlink accounts. for social accounts, just remove the token || logout
+    app.get('/unlink/google', function(req, res) {
+        console.log('helloo');
+        req.logout();
+        req.redirect('/')
+        var user          = req.user;
+        user.google.token = undefined;
+        user.save(function(err) {
+            console.log(user, ' has been successfully logged out.');
+            res.redirect('/');
+        });
+    });
+
+    // prevent unauthorized access to assets 
+    app.get('/groups', isLoggedIn);
+    app.get('/listings', isLoggedIn);
+
     app.get('/api/test', function (req, res) {
         console.log(req);
         res.send(req);
@@ -168,4 +203,3 @@ module.exports = function(app) {
         res.sendfile('./public/index.html');
     });
 };
-
