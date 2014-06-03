@@ -1,12 +1,7 @@
 var http = require('http-request');
 var LinkParser = require('./linkParser.js')
 
-// Mongoose Models
-var User = require('./models/User.js');
-var Group = require('./models/Group.js');
-var Property = require('./models/Property.js');
-
-// route middleware to ensure user is logged in
+// middleware to ensure current user is authenticated
 var isLoggedIn = function (req, res, next) {
     req.isAuthenticated() ? next() : res.redirect('/');
 };
