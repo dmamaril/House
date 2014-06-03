@@ -24,21 +24,21 @@ module.exports = function(app) {
         });
     });
 
-    //creates a user. TODO: how to handle groups
-    app.post('/api/user', function (req, res) {
-        User.findOne({id: req.body.id}, function (err, user) {
+    //edits a user. TODO: how to handle groups
+    app.put('/api/user:id', function (req, res) {
+        User.findOne({_id: req.params.id}, function (err, user) {
             if (user) {
-                res.send(400, 'User Already Exists')
-            } else {                
                 user.name = req.body.name;
                 user.budget = req.body.budget;
                 user.location = req.body.location;
                 user.prefDistance = req.body.prefDistance;
-                user.groups = req.body.groups;
+                // user.groups = req.body.groups;
                 user.save(function (err, savedUser) {
                     console.log(savedUser, 'Successfully saved!');
                 });
                 res.send(user);
+            } else {                
+                res.send(400, 'User Already Exists')
             }
         });
     });
@@ -52,9 +52,9 @@ module.exports = function(app) {
     });
 
     //used to be look for group and get locations.
-    app.get('/api/listings/:groupId', function (req, res) {
+    app.get('/api/group/:groupId/listings', function (req, res) {
         Listing.find({group: req.params.groupId}, function (err, listings) {
-            res.send(group.listings);
+            res.send(listings);
         });
     });
 
@@ -92,34 +92,6 @@ module.exports = function(app) {
         Listing.findOne({_id: req.params.id}, function (err, listing) {
             listing.remove();
             res.send('success');
-        });
-    });
-
-    app.post('/login', function (req, res) {
-        User.findOne({email: req.body.email}, function (err, user) {
-            if (user) {
-                res.send(user);
-            } else {
-                var groupName = "(private) " + req.body.email;
-                var name = req.body.email.split('@')[0];
-                var newUser = new User({
-                    name: name,
-                    email: req.body.email,
-                    prefDistance: 0,
-                    budget: 0,
-                    groups: [groupName],
-                    location: []
-                });
-                newUser.save();
-                var newGroup = new Group({
-                    name: groupName,
-                    isPrivate: true,
-                    members: [newUser],
-                    properties: []
-                });
-                newGroup.save();
-                res.send(newUser);
-            }
         });
     });
 
