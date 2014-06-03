@@ -4,6 +4,5 @@ app.controller('ListingsController', function ($scope, $rootScope, Listings) {
     $rootScope.$on('change:listings', function(event, listings) {
         $scope.listings = listings;
     });
-    // Listings.get($rootScope.groupName);
-    Listings.get();
+    Listings.get($rootScope.groupName);
 });

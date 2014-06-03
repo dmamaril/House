@@ -10,10 +10,9 @@ app.factory('Listings', function ($http, $rootScope) {
     };
 
     methods.get = function(groupName) {
-        return $http.get('/api/listings')
-            .success(function (data) {
-                console.log(data);
-        });
+        return $http.get('/api/listings', {
+            params: {groupName: groupName}
+        }).success(broadcast);
     };
 
     methods.post = function(url) {

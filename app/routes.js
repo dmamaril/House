@@ -45,15 +45,8 @@ module.exports = function(app, passport, User, Group, Property) {
     }),
 
     app.get('/api/user', isLoggedIn, function (req, res) {
-        console.log('Sending user data of ', req.user.google.name, 'routes.js GET /api/user');
+        console.log('Sending user data of ', req.user.google.name);
         res.send(req.user);
-        // User.findOne({_id: req.query.id}, function (err, user) {
-        //     if (user) {
-        //         res.send(user);
-        //     } else {
-        //         res.send(501, err);
-        //     }
-        // });
     });
 
     app.post('/api/user', isLoggedIn, function (req, res) {
@@ -107,13 +100,13 @@ module.exports = function(app, passport, User, Group, Property) {
     // TODO: API Endpoint returns user, and mucks with user info...
     // RESTful-ize the API
     app.delete('/api/group', isLoggedIn, function (req, res) {
-        User.findOne({_id: req.query.id}, function (err, user) {
+        User.findOne({_id: req.user._id}, function (err, user) {
             user.groups.forEach(function(groupName, i) {
                 if (groupName === req.query.groupName) { user.groups.splice(i, 1); }
             });
             Group.findOne({name: req.query.groupName}, function (err, group) {
                 group.members.forEach(function(user, i) {
-                    if (user.id === req.query.id) { group.members.splice(i, 1); }
+                    if (user._id === req.user._id) { group.members.splice(i, 1); }
                 });
                 group.save();
                 user.save();
@@ -123,11 +116,10 @@ module.exports = function(app, passport, User, Group, Property) {
     });
 
     app.get('/api/listings', isLoggedIn, function (req, res) {
-        // console.log(req.user)
-        // res.send(req.user)
-        // Group.findOne({name: req.query.groupName}, function (err, group) {
-        //     res.send(group.properties);
-        // });
+        console.log(req.query.groupName, 'req.query.groupName /api/listings GET');
+        Group.findOne({name: req.query.groupName}, function (err, group) {
+            res.send(group.properties);
+        });
     });
 
     app.post('/api/listings', isLoggedIn, function (req, res) {
