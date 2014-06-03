@@ -4,7 +4,8 @@ var LinkParser = require('./linkParser.js')
 // Mongoose Models
 var User = require('./models/User.js');
 var Group = require('./models/Group.js');
-var Property = require('./models/Property.js');
+var Listing = require('./models/Listing.js');
+
 
 module.exports = function(app) {
     app.get('/api/test', function (req, res) {
@@ -12,8 +13,9 @@ module.exports = function(app) {
         res.send(req);
     }),
 
-    app.get('/api/user', function (req, res) {
-        User.findOne({_id: req.query.id}, function (err, user) {
+    //gets a user, requires user id
+    app.get('/api/user/:id', function (req, res) {
+        User.findOne({_id: req.params.id}, function (err, user) {
             if (user) {
                 res.send(user);
             } else {
@@ -22,117 +24,74 @@ module.exports = function(app) {
         });
     });
 
+    //creates a user. TODO: how to handle groups
     app.post('/api/user', function (req, res) {
-        User.findOne({_id: req.body.id}, function (err, user) {
-            user.name = req.body.name;
-            user.budget = req.body.budget;
-            user.location = req.body.location;
-            user.prefDistance = req.body.prefDistance;
-            user.groups = req.body.groups;
-            user.save(function (err, savedUser) {
-                console.log(savedUser, 'Successfully saved!');
-            });
-            Group.findOne({name: req.body.groupName}, function (err, group) {
-                
-            });
-            res.send(user);
+        User.findOne({id: req.body.id}, function (err, user) {
+            if (user) {
+                res.send(400, 'User Already Exists')
+            } else {                
+                user.name = req.body.name;
+                user.budget = req.body.budget;
+                user.location = req.body.location;
+                user.prefDistance = req.body.prefDistance;
+                user.groups = req.body.groups;
+                user.save(function (err, savedUser) {
+                    console.log(savedUser, 'Successfully saved!');
+                });
+                res.send(user);
+            }
         });
     });
 
-    app.get('/api/group', function (req, res) {
-        console.log(req.query);
-        Group.findOne({name: req.query.groupName}, function (err, group) {
+    //Give a group ID and get a group back
+    app.get('/api/group/:id', function (req, res) {
+        Group.findOne({_id: req.params.id}, function (err, group) {
             console.log("Sending back group...", group);
             res.send(group);
         });
     });
 
-    // TODO: API Endpoint returns user, and mucks with user info...
-    // RESTful-ize the API
-    app.post('/api/group', function (req, res) {
-        User.findOne({_id: req.body.id}, function (err, user) {
-            user.groups.push(req.body.groupName);
-            Group.findOne({name: req.body.groupName}, function (err, group) {
-                if (group) {
-                    group.members.push(user);
-                    group.save();
-                    user.save();
-                    res.send(user);
-                } else {
-                    var newGroup = new Group({ 
-                        name: req.body.groupName,
-                        members: [user],
-                        properties: []
-                    });
-                    newGroup.save();
-                    res.send(user);
-                }
-            });
+    //used to be look for group and get locations.
+    app.get('/api/listings/:groupId', function (req, res) {
+        Listing.find({group: req.params.groupId}, function (err, listings) {
+            res.send(group.listings);
         });
     });
 
-    // TODO: API Endpoint returns user, and mucks with user info...
-    // RESTful-ize the API
-    app.delete('/api/group', function (req, res) {
-        User.findOne({_id: req.query.id}, function (err, user) {
-            user.groups.forEach(function(groupName, i) {
-                if (groupName === req.query.groupName) { user.groups.splice(i, 1); }
-            });
-            Group.findOne({name: req.query.groupName}, function (err, group) {
-                group.members.forEach(function(user, i) {
-                    if (user.id === req.query.id) { group.members.splice(i, 1); }
-                });
-                group.save();
-                user.save();
-                res.send(user);
-            });
-        });
-    });
-
-    app.get('/api/listings', function (req, res) {
-        Group.findOne({name: req.query.groupName}, function (err, group) {
-            res.send(group.properties);
-        });
-    });
-
+    //post a listing, requires a url and a groupId
     app.post('/api/listings', function (req, res) {
-        Group.findOne({name: req.body.groupName}, function (err, group) {
-            http.get(req.body.url, function (err, response) {
-                var listing;
-                if (req.body.url.indexOf('craigslist') > -1) { 
-                    listing = LinkParser.craigslist(response.buffer.toString(), req.body.url); 
-                } else if (req.body.url.indexOf('airbnb') > -1) {
-                    listing = LinkParser.airbnb(response.buffer.toString(), req.body.url);
-                } else {
-                    res.send(501);
-                    return null;
-                }
-                group.properties.push(listing);
-                group.save();
-                res.send(group.properties);
-            });
+        var newListing = new Listing({
+            group: req.body.groupId //TODO: Agree on name for the req
+        })
+
+        var extendNewProp = function (parseResult) {
+            for (var prop in parseResult) {
+                newListing[prop] = parseResult[prop];
+            }
+        }
+        http.get(req.body.url, function (err, response) {
+            var listing;
+            if (req.body.url.indexOf('craigslist') > -1) { 
+                listing = LinkParser.craigslist(response.buffer.toString(), req.body.url);
+                extendNewProp(listing); 
+            } else if (req.body.url.indexOf('airbnb') > -1) {
+                listing = LinkParser.airbnb(response.buffer.toString(), req.body.url);
+                extendNewProp(listing);
+            } else {
+                res.send(501);
+                return null;
+            }
+            newListing.save(); //TODO: error handing
+            res.send(listing); //figure out what we're returning
         })
     });
 
-    app.put('/api/listings', function (req, res) {
-        Group.findOne({name: req.query.groupName}, function (err, group) {
-            group.properties.forEach(function(listing, i) {
-                if (listing.id === req.query.listing._id) {
-                    group.properties[i] = req.query.listing;
-                }
-            });
-            group.save();
-            res.send(group.properties);
-        });
-    });
 
-    app.delete('/api/listings', function (req, res) {
-        Group.findOne({name: req.query.groupName}, function (err, group) {
-            group.properties.forEach(function (listing, i) {
-                if (listing.id === req.query.listing._id) { group.properties.splice(i, 1); }
-                group.save();
-            });
-            res.send(group.properties);
+    //delete a listing. give it a listing id.
+    app.delete('/api/listings/:id', function (req, res) {
+        Listing.findOne({_id: req.params.id}, function (err, listing) {
+            listing.remove();
+            res.send('success');
         });
     });
 
