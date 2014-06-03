@@ -12,8 +12,8 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 				userData: function (User) {
 					return User.get()
 						.then(function (data) {
-							console.log('data resolved ', data);
-							return data;
+							console.log(data.data);
+							return data.data;
 						});
 				}
 			}

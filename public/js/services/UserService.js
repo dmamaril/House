@@ -3,6 +3,7 @@ app.factory('User', function($http, $rootScope, $location) {
 
     var broadcast = function (user) {
         $rootScope.user = user;
+        $rootScope.groupName = user.groups[0];
         $rootScope.$emit('change:user', user);
     };
 
