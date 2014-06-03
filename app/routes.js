@@ -40,7 +40,7 @@ module.exports = function(app, passport, User, Group, Listing) {
     }),
 
     app.get('/api/user/:id', isLoggedIn, function (req, res) {
-        console.log('Sending user data of ', req.user);
+        console.log('Sending user data of ', req.user.google.name);
         res.send(req.user);
     });
 

@@ -10,6 +10,7 @@ html, body, .content {
 a:hover { text-decoration: none; }
 
 .angular-google-map-container { height: 500px; }
+.fa:hover, .fa-google-plus:hover { background-color: #CBE3B0;}
 
 /* ========= CONTAINERS ========= */
 /* HOME PAGE CONTAINERS */
