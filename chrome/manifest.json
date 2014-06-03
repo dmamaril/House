@@ -1,0 +1,51 @@
+{
+   "background": {
+      "page": "html/background.html"
+   },
+   "browser_action": {
+      "default_icon": {
+         "19": "img/browser-action-icon-19.png", // logos as size 19x19
+         "38": "img/browser-action-icon-38.png" // logo as 38x38
+      },
+      "default_title": "__MSG_toolbarButtonTitle__" // tooltip
+   },
+   "content_scripts": [ {
+      "js": [ "js/keyboard-shortcut.js" ],
+      "matches": [ "*://*/*" ]
+   }, {
+      "js": [ "js/jquery.js", "js/shared.js", "js/login-inject.js" ],
+      "matches": [ "*://getpocket.com/extension_login_success" ]
+   }, {
+      "js": [ "js/jquery.js", "js/shared.js", "js/logout-inject.js" ],
+      "matches": [ "*://getpocket.com/login?e=4" ]
+   }, {
+      "css": [ "sites/twitter/twitter.ril.css", "sites/twitter/twitter.ril.chrome.css" ],
+      "js": [ "js/jquery.js", "js/shared.js", "sites/twitter/twitter.ril.js" ],
+      "matches": [ "*://twitter.com/*" ]
+   }, {
+      "js": [ "js/jquery.js", "js/shared.js", "sites/hackernews/hn.pocket.js" ],
+      "matches": [ "http://*.ycombinator.org/*", "https://*.ycombinator.org/*", "http://*.ycombinator.com/*", "https://*.ycombinator.com/*" ]
+   }, {
+      "js": [ "js/jquery.js", "js/shared.js", "sites/reddit/reddit.pocket.js" ],
+      "matches": [ "*://*.reddit.com/*" ]
+   }, {
+      "css": [ "sites/yahoo/yahoo.pocket.css", "sites/yahoo/yahoo.pocket.chrome.css" ],
+      "js": [ "js/jquery.js", "js/shared.js", "sites/yahoo/yahoo.pocket.js", "sites/yahoo/yahoo-share-button.pocket.js" ],
+      "matches": [ "*://*.yahoo.com/*" ]
+   } ],
+   "default_locale": "en",
+   "description": "__MSG_extDescriptionGoogleChrome__",
+   "icons": {
+      "128": "img/icon-128.png",
+      "16": "img/icon-16.png",
+      "48": "img/icon-48.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDKCQwBisK1UcxYMn6MAfDbc8yXWzvbnCzqJwjwbeMaAHji91jdCy3bEzMprTZxW/1Anfk9B4P+hcoTwqUaMUB4WemQMRKRsr9vC45V1iv912nqyGkoGT+cRKZc+niBriAnn4J2GBACHJqkkCiSChphDFt/UNoQEKz4VoqWZDVj/QIDAQAB",
+   "manifest_version": 2,
+   "name": "Save to Pocket",
+   "options_page": "html/options.html",
+   "permissions": [ "tabs", "contextMenus", "cookies", "notifications", "https://readitlaterlist.com/", "http://*/*", "https://*/*" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.8.2",
+   "web_accessible_resources": [ "sites/twitter/twitter-mask-large.png", "sites/twitter/twitter-mask.png", "sites/twitter/twitter_web_sprite_bgs.png", "sites/twitter/twttr-sprite-v2.png", "sites/twitter/twttr-sprite.png", "sites/yahoo/ril-icon-white.png", "sites/yahoo/ril-icon-white@2x.png", "img/pocket-logo.png" ]
+}

@@ -10,11 +10,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 			controller: 'GroupsController',
 			resolve: {
 				userData: function (User) {
-					return User.get()
-						.then(function (data) {
-							console.log(data.data);
-							return data.data;
-						});
+					return User.get();
 				}
 			}
 		})
