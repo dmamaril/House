@@ -3,12 +3,12 @@ app.factory('User', function($http, $rootScope, $location) {
 
     var broadcast = function (user) {
         $rootScope.user = user;
-        $rootScope.groupName = user.groups[0];
+        $rootScope.groupName = user.google['email'];
         $rootScope.$emit('change:user', user);
     };
 
     methods.get = function() {
-        return $http.get('/api/user').success(broadcast);
+        return $http.get('/api/user/:id').success(broadcast);
     };
 
     methods.edit = function(user) {

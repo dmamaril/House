@@ -22,13 +22,14 @@ module.exports = function(passport, User, Group) {
 
     },
     function(req, token, refreshToken, profile, done) {
+        var profileEmail = profile.emails[0].value.toLowerCase();
         // asynchronous
         process.nextTick(function() {
 
             // check if the user is already logged in
             if (!req.user) {
 
-                User.findOne({ 'google.id' : profile.id }, function(err, user) {
+                User.findOne({ 'google.email' : profileEmail }, function(err, user) {
                     if (err)
                         return done(err);
 
@@ -38,47 +39,35 @@ module.exports = function(passport, User, Group) {
                         if (!user.google.token) {
                             user.google.token = token;
                             user.google.name  = profile.displayName;
-                            user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
-                            user.groups.push(user.google.email);
+                            user.google.email = profileEmail || ''; // pull the first email
+                            // user.groups.push(user.google.email);
 
-                            user.save(function(err) {
-                                if (err) { throw err; }
-                                var newGroup = new Group({
-                                    name: user.google.email,
-                                    isPrivate: true,
-                                    members: [user],
-                                    properties: []
-                                });
-                                newGroup.save(function (err) {
-                                    if (err) { throw err; }
-                                    return done(null, user);
-                                });
-                            });
+                            user.save();
+                            return done(null, user);
                         }
                         console.log(user.google.name, ' has been saved to database.');
                         return done(null, user);
                     } else {
-                        var newUser          = new User();
+                        var newGroup = new Group();
+                        newGroup.name = profile.name.givenName + "'s list";
 
-                        newUser.google.id    = profile.id;
-                        newUser.google.token = token;
-                        newUser.google.name  = profile.displayName;
-                        newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
-                        newUser.groups.push(newUser.google.email);
-
-                        newUser.save(function(err) {
+                        newGroup.save(function (err) {
                             if (err) { throw err; }
-                            var newGroup = new Group({
-                                name: newUser.google.email,
-                                isPrivate: true,
-                                members: [newUser],
-                                properties: []
-                            });
-                            newGroup.save(function (err) {
-                                if (err) { throw err; }
-                                return done(null, newUser);
-                            });
-                        });
+                            var newUser = new User();
+
+                            newUser.google.token = token;
+                            newUser.google.name  = profile.displayName;
+                            newUser.google.email = profileEmail || ''; // pull the first email
+                            newUser.groups.push(newGroup._id);
+
+                            console.log(newGroup, 'newGroup');
+                            console.log(newUser, 'newUser');
+
+                            newUser.save();
+                            return done(null, newUser);
+                        })
+
+
                     }
                 });
 
@@ -86,11 +75,10 @@ module.exports = function(passport, User, Group) {
                 // user already exists and is logged in, we have to link accounts
                 var user               = req.user; // pull the user out of the session
 
-                user.google.id    = profile.id;
                 user.google.token = token;
                 user.google.name  = profile.displayName;
-                user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
-                user.groups.push(user.google.email);
+                user.google.email = profileEmail || ''; // pull the first email
+                // user.groups.push(user.google.email);
 
                 user.save(function(err) {
                     if (err)

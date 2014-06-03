@@ -4,7 +4,7 @@
   "dependencies": {
     "express": "~4.0.0",
     "mongoose": "~3.6.13",
-    "http-request": "^0.6.2"
+    "http-request": "^0.6.2",
     "passport-google-oauth": "~0.1.5",
     "connect-flash": "~0.1.1",
     "morgan": "~1.0.0",

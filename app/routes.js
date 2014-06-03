@@ -6,7 +6,7 @@ var isLoggedIn = function (req, res, next) {
     req.isAuthenticated() ? next() : res.redirect('/');
 };
 
-module.exports = function(app, passport, User, Group, Property) {
+module.exports = function(app, passport, User, Group, Listing) {
 
     app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 
@@ -39,12 +39,12 @@ module.exports = function(app, passport, User, Group, Property) {
         res.send(req);
     }),
 
-    app.get('/api/user', isLoggedIn, function (req, res) {
-        console.log('Sending user data of ', req.user.google.name);
+    app.get('/api/user/:id', isLoggedIn, function (req, res) {
+        console.log('Sending user data of ', req.user);
         res.send(req.user);
     });
 
-    app.post('/api/user', isLoggedIn, function (req, res) {
+    app.post('/api/user/', isLoggedIn, function (req, res) {
         User.findOne({_id: req.body.id}, function (err, user) {
             user.name = req.body.name;
             user.budget = req.body.budget;

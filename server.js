@@ -18,7 +18,7 @@ var port = process.env.PORT || 8080;
 /* ==== MONGODB ==== */
 var User = require('./app/models/User.js');
 var Group = require('./app/models/Group.js');
-var Property = require('./app/models/Property.js');
+var Listing = require('./app/models/Listing.js');
 
 
 mongoose.connect(db.url);
@@ -42,7 +42,7 @@ app.use(flash());                           // use connect-flash for flash messa
 app.use(methodOverride());                  // simulate DELETE and PUT
 
 // routes
-require('./app/routes.js')(app, passport, User, Group, Property); // load our routes and pass in our app and fully configured passport
+require('./app/routes.js')(app, passport, User, Group, Listing); // load our routes and pass in our app and fully configured passport
 
 // start app
 app.listen(port);
