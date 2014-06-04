@@ -2,58 +2,14 @@ var http = require('http-request');
 var LinkParser = require('./linkParser.js')
 
 // route middleware to ensure user is logged in
-var isLoggedIn = function (req, res, next) {
+var checkAuth = function (req, res, next) {
     req.isAuthenticated() ? next() : res.redirect('/');
 };
 
 module.exports = function(app, passport, User, Group, Property) {
-
-    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-
-    // the callback after google has authenticated the user
-    app.get('/auth/google/callback',
-      passport.authenticate('google', {
-        successRedirect : '/groups',
-        failureRedirect : '/'
-      }));
-
-    // used to unlink accounts. for social accounts, just remove the token || logout
-    app.get('/unlink/google', function(req, res) {
-        console.log('helloo');
-        req.logout();
-        req.redirect('/')
-        var user          = req.user;
-        user.google.token = undefined;
-        user.save(function(err) {
-            console.log(user, ' has been successfully logged out.');
-            res.redirect('/');
-        });
-    });
-
-    // prevent unauthorized access to assets 
-    app.get('/groups', isLoggedIn);
-    app.get('/listings', isLoggedIn);
-
-    app.get('/api/test', isLoggedIn, function (req, res) {
-        console.log(req);
-        res.send(req);
-    }),
-
-    //gets a user, requires user id
-    app.get('/api/user/:id', isLoggedIn, function (req, res) {
-        User.findOne({_id: req.user._id})
-        .populate('groups')
-        .exec( function (err, user) {
-            if (user) {
-                res.send(user);
-            } else {
-                res.send(501, err);
-            }
-        });
-    });
-
+    /* === MAIN ROUTES === */
     //edits a user. TODO: how to handle groups
-    app.put('/api/user/:id', isLoggedIn, function (req, res) {
+    app.put('/api/user/:id', checkAuth, function (req, res) {
         User.findOne({_id: req.params.id}, function (err, user) {
             if (user) {
                 if(req.params.budget) {user.budget = req.params.budget};
@@ -70,14 +26,14 @@ module.exports = function(app, passport, User, Group, Property) {
     });
 
     //Give a group ID and get a group back
-    app.get('/api/group/:id', isLoggedIn, function (req, res) {
+    app.get('/api/group/:id', checkAuth, function (req, res) {
         Group.findOne({_id: req.params.id}, function (err, group) {
             res.send(group);
         });
     });
 
 
-    app.get('/api/group/:groupId/listings', isLoggedIn, function (req, res) {
+    app.get('/api/group/:groupId/listings', checkAuth, function (req, res) {
         Listing.find({group: req.params.groupId})
         .populate('group')
         .exec(function (err, listings) {
@@ -86,7 +42,7 @@ module.exports = function(app, passport, User, Group, Property) {
     });
 
     //post a listing, requires a url and a groupId
-    app.post('/api/listings', isLoggedIn, function (req, res) {
+    app.post('/api/listings', checkAuth, function (req, res) {
         var newListing = new Listing({
             group: req.body.groupId //TODO: Agree on name for the req
         })
@@ -115,14 +71,14 @@ module.exports = function(app, passport, User, Group, Property) {
 
 
     //delete a listing. give it a listing id.
-    app.delete('/api/listings/:id', isLoggedIn, function (req, res) {
+    app.delete('/api/listings/:id', checkAuth, function (req, res) {
         Listing.findOne({_id: req.params.id}, function (err, listing) {
             listing.remove();
             res.send('success');
         });
     });
 
-    app.put('/api/group/:groupId/users/:userId', isLoggedIn, function (req, res) {
+    app.put('/api/group/:groupId/users/:userId', checkAuth, function (req, res) {
         User.findOne({_id: req.params.userId}, function (err, user) {
             user.groups.push(req.params.groupId);
             user.save(function(err){
@@ -146,7 +102,7 @@ module.exports = function(app, passport, User, Group, Property) {
     // });
 
     // (@name, @userId)
-    app.post('/api/group', isLoggedIn, function (req, res) {
+    app.post('/api/group', checkAuth, function (req, res) {
         var newGroup = new Group({
             name: req.body.name
         })
@@ -163,7 +119,50 @@ module.exports = function(app, passport, User, Group, Property) {
     app.get('*', function(req, res) {
         res.sendfile('./public/index.html');
     });
-    // app.get('*', function(req, res) {
-    //     res.sendfile('./ajaxtest.html');
-    // });
+
+
+    /* === AUTHENTICATION === */
+    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+    // the callback after google has authenticated the user
+    app.get('/auth/google/callback',
+      passport.authenticate('google', {
+        successRedirect : '/groups',
+        failureRedirect : '/'
+      }));
+
+    // used to unlink accounts. for social accounts, just remove the token || logout
+    app.get('/unlink/google', function(req, res) {
+        console.log('helloo');
+        req.logout();
+        req.redirect('/')
+        var user          = req.user;
+        user.google.token = undefined;
+        user.save(function(err) {
+            console.log(user, ' has been successfully logged out.');
+            res.redirect('/');
+        });
+    });
+
+    // prevent unauthorized access to assets 
+    app.get('/groups', checkAuth);
+    app.get('/listings', checkAuth);
+
+    app.get('/api/test', checkAuth, function (req, res) {
+        console.log(req);
+        res.send(req);
+    }),
+
+    //gets a user, requires user id
+    app.get('/api/user/:id', checkAuth, function (req, res) {
+        User.findOne({_id: req.user._id})
+        .populate('groups')
+        .exec( function (err, user) {
+            if (user) {
+                res.send(user);
+            } else {
+                res.send(501, err);
+            }
+        });
+    });
 };
