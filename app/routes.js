@@ -135,11 +135,11 @@ module.exports = function(app) {
         });
     });
 
-    app.get('*', function(req, res) {
-        res.sendfile('./public/index.html');
-    });
     // app.get('*', function(req, res) {
-    //     res.sendfile('./ajaxtest.html');
+    //     res.sendfile('./public/index.html');
     // });
+    app.get('*', function(req, res) {
+        res.sendfile('./ajaxtest.html');
+    });
 };
 
