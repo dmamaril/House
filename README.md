@@ -1,7 +1,7 @@
-# HOUSE: group apartment hunting made easy
+# HOUSE: apartment hunting made easy
 Produced at <a href='http://hackreactor.com'>Hack Reactor </a> by <a href='http://github.com/willwclo'>Will Lo</a>, <a href='http://github.com/vhalbwachs'>Vin Halbwachs</a> & <a href='http://github.com/mamarildon'>Don Mamaril </a>
 
-<img src='http://i.imgur.com/Dhmjjdc.png'/>
+<img src='http://i.imgur.com/IWBde0H.png'/>
 <a href='' >House [[ insert deployed link here ]]</a> introduces you to others that have been accepted to your school. This helps you get from "decent" roommates to ones who won't decide to host a giant party the night before you've got a big project in the morning. You'll be surrounded with peers that are pursuing the same goals, which means less distraction and more motivation.
 
 Our platform is about coordination. Consolidate all communication on site and simplify the house-hunting experience.
