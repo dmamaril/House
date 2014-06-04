@@ -4,7 +4,9 @@ app.controller('MapController', function ($scope, $rootScope, User) {
         $scope.properties = listings;
     });
 
-    document.getElementById('')
+    // HACK: ng-map directive seems to interfere with CSS styling?
+    var _div = document.getElementsByClassName('angular-google-map-container')[0];
+    _div.style.height = (window.innerHeight - 100).toString() + 'px';
 
     var mapSettings = [
         {
