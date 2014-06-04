@@ -12,4 +12,4 @@ var listingSchema = mongoose.Schema({
 
 var Listing = mongoose.model('Listing', listingSchema);
 
-module.exports = Property;
+module.exports = Listing;

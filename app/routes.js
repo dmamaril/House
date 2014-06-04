@@ -15,7 +15,9 @@ module.exports = function(app) {
 
     //gets a user, requires user id
     app.get('/api/user/:id', function (req, res) {
-        User.findOne({_id: req.params.id}, function (err, user) {
+        User.findOne({_id: req.params.id})
+        .populate('groups')
+        .exec( function (err, user) {
             if (user) {
                 res.send(user);
             } else {
@@ -25,14 +27,13 @@ module.exports = function(app) {
     });
 
     //edits a user. TODO: how to handle groups
-    app.put('/api/user:id', function (req, res) {
+    app.put('/api/user/:id', function (req, res) {
         User.findOne({_id: req.params.id}, function (err, user) {
             if (user) {
-                user.name = req.body.name;
-                user.budget = req.body.budget;
-                user.location = req.body.location;
-                user.prefDistance = req.body.prefDistance;
-                // user.groups = req.body.groups;
+                if(req.params.name) {user.name = req.params.name};
+                if(req.params.budget) {user.budget = req.params.budget};
+                if(req.params.location) {user.location = req.params.location};
+                if(req.params.prefDistance) {user.prefDistance = req.params.prefDistance};
                 user.save(function (err, savedUser) {
                     console.log(savedUser, 'Successfully saved!');
                 });
@@ -46,14 +47,15 @@ module.exports = function(app) {
     //Give a group ID and get a group back
     app.get('/api/group/:id', function (req, res) {
         Group.findOne({_id: req.params.id}, function (err, group) {
-            console.log("Sending back group...", group);
             res.send(group);
         });
     });
 
-    //used to be look for group and get locations.
+
     app.get('/api/group/:groupId/listings', function (req, res) {
-        Listing.find({group: req.params.groupId}, function (err, listings) {
+        Listing.find({group: req.params.groupId})
+        .populate('group')
+        .exec(function (err, listings) {
             res.send(listings);
         });
     });
@@ -95,8 +97,49 @@ module.exports = function(app) {
         });
     });
 
+    app.put('/api/group/:groupId/users/:userId', function (req, res) {
+        User.findOne({_id: req.params.userId}, function (err, user) {
+            user.groups.push(req.params.groupId);
+            user.save(function(err){
+                if (err) {return err;}
+                res.send(user);
+            });
+            res.send('success');
+        });
+    });
+
+    //TODO: remove group
+    // app.delete('/api/group/:groupId/users/:userId', function (req, res) {
+    //     User.findOne({_id: req.params.userId}, function (err, user) {
+    //         user.groups.push(req.params.groupId);
+    //         user.save(function(err){
+    //             if (err) {return err;}
+    //             res.send(user);
+    //         });
+    //         res.send('success');
+    //     });
+    // });
+
+    // (@name, @userId)
+    app.post('/api/group', function (req, res) {
+        var newGroup = new Group({
+            name: req.body.name
+        })
+        newGroup.save(function (err) {
+            User.findOne({_id: req.body.userId}, function (err, user) {
+                user.groups.push(newGroup);
+                user.save(function(err) {
+                    res.send(newGroup);
+                });
+            });
+        });
+    });
+
+    // app.get('*', function(req, res) {
+    //     res.sendfile('./public/index.html');
+    // });
     app.get('*', function(req, res) {
-        res.sendfile('./public/index.html');
+        res.sendfile('./ajaxtest.html');
     });
 };
 
