@@ -101,7 +101,6 @@ var Authentication = function(app, passport) {
     );
 
     app.get('/unlink/google', function(req, res) {
-        console.log('helloo');
         req.logout();
         req.redirect('/')
         var user = req.user;

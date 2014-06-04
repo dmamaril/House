@@ -83,7 +83,6 @@ module.exports = function(app, passport) {
     app.delete('/api/listings/:id', Authentication.check, function (req, res) {
         Listing.findOne({_id: req.params.id}, function (err, listing) {
             listing.remove();
-            res.send('success');
         });
     });
 
@@ -94,21 +93,18 @@ module.exports = function(app, passport) {
                 if (err) {return err;}
                 res.send(user);
             });
-            res.send('success');
         });
     });
 
-    //TODO: remove group
-    // app.delete('/api/group/:groupId/users/:userId', function (req, res) {
-    //     User.findOne({_id: req.params.userId}, function (err, user) {
-    //         user.groups.push(req.params.groupId);
-    //         user.save(function(err){
-    //             if (err) {return err;}
-    //             res.send(user);
-    //         });
-    //         res.send('success');
-    //     });
-    // });
+    app.delete('/api/group/:groupId/users/:userId', function (req, res) {
+        User.findOne({_id: req.params.userId}, function (err, user) {
+            user.groups.remove(req.param.groupId);
+            user.save(function(err) {
+                if (err) {return err;}
+                res.send(user);
+            });
+        });
+    });
 
     app.post('/api/group', Authentication.check, function (req, res) {
         var newGroup = new Group({
