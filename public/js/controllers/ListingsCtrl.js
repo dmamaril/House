@@ -1,4 +1,4 @@
-app.controller('ListingsController', function ($scope, $rootScope, Listings, Maps) {
+app.controller('ListingsController', function ($scope, $rootScope, Listings) {
     $scope.listings = [];
 
     $rootScope.$on('change:listings', function(event, listings) {
@@ -6,7 +6,7 @@ app.controller('ListingsController', function ($scope, $rootScope, Listings, Map
     });
     Listings.get($rootScope.groupName);
 
-    $scope.test = function(input) {
-        Maps.geocode(input);
-    };
+    // $scope.test = function(input) {
+    //     Maps.geocode(input);
+    // };
 });

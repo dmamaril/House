@@ -2,6 +2,7 @@ app.factory('Listings', function ($http, $rootScope, Maps) {
     var methods = {};
 
     var broadcast = function (listings) {
+        console.log(listings);
         var mapped = listings.map(function(listing, i) {
             listing.id = i;
             return listing;
