@@ -13,7 +13,7 @@ var userSchema = mongoose.Schema({
     email: String,
     prefDistance: String,
     budget: Number,
-    groups: Array, // names, not group objects
+    groups: [{type: mongoose.Schema.Types.ObjectId, ref: 'Group'}],
     location: Array // lat & long
 });
 
