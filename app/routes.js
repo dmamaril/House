@@ -5,17 +5,11 @@ var User = require('./models/User.js');
 var Group = require('./models/Group.js');
 var Listing = require('./models/Listing.js');
 
-var checkAuth = function (req, res, next) {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.redirect('/');
-    }
-};
+var Authentication = require('./authentication.js');
 
 module.exports = function(app, passport) {
     /* === MAIN ROUTES === */
-    app.get('/api/user/:id', checkAuth, function (req, res) {
+    app.get('/api/user/:id', Authentication.check, function (req, res) {
         User.findOne({_id: req.user._id})
         .populate('groups')
         .exec(function (err, user) {
@@ -27,7 +21,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.put('/api/user/:id', checkAuth, function (req, res) {
+    app.put('/api/user/:id', Authentication.check, function (req, res) {
         User.findOne({_id: req.params.id}, function (err, user) {
             if (user) {
                 if(req.params.budget) {user.budget = req.params.budget};
@@ -43,14 +37,14 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.get('/api/group/:id', checkAuth, function (req, res) {
+    app.get('/api/group/:id', Authentication.check, function (req, res) {
         Group.findOne({_id: req.params.id}, function (err, group) {
             res.send(group);
         });
     });
 
 
-    app.get('/api/group/:groupId/listings', checkAuth, function (req, res) {
+    app.get('/api/group/:groupId/listings', Authentication.check, function (req, res) {
         Listing.find({group: req.params.groupId})
         .populate('group')
         .exec(function (err, listings) {
@@ -58,7 +52,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/api/listings', checkAuth, function (req, res) {
+    app.post('/api/listings', Authentication.check, function (req, res) {
         var newListing = new Listing({
             group: req.body.groupId //TODO: Agree on name for the req
         })
@@ -86,14 +80,14 @@ module.exports = function(app, passport) {
     });
 
 
-    app.delete('/api/listings/:id', checkAuth, function (req, res) {
+    app.delete('/api/listings/:id', Authentication.check, function (req, res) {
         Listing.findOne({_id: req.params.id}, function (err, listing) {
             listing.remove();
             res.send('success');
         });
     });
 
-    app.put('/api/group/:groupId/users/:userId', checkAuth, function (req, res) {
+    app.put('/api/group/:groupId/users/:userId', Authentication.check, function (req, res) {
         User.findOne({_id: req.params.userId}, function (err, user) {
             user.groups.push(req.params.groupId);
             user.save(function(err){
@@ -116,7 +110,7 @@ module.exports = function(app, passport) {
     //     });
     // });
 
-    app.post('/api/group', checkAuth, function (req, res) {
+    app.post('/api/group', Authentication.check, function (req, res) {
         var newGroup = new Group({
             name: req.body.name
         })
@@ -129,30 +123,6 @@ module.exports = function(app, passport) {
             });
         });
     });
-
-    /* === AUTHENTICATION === */
-    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-    app.get('/auth/google/callback',
-        passport.authenticate('google', {
-            successRedirect : '/groups',
-            failureRedirect : '/'
-        })
-    );
-
-    app.get('/unlink/google', function(req, res) {
-        console.log('helloo');
-        req.logout();
-        req.redirect('/')
-        var user = req.user;
-        user.google.token = undefined;
-        user.save(function(err) {
-            console.log(user, ' has been successfully logged out.');
-            res.redirect('/');
-        });
-    });
-
-    app.get('/groups', checkAuth);
-    app.get('/listings', checkAuth);
 
 
     /* === DEFAULT === */

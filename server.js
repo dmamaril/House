@@ -41,9 +41,9 @@ app.use(flash());                           // use connect-flash for flash messa
 
 app.use(methodOverride());                  // simulate DELETE and PUT
 
-// routes
-require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
-require('./app/passport.js')(passport); // pass passport for configuration
+// authentication and routes
+require('./app/authentication.js')(app, passport); // authentication
+require('./app/routes.js')(app); // routes
 
 // start app
 app.listen(port);

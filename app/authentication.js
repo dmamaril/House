@@ -1,5 +1,5 @@
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var configAuth = require('./config/auth');
+var configAuth = require('./config/auth.js');
 
 var User = require('./models/User.js');
 var Group = require('./models/Group.js');
@@ -63,7 +63,8 @@ var linkUser = function (profile, token, done) {
     });   
 };
 
-module.exports = function(passport, passportHelpers) {
+var Authentication = function(app, passport) {
+    /* === PASSPORT CONFIG === */
     passport.serializeUser(function(user, done) {
         done(null, user.id);
     });
@@ -80,7 +81,6 @@ module.exports = function(passport, passportHelpers) {
             callbackURL     : configAuth.googleAuth.callbackURL,
             passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
         }, function(req, token, refreshToken, profile, done) {
-            console.log(passportHelpers);
             process.nextTick(function() {
                 if (!req.user) {
                     updateUser(profile, token, done);
@@ -90,4 +90,39 @@ module.exports = function(passport, passportHelpers) {
             });
         })
     );
+
+    /* === O-AUTH ROUTES === */   
+    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            successRedirect : '/groups',
+            failureRedirect : '/'
+        })
+    );
+
+    app.get('/unlink/google', function(req, res) {
+        console.log('helloo');
+        req.logout();
+        req.redirect('/')
+        var user = req.user;
+        user.google.token = undefined;
+        user.save(function(err) {
+            console.log(user, ' has been successfully logged out.');
+            res.redirect('/');
+        });
+    });
+
+    /* === RESTRICTION ACCESS === */
+    app.get('/groups', Authentication.check);
+    app.get('/listings', Authentication.check);
 };
+
+Authentication.check = function (req, res, next) {
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+};
+
+module.exports = Authentication;
