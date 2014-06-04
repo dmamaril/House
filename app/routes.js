@@ -39,9 +39,19 @@ module.exports = function(app, passport, User, Group, Listing) {
         res.send(req);
     }),
 
-    app.get('/api/user/:id', isLoggedIn, function (req, res) {
-        console.log('Sending user data of ', req.user.google.name);
-        res.send(req.user);
+
+    //gets a user, requires user id
+    app.get('/api/user/:id', function (req, res) {
+        User.findOne({_id: req.user._id})
+        .populate('groups')
+        .exec( function (err, user) {
+            if (user) {
+                console.log('Serving user ', user);
+                res.send(user);
+            } else {
+                res.send(501, err);
+            }
+        });
     });
 
     app.post('/api/user/', isLoggedIn, function (req, res) {

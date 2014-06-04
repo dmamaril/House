@@ -25,7 +25,8 @@ mongoose.connect(db.url);
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', function() { console.log("Mongo DB connected!"); });
 
-require('./app/passport')(passport, User, Group); // pass passport for configuration
+var passportHelpers = require('./app/passportHelpers');
+require('./app/passport')(passport, passportHelpers, User); // pass passport for configuration
 
 app.use(express.static(__dirname + '/public'));     // set the static files location /public/img will be /img for users
 
