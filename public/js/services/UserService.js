@@ -22,7 +22,6 @@ app.factory('User', function($http, $rootScope, $location) {
         }).success(broadcast);
     };
 
-
     methods.addGroup = function (groupName) {
         return $http.post('/api/group', {
             id: $rootScope.user._id, 

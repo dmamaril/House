@@ -14,28 +14,28 @@ var methodOverride = require('method-override');
 /* ==== CONFIG ==== */
 var db = require('./app/config/db.js');
 var port = process.env.PORT || 8080;
+var passportHelpers = require('./app/passportHelpers');
 
 /* ==== MONGODB ==== */
 var User = require('./app/models/User.js');
 var Group = require('./app/models/Group.js');
 var Listing = require('./app/models/Listing.js');
 
-
 mongoose.connect(db.url);
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', function() { console.log("Mongo DB connected!"); });
 
-var passportHelpers = require('./app/passportHelpers');
+/* ==== STATIC SERVING ==== */
+app.use(express.static(__dirname + '/public'));     // set the static files location /public/img will be /img for users
+
+/* ==== AUTHENTICATION ==== */
 require('./app/passport')(passport, passportHelpers, User); // pass passport for configuration
 
-app.use(express.static(__dirname + '/public'));     // set the static files location /public/img will be /img for users
 
 // set up our express application
 app.use(morgan('dev'));                     // log every request to the console
 app.use(cookieParser());                    // read cookies (needed for auth)
 app.use(bodyParser());                      // get information from html forms
-
-// required for passport
 app.use(session({ secret: 'houseApp' }));   // session secret
 app.use(passport.initialize());
 app.use(passport.session());                // persistent login sessions
