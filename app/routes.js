@@ -1,14 +1,28 @@
 var http = require('http-request');
 var LinkParser = require('./linkParser.js')
 
-// route middleware to ensure user is logged in
 var checkAuth = function (req, res, next) {
-    req.isAuthenticated() ? next() : res.redirect('/');
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.redirect('/');
+    }
 };
 
 module.exports = function(app, passport, User, Group, Property) {
     /* === MAIN ROUTES === */
-    //edits a user. TODO: how to handle groups
+    app.get('/api/user/:id', checkAuth, function (req, res) {
+        User.findOne({_id: req.user._id})
+        .populate('groups')
+        .exec(function (err, user) {
+            if (user) {
+                res.send(user);
+            } else {
+                res.send(501, err);
+            }
+        });
+    });
+
     app.put('/api/user/:id', checkAuth, function (req, res) {
         User.findOne({_id: req.params.id}, function (err, user) {
             if (user) {
@@ -25,7 +39,6 @@ module.exports = function(app, passport, User, Group, Property) {
         });
     });
 
-    //Give a group ID and get a group back
     app.get('/api/group/:id', checkAuth, function (req, res) {
         Group.findOne({_id: req.params.id}, function (err, group) {
             res.send(group);
@@ -41,7 +54,6 @@ module.exports = function(app, passport, User, Group, Property) {
         });
     });
 
-    //post a listing, requires a url and a groupId
     app.post('/api/listings', checkAuth, function (req, res) {
         var newListing = new Listing({
             group: req.body.groupId //TODO: Agree on name for the req
@@ -70,7 +82,6 @@ module.exports = function(app, passport, User, Group, Property) {
     });
 
 
-    //delete a listing. give it a listing id.
     app.delete('/api/listings/:id', checkAuth, function (req, res) {
         Listing.findOne({_id: req.params.id}, function (err, listing) {
             listing.remove();
@@ -101,7 +112,6 @@ module.exports = function(app, passport, User, Group, Property) {
     //     });
     // });
 
-    // (@name, @userId)
     app.post('/api/group', checkAuth, function (req, res) {
         var newGroup = new Group({
             name: req.body.name
@@ -116,27 +126,20 @@ module.exports = function(app, passport, User, Group, Property) {
         });
     });
 
-    app.get('*', function(req, res) {
-        res.sendfile('./public/index.html');
-    });
-
-
     /* === AUTHENTICATION === */
     app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-
-    // the callback after google has authenticated the user
     app.get('/auth/google/callback',
-      passport.authenticate('google', {
-        successRedirect : '/groups',
-        failureRedirect : '/'
-      }));
+        passport.authenticate('google', {
+            successRedirect : '/groups',
+            failureRedirect : '/'
+        })
+    );
 
-    // used to unlink accounts. for social accounts, just remove the token || logout
     app.get('/unlink/google', function(req, res) {
         console.log('helloo');
         req.logout();
         req.redirect('/')
-        var user          = req.user;
+        var user = req.user;
         user.google.token = undefined;
         user.save(function(err) {
             console.log(user, ' has been successfully logged out.');
@@ -144,25 +147,12 @@ module.exports = function(app, passport, User, Group, Property) {
         });
     });
 
-    // prevent unauthorized access to assets 
     app.get('/groups', checkAuth);
     app.get('/listings', checkAuth);
 
-    app.get('/api/test', checkAuth, function (req, res) {
-        console.log(req);
-        res.send(req);
-    }),
 
-    //gets a user, requires user id
-    app.get('/api/user/:id', checkAuth, function (req, res) {
-        User.findOne({_id: req.user._id})
-        .populate('groups')
-        .exec( function (err, user) {
-            if (user) {
-                res.send(user);
-            } else {
-                res.send(501, err);
-            }
-        });
+    /* === DEFAULT === */
+    app.get('*', function(req, res) {
+        res.sendfile('./public/index.html');
     });
 };
