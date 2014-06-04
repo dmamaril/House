@@ -1,20 +1,49 @@
 var http = require('http-request');
 var LinkParser = require('./linkParser.js')
 
-// Mongoose Models
-var User = require('./models/User.js');
-var Group = require('./models/Group.js');
-var Listing = require('./models/Listing.js');
+// route middleware to ensure user is logged in
+var isLoggedIn = function (req, res, next) {
+    req.isAuthenticated() ? next() : res.redirect('/');
+};
 
-module.exports = function(app) {
-    app.get('/api/test', function (req, res) {
+module.exports = function(app, passport, User, Group, Property) {
+
+    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+    // the callback after google has authenticated the user
+    app.get('/auth/google/callback',
+      passport.authenticate('google', {
+        successRedirect : '/groups',
+        failureRedirect : '/'
+      }));
+
+    // used to unlink accounts. for social accounts, just remove the token || logout
+    app.get('/unlink/google', function(req, res) {
+        console.log('helloo');
+        req.logout();
+        req.redirect('/')
+        var user          = req.user;
+        user.google.token = undefined;
+        user.save(function(err) {
+            console.log(user, ' has been successfully logged out.');
+            res.redirect('/');
+        });
+    });
+
+    // prevent unauthorized access to assets 
+    app.get('/groups', isLoggedIn);
+    app.get('/listings', isLoggedIn);
+
+    app.get('/api/test', isLoggedIn, function (req, res) {
         console.log(req);
         res.send(req);
     }),
 
     //gets a user, requires user id
-    app.get('/api/user/:id', function (req, res) {
-        User.findOne({_id: req.params.id}, function (err, user) {
+    app.get('/api/user/:id', isLoggedIn, function (req, res) {
+        User.findOne({_id: req.user._id})
+        .populate('groups')
+        .exec( function (err, user) {
             if (user) {
                 res.send(user);
             } else {
@@ -24,41 +53,40 @@ module.exports = function(app) {
     });
 
     //edits a user. TODO: how to handle groups
-    app.put('/api/user', function (req, res) {
-        User.findOne({id: req.body.id}, function (err, user) {
-            if (!user) {
-                res.send(400, 'User does not exist.');
-            } else {                
-                user.name = req.body.name;
-                user.budget = req.body.budget;
-                user.location = req.body.location;
-                user.prefDistance = req.body.prefDistance;
-                user.groups = req.body.groups;
+    app.put('/api/user/:id', isLoggedIn, function (req, res) {
+        User.findOne({_id: req.params.id}, function (err, user) {
+            if (user) {
+                if(req.params.budget) {user.budget = req.params.budget};
+                if(req.params.location) {user.location = req.params.location};
+                if(req.params.prefDistance) {user.prefDistance = req.params.prefDistance};
                 user.save(function (err, savedUser) {
                     console.log(savedUser, 'Successfully saved!');
                 });
                 res.send(user);
+            } else {                
+                res.send(400, 'User Already Exists')
             }
         });
     });
 
     //Give a group ID and get a group back
-    app.get('/api/group/:id', function (req, res) {
+    app.get('/api/group/:id', isLoggedIn, function (req, res) {
         Group.findOne({_id: req.params.id}, function (err, group) {
-            console.log("Sending back group...", group);
             res.send(group);
         });
     });
 
-    //used to be look for group and get locations.
-    app.get('/api/listings/:groupId', function (req, res) {
-        Listing.find({group: req.params.groupId}, function (err, listings) {
-            res.send(group.listings);
+
+    app.get('/api/group/:groupId/listings', isLoggedIn, function (req, res) {
+        Listing.find({group: req.params.groupId})
+        .populate('group')
+        .exec(function (err, listings) {
+            res.send(listings);
         });
     });
 
     //post a listing, requires a url and a groupId
-    app.post('/api/listings', function (req, res) {
+    app.post('/api/listings', isLoggedIn, function (req, res) {
         var newListing = new Listing({
             group: req.body.groupId //TODO: Agree on name for the req
         })
@@ -87,42 +115,55 @@ module.exports = function(app) {
 
 
     //delete a listing. give it a listing id.
-    app.delete('/api/listings/:id', function (req, res) {
+    app.delete('/api/listings/:id', isLoggedIn, function (req, res) {
         Listing.findOne({_id: req.params.id}, function (err, listing) {
             listing.remove();
             res.send('success');
         });
     });
 
-    app.post('/login', function (req, res) {
-        User.findOne({email: req.body.email}, function (err, user) {
-            if (user) {
+    app.put('/api/group/:groupId/users/:userId', isLoggedIn, function (req, res) {
+        User.findOne({_id: req.params.userId}, function (err, user) {
+            user.groups.push(req.params.groupId);
+            user.save(function(err){
+                if (err) {return err;}
                 res.send(user);
-            } else {
-                var groupName = "(private) " + req.body.email;
-                var name = req.body.email.split('@')[0];
-                var newUser = new User({
-                    name: name,
-                    email: req.body.email,
-                    prefDistance: 0,
-                    budget: 0,
-                    groups: [groupName],
-                    location: []
+            });
+            res.send('success');
+        });
+    });
+
+    //TODO: remove group
+    // app.delete('/api/group/:groupId/users/:userId', function (req, res) {
+    //     User.findOne({_id: req.params.userId}, function (err, user) {
+    //         user.groups.push(req.params.groupId);
+    //         user.save(function(err){
+    //             if (err) {return err;}
+    //             res.send(user);
+    //         });
+    //         res.send('success');
+    //     });
+    // });
+
+    // (@name, @userId)
+    app.post('/api/group', isLoggedIn, function (req, res) {
+        var newGroup = new Group({
+            name: req.body.name
+        })
+        newGroup.save(function (err) {
+            User.findOne({_id: req.body.userId}, function (err, user) {
+                user.groups.push(newGroup);
+                user.save(function(err) {
+                    res.send(newGroup);
                 });
-                newUser.save();
-                var newGroup = new Group({
-                    name: groupName,
-                    isPrivate: true,
-                    members: [newUser],
-                    properties: []
-                });
-                newGroup.save();
-                res.send(newUser);
-            }
+            });
         });
     });
 
     app.get('*', function(req, res) {
         res.sendfile('./public/index.html');
     });
+    // app.get('*', function(req, res) {
+    //     res.sendfile('./ajaxtest.html');
+    // });
 };

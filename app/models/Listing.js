@@ -1,14 +1,15 @@
 var mongoose = require('mongoose');
 
-var propertySchema = mongoose.Schema({
+var listingSchema = mongoose.Schema({
   votes: Array,
   title: String,
   url: String,
   location: Array, // long, lat
   rooms: String,
-  price: Number
+  price: Number,
+  group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group'}
 });
 
-var Property = mongoose.model('Property', propertySchema);
+var Listing = mongoose.model('Listing', listingSchema);
 
-module.exports = Property;
+module.exports = Listing;

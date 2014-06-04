@@ -1,13 +1,18 @@
 var mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
-    name: String,
-    email: String,
+    google           : {
+        token        : String,
+        email        : String,
+        name         : String
+    },
     prefDistance: String,
     budget: Number,
-    groups: Array, // names, not group objects
+    groups: [{type: mongoose.Schema.Types.ObjectId, ref: 'Group'}],
     location: Array // lat & long
 });
+
+
 
 var User = mongoose.model('User', userSchema);
 

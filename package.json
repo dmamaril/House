@@ -2,22 +2,24 @@
   "name": "starter-node-angular",
   "main": "server.js",
   "dependencies": {
-    "express": "~3.4.8",
+    "express": "~4.0.0",
     "mongoose": "~3.6.13",
-    "bluebird": "^1.2.4",
-    "http-request": "^0.6.2"
+    "http-request": "^0.6.2",
+    "passport-google-oauth": "~0.1.5",
+    "connect-flash": "~0.1.1",
+    "morgan": "~1.0.0",
+    "body-parser": "~1.0.0",
+    "cookie-parser": "~1.0.0",
+    "method-override": "^1.0.2",
+    "express-session": "~1.0.0",
+    "passport": "^0.2.0"
   },
-  "devDependencies": {
-    "karma": "^0.12.16",
-    "karma-chrome-launcher": "^0.1.4",
-    "karma-jasmine": "^0.1.5"
-  },
+  "devDependencies": {},
   "scripts": {
     "start": "node server.js"
   },
   "description": "This is a repo for a starter appliation for a Single Page MEAN Stack application. Just download and install and you have a good foundation for building application.",
   "version": "0.0.0",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/willwclo/House.git"
