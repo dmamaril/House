@@ -3,13 +3,12 @@ app.factory('User', function($http, $rootScope, $location) {
 
     var broadcast = function (user) {
         $rootScope.user = user;
+        $rootScope.groupName = user.groups[0].name;
         $rootScope.$emit('change:user', user);
     };
 
     methods.get = function() {
-        return $http.get('/api/user', {
-            params: {id: $rootScope.user._id}
-        }).success(broadcast);
+        return $http.get('/api/user/:id').success(broadcast);
     };
 
     methods.edit = function(user) {
@@ -23,15 +22,6 @@ app.factory('User', function($http, $rootScope, $location) {
         }).success(broadcast);
     };
 
-    methods.login = function (email) {
-        return $http.post('/login', { email: email })
-            .success(function(user) {
-                console.log(user);
-                $rootScope.user = user;
-                $rootScope.groupName =  user.groups[0];
-                $location.path("/listings");
-            });
-    };
 
     methods.addGroup = function (groupName) {
         return $http.post('/api/group', {

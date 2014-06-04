@@ -1,12 +1,6 @@
 var http = require('http-request');
 var LinkParser = require('./linkParser.js')
 
-// Mongoose Models
-var User = require('./models/User.js');
-var Group = require('./models/Group.js');
-var Listing = require('./models/Listing.js');
-
-
 // route middleware to ensure user is logged in
 var isLoggedIn = function (req, res, next) {
     req.isAuthenticated() ? next() : res.redirect('/');
@@ -19,7 +13,7 @@ module.exports = function(app, passport, User, Group, Property) {
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
       passport.authenticate('google', {
-        successRedirect : '/listings',
+        successRedirect : '/groups',
         failureRedirect : '/'
       }));
 
@@ -37,17 +31,17 @@ module.exports = function(app, passport, User, Group, Property) {
     });
 
     // prevent unauthorized access to assets 
-    app.get('/groups');
-    app.get('/listings');
+    app.get('/groups', isLoggedIn);
+    app.get('/listings', isLoggedIn);
 
-    app.get('/api/test', function (req, res) {
+    app.get('/api/test', isLoggedIn, function (req, res) {
         console.log(req);
         res.send(req);
     }),
 
     //gets a user, requires user id
-    app.get('/api/user/:id', function (req, res) {
-        User.findOne({_id: req.params.id})
+    app.get('/api/user/:id', isLoggedIn, function (req, res) {
+        User.findOne({_id: req.user._id})
         .populate('groups')
         .exec( function (err, user) {
             if (user) {
@@ -59,10 +53,9 @@ module.exports = function(app, passport, User, Group, Property) {
     });
 
     //edits a user. TODO: how to handle groups
-    app.put('/api/user/:id', function (req, res) {
+    app.put('/api/user/:id', isLoggedIn, function (req, res) {
         User.findOne({_id: req.params.id}, function (err, user) {
             if (user) {
-                if(req.params.name) {user.name = req.params.name};
                 if(req.params.budget) {user.budget = req.params.budget};
                 if(req.params.location) {user.location = req.params.location};
                 if(req.params.prefDistance) {user.prefDistance = req.params.prefDistance};
@@ -77,14 +70,14 @@ module.exports = function(app, passport, User, Group, Property) {
     });
 
     //Give a group ID and get a group back
-    app.get('/api/group/:id', function (req, res) {
+    app.get('/api/group/:id', isLoggedIn, function (req, res) {
         Group.findOne({_id: req.params.id}, function (err, group) {
             res.send(group);
         });
     });
 
 
-    app.get('/api/group/:groupId/listings', function (req, res) {
+    app.get('/api/group/:groupId/listings', isLoggedIn, function (req, res) {
         Listing.find({group: req.params.groupId})
         .populate('group')
         .exec(function (err, listings) {
@@ -93,7 +86,7 @@ module.exports = function(app, passport, User, Group, Property) {
     });
 
     //post a listing, requires a url and a groupId
-    app.post('/api/listings', function (req, res) {
+    app.post('/api/listings', isLoggedIn, function (req, res) {
         var newListing = new Listing({
             group: req.body.groupId //TODO: Agree on name for the req
         })
@@ -122,14 +115,14 @@ module.exports = function(app, passport, User, Group, Property) {
 
 
     //delete a listing. give it a listing id.
-    app.delete('/api/listings/:id', function (req, res) {
+    app.delete('/api/listings/:id', isLoggedIn, function (req, res) {
         Listing.findOne({_id: req.params.id}, function (err, listing) {
             listing.remove();
             res.send('success');
         });
     });
 
-    app.put('/api/group/:groupId/users/:userId', function (req, res) {
+    app.put('/api/group/:groupId/users/:userId', isLoggedIn, function (req, res) {
         User.findOne({_id: req.params.userId}, function (err, user) {
             user.groups.push(req.params.groupId);
             user.save(function(err){
@@ -153,7 +146,7 @@ module.exports = function(app, passport, User, Group, Property) {
     // });
 
     // (@name, @userId)
-    app.post('/api/group', function (req, res) {
+    app.post('/api/group', isLoggedIn, function (req, res) {
         var newGroup = new Group({
             name: req.body.name
         })
@@ -167,10 +160,10 @@ module.exports = function(app, passport, User, Group, Property) {
         });
     });
 
-    // app.get('*', function(req, res) {
-    //     res.sendfile('./public/index.html');
-    // });
     app.get('*', function(req, res) {
-        res.sendfile('./ajaxtest.html');
+        res.sendfile('./public/index.html');
     });
+    // app.get('*', function(req, res) {
+    //     res.sendfile('./ajaxtest.html');
+    // });
 };

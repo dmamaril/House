@@ -18,14 +18,15 @@ var port = process.env.PORT || 8080;
 /* ==== MONGODB ==== */
 var User = require('./app/models/User.js');
 var Group = require('./app/models/Group.js');
-var Property = require('./app/models/Property.js');
+var Listing = require('./app/models/Listing.js');
 
 
 mongoose.connect(db.url);
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', function() { console.log("Mongo DB connected!"); });
 
-require('./app/config/passport')(passport, User); // pass passport for configuration
+var passportHelpers = require('./app/passportHelpers');
+require('./app/passport')(passport, passportHelpers, User); // pass passport for configuration
 
 app.use(express.static(__dirname + '/public'));     // set the static files location /public/img will be /img for users
 
@@ -42,7 +43,7 @@ app.use(flash());                           // use connect-flash for flash messa
 app.use(methodOverride());                  // simulate DELETE and PUT
 
 // routes
-require('./app/routes.js')(app, passport, User, Group, Property); // load our routes and pass in our app and fully configured passport
+require('./app/routes.js')(app, passport, User, Group, Listing); // load our routes and pass in our app and fully configured passport
 
 // start app
 app.listen(port);
