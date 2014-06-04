@@ -1,15 +1,16 @@
 /* ==== MODULES ==== */
 var express = require('express');
 var app = express();
+var methodOverride = require('method-override');
+var bodyParser = require('body-parser');
+var morgan = require('morgan');
+
 var mongoose = require('mongoose');
+
 var passport = require('passport');
 var flash = require('connect-flash');
-
-var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
 var session = require('express-session');
-var methodOverride = require('method-override');
 
 /* ==== CONFIG ==== */
 var db = require('./app/config/db.js');
