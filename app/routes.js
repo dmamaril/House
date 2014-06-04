@@ -1,6 +1,10 @@
 var http = require('http-request');
 var LinkParser = require('./linkParser.js')
 
+var User = require('./models/User.js');
+var Group = require('./models/Group.js');
+var Listing = require('./models/Listing.js');
+
 var checkAuth = function (req, res, next) {
     if (req.isAuthenticated()) {
         next();
@@ -9,7 +13,7 @@ var checkAuth = function (req, res, next) {
     }
 };
 
-module.exports = function(app, passport, User, Group, Property) {
+module.exports = function(app, passport) {
     /* === MAIN ROUTES === */
     app.get('/api/user/:id', checkAuth, function (req, res) {
         User.findOne({_id: req.user._id})

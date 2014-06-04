@@ -15,7 +15,6 @@ var session = require('express-session');
 /* ==== CONFIG ==== */
 var db = require('./app/config/db.js');
 var port = process.env.PORT || 8080;
-var passportHelpers = require('./app/passportHelpers');
 
 /* ==== MONGODB ==== */
 var User = require('./app/models/User.js');
@@ -30,21 +29,21 @@ mongoose.connection.once('open', function() { console.log("Mongo DB connected!")
 app.use(express.static(__dirname + '/public'));     // set the static files location /public/img will be /img for users
 
 /* ==== AUTHENTICATION ==== */
-require('./app/passport')(passport, passportHelpers, User); // pass passport for configuration
-
-
 // set up our express application
 app.use(morgan('dev'));                     // log every request to the console
 app.use(cookieParser());                    // read cookies (needed for auth)
 app.use(bodyParser());                      // get information from html forms
+
 app.use(session({ secret: 'houseApp' }));   // session secret
 app.use(passport.initialize());
 app.use(passport.session());                // persistent login sessions
 app.use(flash());                           // use connect-flash for flash messages stored in session
+
 app.use(methodOverride());                  // simulate DELETE and PUT
 
 // routes
-require('./app/routes.js')(app, passport, User, Group, Listing); // load our routes and pass in our app and fully configured passport
+require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./app/passport.js')(passport); // pass passport for configuration
 
 // start app
 app.listen(port);
