@@ -5,9 +5,9 @@ var googleAuth = new OAuth2('google', {
 });
 
 var email; 
+var xhr = new XMLHttpRequest(); 
 
 googleAuth.authorize(function() {
-  var xhr = new XMLHttpRequest(); 
   xhr.onreadystatechange = function() { 
     if( xhr.readyState == 4 ) {
       if( xhr.status == 200 ) { 
