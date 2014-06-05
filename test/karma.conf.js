@@ -12,11 +12,12 @@ module.exports = function(config) {
       'public/libs/angular/angular.js',
       'public/libs/angular-mocks/angular-mocks.js',
       'public/libs/angular-route/angular-route.js',
-      'public/js/app.js',
-      'public/js/*.js',
-      'public/js/controllers/*.js',
-      'public/js/services/*.js',
-      'test/spec/*.js'
+      'public/libs/jquery/dist/jquery.js',
+      // 'public/js/app.js',
+      // 'public/js/*.js',
+      // 'public/js/controllers/*.js',
+      // 'public/js/services/*.js',
+      'test/spec/apiTest.js'
     ],
 
     // frameworks to use

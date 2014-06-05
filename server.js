@@ -12,11 +12,17 @@ mongoose.connect(dbConfig.url);
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', function() { console.log("Mongo DB connected!"); });
 
+var allowCrossDomain = function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin','*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  next();
+};
 // express
 app.configure(function() {
     app.use(express.static(__dirname + '/public'));     // set the static files location /public/img will be /img for users
     app.use(express.logger('dev'));                     // log every request to the console
     app.use(express.bodyParser());                      // pull information from html in POST
+    app.use(allowCrossDomain);                          // allow cors
     app.use(express.methodOverride());                  // simulate DELETE and PUT
 });
 

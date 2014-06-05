@@ -44,6 +44,19 @@ module.exports = function(app) {
         });
     });
 
+    app.get('/api/getTestUser', function (req, res) {
+        var newUser = new User();
+            newUser.set('name', 'testSuite');
+            newUser.set('email', 'test@gmail.com');
+            newUser.set('prefDistance', '50');
+            newUser.set('budget', 4000);
+            newUser.set('location', [10,20]); // lat & long
+            newUser.save(function(err) {
+            if(err){console.log(err);}
+            res.send(newUser);
+        });
+    });
+
     //Give a group ID and get a group back
     app.get('/api/group/:id', function (req, res) {
         Group.findOne({_id: req.params.id}, function (err, group) {
@@ -51,11 +64,17 @@ module.exports = function(app) {
         });
     });
 
+    app.get('/api/group/:id/users', function (req, res) {
+        User.find({groups: req.params.id}, function (err, users) {
+            res.send(users);
+        });
+    });
 
     app.get('/api/group/:groupId/listings', function (req, res) {
         Listing.find({group: req.params.groupId})
         .populate('group')
         .exec(function (err, listings) {
+            console.log(err);
             res.send(listings);
         });
     });
@@ -84,12 +103,11 @@ module.exports = function(app) {
                 return null;
             }
             newListing.save(); //TODO: error handing
-            res.send(listing); //figure out what we're returning
+            res.send(newListing); //figure out what we're returning
         })
     });
 
 
-    //delete a listing. give it a listing id.
     app.delete('/api/listings/:id', function (req, res) {
         Listing.findOne({_id: req.params.id}, function (err, listing) {
             listing.remove();
@@ -104,21 +122,19 @@ module.exports = function(app) {
                 if (err) {return err;}
                 res.send(user);
             });
-            res.send('success');
         });
     });
 
-    //TODO: remove group
-    // app.delete('/api/group/:groupId/users/:userId', function (req, res) {
-    //     User.findOne({_id: req.params.userId}, function (err, user) {
-    //         user.groups.push(req.params.groupId);
-    //         user.save(function(err){
-    //             if (err) {return err;}
-    //             res.send(user);
-    //         });
-    //         res.send('success');
-    //     });
-    // });
+    app.delete('/api/group/:groupId/users/:userId', function (req, res) {
+        console.log(req.params.userId);
+        User.findOne({_id: req.params.userId}, function (err, user) {
+            user.groups.remove(req.param.groupId);
+            user.save(function(err) {
+                if (err) {return err;}
+                res.send(user);
+            });
+        });
+    });
 
     // (@name, @userId)
     app.post('/api/group', function (req, res) {
@@ -127,19 +143,20 @@ module.exports = function(app) {
         })
         newGroup.save(function (err) {
             User.findOne({_id: req.body.userId}, function (err, user) {
+                if(err) {console.log(err)};
                 user.groups.push(newGroup);
                 user.save(function(err) {
+                    if(err){console.log(err)}
+                    console.log(newGroup);
                     res.send(newGroup);
                 });
             });
         });
     });
 
-    // app.get('*', function(req, res) {
-    //     res.sendfile('./public/index.html');
-    // });
     app.get('*', function(req, res) {
-        res.sendfile('./ajaxtest.html');
+        res.sendfile('./public/index.html');
     });
+
 };
 
