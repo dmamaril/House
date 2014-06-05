@@ -1,7 +1,8 @@
-app.factory('Listings', function ($http, $rootScope) {    
+app.factory('Listings', function ($http, $rootScope, Maps) {    
     var methods = {};
 
     var broadcast = function (listings) {
+        console.log(listings);
         var mapped = listings.map(function(listing, i) {
             listing.id = i;
             return listing;
@@ -35,7 +36,7 @@ app.factory('Listings', function ($http, $rootScope) {
         return $http.delete('/api/listings', {
             params: {
                 groupName: $rootScope.groupName,
-                listing: listing
+                listingURL: listing.url
             }
         }).success(broadcast);
     };

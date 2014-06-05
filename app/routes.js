@@ -1,39 +1,33 @@
 var http = require('http-request');
 var LinkParser = require('./linkParser.js')
 
-// Mongoose Models
 var User = require('./models/User.js');
 var Group = require('./models/Group.js');
 var Listing = require('./models/Listing.js');
 
+var Authentication = require('./authentication.js');
 
-module.exports = function(app) {
-    app.get('/api/test', function (req, res) {
-        console.log(req);
-        res.send(req);
-    }),
-
-    //gets a user, requires user id
-    app.get('/api/user/:id', function (req, res) {
-        User.findOne({_id: req.params.id})
-        .populate('groups')
-        .exec( function (err, user) {
-            if (user) {
-                res.send(user);
-            } else {
-                res.send(501, err);
-            }
-        });
+module.exports = function(app, passport) {
+    /* === MAIN ROUTES === */
+    app.get('/api/user/:id', Authentication.check, function (req, res) {
+        console.log('Win.')
+        // User.findOne({_id: req.user._id})
+        // .populate('groups')
+        // .exec(function (err, user) {
+        //     if (user) {
+        //         res.send(user);
+        //     } else {
+        //         res.send(501, err);
+        //     }
+        // });
     });
 
-    //edits a user. TODO: how to handle groups
-    app.put('/api/user/:id', function (req, res) {
+    app.put('/api/user/:id', Authentication.check, function (req, res) {
         User.findOne({_id: req.params.id}, function (err, user) {
             if (user) {
-                if(req.params.name) {user.name = req.params.name};
-                if(req.params.budget) {user.budget = req.params.budget};
-                if(req.params.location) {user.location = req.params.location};
-                if(req.params.prefDistance) {user.prefDistance = req.params.prefDistance};
+                if (req.params.budget) { user.budget = req.params.budget };
+                if (req.params.location) { user.location = req.params.location };
+                if (req.params.prefDistance) { user.prefDistance = req.params.prefDistance };
                 user.save(function (err, savedUser) {
                     console.log(savedUser, 'Successfully saved!');
                 });
@@ -57,8 +51,21 @@ module.exports = function(app) {
         });
     });
 
-    //Give a group ID and get a group back
-    app.get('/api/group/:id', function (req, res) {
+    app.post('/api/group', Authentication.check, function (req, res) {
+        var newGroup = new Group({
+            name: req.body.name
+        })
+        newGroup.save(function (err) {
+            User.findOne({_id: req.body.userId}, function (err, user) {
+                user.groups.push(newGroup);
+                user.save(function(err) {
+                    res.send(newGroup);
+                });
+            });
+        });
+    });
+
+    app.get('/api/group/:id', Authentication.check, function (req, res) {
         Group.findOne({_id: req.params.id}, function (err, group) {
             res.send(group);
         });
@@ -70,8 +77,8 @@ module.exports = function(app) {
         });
     });
 
-    app.get('/api/group/:groupId/listings', function (req, res) {
-        Listing.find({group: req.params.groupId})
+    app.get('/api/group/:id/listings', Authentication.check, function (req, res) {
+        Listing.find({group: req.params.id})
         .populate('group')
         .exec(function (err, listings) {
             console.log(err);
@@ -79,8 +86,7 @@ module.exports = function(app) {
         });
     });
 
-    //post a listing, requires a url and a groupId
-    app.post('/api/listings', function (req, res) {
+    app.post('/api/listings', Authentication.check, function (req, res) {
         var newListing = new Listing({
             group: req.body.groupId //TODO: Agree on name for the req
         })
@@ -108,16 +114,16 @@ module.exports = function(app) {
     });
 
 
-    app.delete('/api/listings/:id', function (req, res) {
+
+    app.delete('/api/listings/:id', Authentication.check, function (req, res) {
         Listing.findOne({_id: req.params.id}, function (err, listing) {
             listing.remove();
-            res.send('success');
         });
     });
 
-    app.put('/api/group/:groupId/users/:userId', function (req, res) {
+    app.put('/api/group/:id/users/:userId', Authentication.check, function (req, res) {
         User.findOne({_id: req.params.userId}, function (err, user) {
-            user.groups.push(req.params.groupId);
+            user.groups.push(req.params.id);
             user.save(function(err){
                 if (err) {return err;}
                 res.send(user);
@@ -154,9 +160,8 @@ module.exports = function(app) {
         });
     });
 
+    /* === DEFAULT === */
     app.get('*', function(req, res) {
         res.sendfile('./public/index.html');
     });
-
 };
-

@@ -9,7 +9,8 @@ html, body, .content {
 .omega { margin-right: 0; padding-right: 0;}
 a:hover { text-decoration: none; }
 
-.angular-google-map-container { height: 500px; }
+.angular-google-map-container { height: 600px; }
+.fa:hover, .fa-google-plus:hover { background-color: #CBE3B0;}
 
 /* ========= CONTAINERS ========= */
 /* HOME PAGE CONTAINERS */

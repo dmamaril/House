@@ -17,7 +17,8 @@
 	<script src="libs/underscore/underscore.js"></script>
 	<script src="libs/angular/angular.js"></script>
 	<script src="libs/angular-route/angular-route.js"></script>
-	<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=true_or_false">
+  	</script>
 	<script src="libs/angular-google-maps/dist/angular-google-maps.min.js"></script>
 
 	<!-- ANGULAR CUSTOM -->
@@ -39,6 +40,7 @@
 	<script src="js/services/ListingService.js"></script>
 	<script src="js/services/GroupService.js"></script>
 	<script src="js/services/UserService.js"></script>
+	<script src="js/services/MapsService.js"></script>
 </head>
 <body ng-app="houseApp">
 

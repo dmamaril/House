@@ -1,16 +1,34 @@
 app.factory('User', function($http, $rootScope, $location) {
-    var methods = {};
+    var userProfile = {};
+    var currentGroup = '';
 
     var broadcast = function (user) {
-        $rootScope.user = user;
+        userProfile = user;
+        $rootScope.groupName = user.groups[0].name;
         $rootScope.$emit('change:user', user);
     };
 
-    methods.get = function() {
-        return $http.get('/api/user', {
-            params: {id: $rootScope.user._id}
-        }).success(broadcast);
+    var methods = {};
+
+    methods.fetch = function() {
+        return $http.get('/api/user/:id').success(broadcast);
     };
+
+    methods.attr = function(userAttrs) {
+        if (arguments.length === 0) { // GET
+            return userProfile;
+        } else { // SET
+            Object.keys(userAttrs).forEach(function(key) {
+                
+            });
+        }
+    };
+
+
+    methods.get = function() {
+        return $http.get('/api/user/:id').success(broadcast);
+    };
+
 
     methods.edit = function(user) {
         return $http.post('/api/user', {
@@ -21,16 +39,6 @@ app.factory('User', function($http, $rootScope, $location) {
             prefDistance: user.prefDistance,
             groups: user.groups
         }).success(broadcast);
-    };
-
-    methods.login = function (email) {
-        return $http.post('/login', { email: email })
-            .success(function(user) {
-                console.log(user);
-                $rootScope.user = user;
-                $rootScope.groupName =  user.groups[0];
-                $location.path("/listings");
-            });
     };
 
     methods.addGroup = function (groupName) {
