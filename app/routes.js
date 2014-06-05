@@ -42,6 +42,7 @@ module.exports = function(app, passport, User, Group, Listing) {
 
     //gets a user, requires user id
     app.get('/api/user/:id', function (req, res) {
+        console.log('in', req.user._id);
         User.findOne({_id: req.user._id})
         .populate('groups')
         .exec( function (err, user) {

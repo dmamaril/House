@@ -1,0 +1,39 @@
+{
+    "name": "__MSG_appName__",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "description": "__MSG_appDescription__",
+    "icons": {
+        "16": "images/house16.png",
+        "128": "images/house128.png"
+    },
+    "default_locale": "en",
+    "background": {
+        // "scripts": [
+        //     "scripts/background.js"
+        // ]
+        "page": "background.html"
+    },
+  "permissions": [
+    "background",
+    "tabs",
+    "http://localhost:8080/*",
+    "http://*/*",
+    "https://*/*",
+    "https://accounts.google.com/o/oauth2/token", 
+    "https://www.googleapis.com/oauth2/v1/userinfo"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "19": "images/house19.png",
+      "38": "images/house38.png"
+    }
+  },
+  "web_accessible_resources": [
+    "oauth2/oauth2.html"
+  ],
+  "content_scripts": [   {
+    "matches": ["http://www.google.com/robots.txt*"],
+    "js": ["oauth2/oauth2_inject.js"],
+    "run_at": "document_start"   } ]
+}
