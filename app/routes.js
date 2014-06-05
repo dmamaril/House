@@ -23,11 +23,14 @@ module.exports = function(app, passport) {
     });
 
     app.put('/api/user/:id', Authentication.check, function (req, res) {
-        User.findOne({_id: req.params.id}, function (err, user) {
+        User.findOne({_id: req.params.id})
+        .populate('groups')
+        .exec(function (err, user) {
+            console.log(req.body);
             if (user) {
-                if (req.params.budget) { user.budget = req.params.budget };
-                if (req.params.location) { user.location = req.params.location };
-                if (req.params.prefDistance) { user.prefDistance = req.params.prefDistance };
+                if (req.body.budget) { user.budget = req.body.budget };
+                if (req.body.location) { user.location = req.body.location };
+                if (req.body.prefDistance) { user.prefDistance = req.body.prefDistance };
                 user.save(function (err, savedUser) {
                     console.log(savedUser, 'Successfully saved!');
                 });
@@ -41,7 +44,7 @@ module.exports = function(app, passport) {
     app.post('/api/group', Authentication.check, function (req, res) {
         var newGroup = new Group({
             name: req.body.name
-        })
+        });
         newGroup.save(function (err) {
             User.findOne({_id: req.body.userId}, function (err, user) {
                 user.groups.push(newGroup);
@@ -52,8 +55,10 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.get('/api/group/:id/users', Authentication.check, function (req, res) {
-        /**/
+    app.get('/api/group/:id/users', function (req, res) {
+        User.find({groups: req.params.id}, function (err, users) {
+            res.send(users);
+        });
     });
 
 

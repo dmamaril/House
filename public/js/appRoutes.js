@@ -7,7 +7,12 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 
 	.when('/home/:id', {
 		templateUrl: 'views/listings.html',
-		controller: 'ListingsController'
+		controller: 'ListingsController',
+		resolve: {
+			app: function ($route, User) {
+				return User.fetch($route.current.params.id);
+			}
+		}
 	})
 
 	.when('/groups', {

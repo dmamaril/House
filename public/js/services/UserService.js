@@ -1,40 +1,31 @@
 app.factory('User', function($http, $rootScope, $location) {
     var userProfile = {};
     var currentGroup = {};
-    var isInitialized = false;
 
     var updateCache = function (user) {
+        console.log("User fetched. ", user);
         userProfile = user;
+        currentGroup = user.groups[0];
         $rootScope.$emit('change:user', user);
     };
 
     var User = {};
 
-    User.init = function(id) {
-        return $http.get('/api/user/:' + id).success(function(user) {
-            console.log("Initialized! ", user);
-            isInitialized = true;
-            currentGroup = users.groups[0];
-            updateCache(user);
-        });
+    User.fetch = function(id) {
+        var id = id || userProfile._id;
+        return $http.get('/api/user/' + id).success(updateCache);
     };
 
-    User.fetch = function() {
-        return $http.get('/api/user/:' + id).success(updateCache);
-    };
-
-    User.get = function () {
-        return userProfile;
-    };
-
+    User.get = function () { return userProfile; };
     User.set = function (userAttrs) {
         Object.keys(userAttrs).forEach(function(key) {
             userProfile[key] = userAttrs[key];
         });
 
-        return $http.post('/api/user/:' + userProfile._id, {
-            params: userProfile
-        }).success(updateCache);
+        console.log(userProfile);
+
+        return $http.put('/api/user/' + userProfile._id, userProfile)
+            .success(updateCache);
     };
 
     User.currentGroup = function(groupName) {
@@ -50,9 +41,7 @@ app.factory('User', function($http, $rootScope, $location) {
         }
     };
 
-    User.isInitialized = function() {
-        return isInitialized;
-    };
+    User.getId = function() { return userProfile._id; }
 
     return User;
 });

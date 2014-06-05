@@ -11,6 +11,7 @@ var createUser = function (profile, token, done) {
         if (err) { throw err; }
         var newUser = new User();
 
+        newUser._id = profile.id;
         newUser.google.token = token;
         newUser.google.name  = profile.displayName;
         newUser.google.email = profile.emails[0].value.toLowerCase() || ''; // pull the first email

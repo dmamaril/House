@@ -1,12 +1,12 @@
 app.controller('ChannelController', function ($scope, $rootScope, $location, Groups, User) {
     $scope.groupName = User.currentGroup().name;
-    $scope.groups = User.get().map(function(group) {
+    $scope.groups = User.get().groups.map(function(group) {
         return group.name;
     });
     $scope.toJoin = '';
 
     $rootScope.$on('change:groups', function() {
-        $scope.groups = User.get().map(function(group) {
+        $scope.groups = User.get().groups.map(function(group) {
             return group.name;
         });
     });
