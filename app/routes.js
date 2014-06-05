@@ -24,9 +24,9 @@ module.exports = function(app, passport) {
     app.put('/api/user/:id', Authentication.check, function (req, res) {
         User.findOne({_id: req.params.id}, function (err, user) {
             if (user) {
-                if(req.params.budget) {user.budget = req.params.budget};
-                if(req.params.location) {user.location = req.params.location};
-                if(req.params.prefDistance) {user.prefDistance = req.params.prefDistance};
+                if (req.params.budget) { user.budget = req.params.budget };
+                if (req.params.location) { user.location = req.params.location };
+                if (req.params.prefDistance) { user.prefDistance = req.params.prefDistance };
                 user.save(function (err, savedUser) {
                     console.log(savedUser, 'Successfully saved!');
                 });
