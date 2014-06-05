@@ -93,12 +93,28 @@ var Authentication = function(app, passport) {
 
     /* === O-AUTH ROUTES === */   
     app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-    app.get('/auth/google/callback',
-        passport.authenticate('google', {
-            successRedirect : '/listings',
-            failureRedirect : '/'
-        })
-    );
+    app.get('/auth/google/callback', function (req, res, next) {
+        passport.authenticate('google', function (err, user, info) {
+            var redirectURL = '/user/' + user._id;
+            console.log('RedirectURL', redirectURL)
+
+            if (err) { return next(err); }
+            if (!user) { return res.redirect('/'); }
+
+            if (req.session.redirectURL) {
+                console.log('authentication.js Req.session.redirectURL', req.session.redirectURL)
+                redirectURL = req.session.redirectURL;
+                req.session.redirectURL = null;
+            }
+
+            req.logIn(user, function (err) {
+                if (err) { return next(err); }
+            });
+
+            res.redirect(redirectURL);
+        })(req, res, next);
+    });
+
 
     app.get('/unlink/google', function(req, res) {
         req.logout();

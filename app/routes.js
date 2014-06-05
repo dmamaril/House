@@ -10,15 +10,16 @@ var Authentication = require('./authentication.js');
 module.exports = function(app, passport) {
     /* === MAIN ROUTES === */
     app.get('/api/user/:id', Authentication.check, function (req, res) {
-        User.findOne({_id: req.user._id})
-        .populate('groups')
-        .exec(function (err, user) {
-            if (user) {
-                res.send(user);
-            } else {
-                res.send(501, err);
-            }
-        });
+        console.log('Win.')
+        // User.findOne({_id: req.user._id})
+        // .populate('groups')
+        // .exec(function (err, user) {
+        //     if (user) {
+        //         res.send(user);
+        //     } else {
+        //         res.send(501, err);
+        //     }
+        // });
     });
 
     app.put('/api/user/:id', Authentication.check, function (req, res) {
