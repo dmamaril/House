@@ -5,8 +5,4 @@ app.controller('ListingsController', function ($scope, $rootScope, Listings) {
         $scope.listings = listings;
     });
     Listings.get($rootScope.groupName);
-
-    // $scope.test = function(input) {
-    //     Maps.geocode(input);
-    // };
 });
