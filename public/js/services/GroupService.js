@@ -29,7 +29,6 @@ app.factory('Groups', function ($rootScope, $http) {
     };
 
     Group.getMembers = function(group) {
-        console.log(group);
         var id = group._id;
         return $http.get('/api/group/' + id + '/users/')
             .success(updateMembers);

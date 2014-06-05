@@ -3,7 +3,6 @@ app.factory('User', function($http, $rootScope, $location) {
     var currentGroup = {};
 
     var updateCache = function (user) {
-        console.log("User fetched. ", user);
         userProfile = user;
         currentGroup = user.groups[0];
         $rootScope.$emit('change:user', user);

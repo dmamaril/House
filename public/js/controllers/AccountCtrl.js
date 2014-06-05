@@ -6,7 +6,6 @@ app.controller('AccountController', function ($scope, $rootScope, User) {
 
     $scope.save = function (keyEvent) {
         if (keyEvent.which === 13) {
-            console.log($scope.user);
             User.set($scope.user);
         }
     };
