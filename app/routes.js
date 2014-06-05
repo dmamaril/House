@@ -10,6 +10,7 @@ var Authentication = require('./authentication.js');
 module.exports = function(app, passport) {
     /* === MAIN ROUTES === */
     app.get('/api/user/:id', Authentication.check, function (req, res) {
+        console.log(req.params.id);
         User.findOne({_id: req.user._id})
         .populate('groups')
         .exec(function (err, user) {
