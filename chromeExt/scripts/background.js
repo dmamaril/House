@@ -47,9 +47,9 @@ var parseUrl = function (uri) {
     // If the request completed
     if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          if (xhr.response.indexOf('craigslist') > -1) { 
+          if (uri.indexOf('craigslist') !== -1 && uri.indexOf('.html') !== -1) { 
               postToServer(parser.craigslist(xhr.response, uri));
-            } else if (xhr.response.indexOf('airbnb') > -1) {
+            } else if (uri.indexOf('airbnb') !== -1 && uri.indexOf('/rooms/') !== -1) {
               postToServer(parser.airbnb(xhr.response, uri));
             } else {
               console.log('NOT A VALID URI !!!!!!!!');
