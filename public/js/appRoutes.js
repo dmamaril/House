@@ -9,9 +9,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 			templateUrl: 'views/groups.html',
 			controller: 'GroupsController',
 			resolve: {
-				userData: function (User) {
-					return User.get();
-				}
+				userData: function (User) { return User.fetch(); }
 			}
 		})
 

@@ -44,8 +44,8 @@ module.exports = function(app, passport) {
     });
 
 
-    app.get('/api/group/:groupId/listings', Authentication.check, function (req, res) {
-        Listing.find({group: req.params.groupId})
+    app.get('/api/group/:id/listings', Authentication.check, function (req, res) {
+        Listing.find({group: req.params.id})
         .populate('group')
         .exec(function (err, listings) {
             res.send(listings);

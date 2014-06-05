@@ -11,6 +11,10 @@ app.factory('User', function($http, $rootScope, $location) {
         return $http.get('/api/user/:id').success(broadcast);
     };
 
+    methods.fetch = function() {
+        return $http.get('/api/user/:id').success(broadcast);
+    };
+
     methods.edit = function(user) {
         return $http.post('/api/user', {
             id: $rootScope.user._id,
