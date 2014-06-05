@@ -4,6 +4,7 @@ app.factory('User', function($http, $rootScope, $location) {
 
     var broadcast = function (user) {
         userProfile = user;
+        $rootScope.user = user;
         $rootScope.groupName = user.groups[0].name;
         $rootScope.$emit('change:user', user);
     };
@@ -19,7 +20,7 @@ app.factory('User', function($http, $rootScope, $location) {
             return userProfile;
         } else { // SET
             Object.keys(userAttrs).forEach(function(key) {
-                
+
             });
         }
     };
