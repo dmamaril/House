@@ -50,7 +50,7 @@ module.exports = function(app, passport) {
             });
         });
     });
-    
+
     app.get('/api/group/:id', Authentication.check, function (req, res) {
         Group.findOne({_id: req.params.id}, function (err, group) {
             res.send(group);
@@ -100,9 +100,9 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.put('/api/group/:groupId/users/:userId', Authentication.check, function (req, res) {
+    app.put('/api/group/:id/users/:userId', Authentication.check, function (req, res) {
         User.findOne({_id: req.params.userId}, function (err, user) {
-            user.groups.push(req.params.groupId);
+            user.groups.push(req.params.id);
             user.save(function(err){
                 if (err) {return err;}
                 res.send(user);
@@ -110,9 +110,9 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.delete('/api/group/:groupId/users/:userId', function (req, res) {
+    app.delete('/api/group/:id/users/:userId', function (req, res) {
         User.findOne({_id: req.params.userId}, function (err, user) {
-            user.groups.remove(req.param.groupId);
+            user.groups.remove(req.param.id);
             user.save(function(err) {
                 if (err) {return err;}
                 res.send(user);
