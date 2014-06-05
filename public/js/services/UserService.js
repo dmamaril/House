@@ -1,10 +1,10 @@
 app.factory('User', function($http, $rootScope, $location) {
     var userProfile = {};
-    var currentGroup = {};
+    var currentGroup;
 
     var updateCache = function (user) {
         userProfile = user;
-        currentGroup = user.groups[0];
+        currentGroup = currentGroup || user.groups[0];
         $rootScope.$emit('change:user', user);
     };
 
@@ -20,8 +20,6 @@ app.factory('User', function($http, $rootScope, $location) {
         Object.keys(userAttrs).forEach(function(key) {
             userProfile[key] = userAttrs[key];
         });
-
-        console.log(userProfile);
 
         return $http.put('/api/user/' + userProfile._id, userProfile)
             .success(updateCache);

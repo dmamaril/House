@@ -1,10 +1,14 @@
-app.factory('Groups', function ($rootScope, $http) {
+app.factory('Groups', function ($rootScope, $http, User) {
     var updateMembers = function (members) {
         $rootScope.$emit('change:members', members);
     };
     var updateGroups = function (groups) {
         $rootScope.$emit('change:groups', groups);
     };
+
+    $rootScope.$on('change:user', function() {
+        Group.getMembers(User.currentGroup());
+    });
 
     var Group = {};
     Group.create = function(creator, groupName) {
