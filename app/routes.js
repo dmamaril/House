@@ -52,10 +52,8 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.get('/api/group/:id', Authentication.check, function (req, res) {
-        Group.findOne({_id: req.params.id}, function (err, group) {
-            res.send(group);
-        });
+    app.get('/api/group/:id/users', Authentication.check, function (req, res) {
+        /**/
     });
 
 

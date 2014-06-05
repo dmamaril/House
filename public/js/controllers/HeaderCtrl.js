@@ -1,4 +1,4 @@
-app.controller('HeaderController', function ($scope, $location, Listings) {
+app.controller('HeaderController', function ($scope, $location, Listings, User) {
     $scope.url = '';
 
     $scope.navigate = function (path) {
@@ -11,7 +11,7 @@ app.controller('HeaderController', function ($scope, $location, Listings) {
 
     $scope.post = function (keyEvent, groupName) {
         if (keyEvent.which === 13) { 
-            Listings.post($scope.url); 
+            Listings.create(User.currentGroup(), $scope.url); 
             $scope.url = '';
         }
     };

@@ -5,6 +5,11 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 		controller: 'HomeController'
 	})
 
+	.when('/home/:id', {
+		templateUrl: 'views/listings.html',
+		controller: 'ListingsController'
+	})
+
 	.when('/groups', {
 		templateUrl: 'views/groups.html',
 		controller: 'GroupsController'
@@ -12,10 +17,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 
 	.when('/listings', {
 		templateUrl: 'views/listings.html',
-		controller: 'ListingsController',
-		resolve: {
-			userData: function (User) { return User.fetch(); }
-		}
+		controller: 'ListingsController'
 	});
 
 	$locationProvider.html5Mode(true);

@@ -1,69 +1,58 @@
 app.factory('User', function($http, $rootScope, $location) {
     var userProfile = {};
-    var currentGroup = '';
+    var currentGroup = {};
+    var isInitialized = false;
 
-    var broadcast = function (user) {
+    var updateCache = function (user) {
         userProfile = user;
-        $rootScope.user = user;
-        $rootScope.groupName = user.groups[0].name;
         $rootScope.$emit('change:user', user);
     };
 
-    var methods = {};
+    var User = {};
 
-    methods.fetch = function() {
-        var id = userProfile._id;
-        return $http.get('/api/user/:' + id).success(broadcast);
+    User.init = function(id) {
+        return $http.get('/api/user/:' + id).success(function(user) {
+            console.log("Initialized! ", user);
+            isInitialized = true;
+            currentGroup = users.groups[0];
+            updateCache(user);
+        });
     };
 
-    methods.attr = function (userAttrs) {
-        if (arguments.length === 0) { // GET
-            return userProfile;
-        } else { // SET
-            var params = {};
-            Object.keys(userAttrs).forEach(function(key) {
+    User.fetch = function() {
+        return $http.get('/api/user/:' + id).success(updateCache);
+    };
 
+    User.get = function () {
+        return userProfile;
+    };
+
+    User.set = function (userAttrs) {
+        Object.keys(userAttrs).forEach(function(key) {
+            userProfile[key] = userAttrs[key];
+        });
+
+        return $http.post('/api/user/:' + userProfile._id, {
+            params: userProfile
+        }).success(updateCache);
+    };
+
+    User.currentGroup = function(groupName) {
+        if (arguments.length === 0) {
+            return currentGroup;
+        } else {
+            userProfile.groups.forEach(function(group) {
+                if (groupName === group.name) {
+                    currentGroup = group;
+                }
             });
+            return currentGroup;
         }
     };
 
-    methods.test = function() {
-        return $http.put('/api/user/:id', {
-            params: { id: userProfile._id, test: 'hello'}
-        });
-    }
-
-    methods.get = function() {
-        return $http.get('/api/user/:id').success(broadcast);
+    User.isInitialized = function() {
+        return isInitialized;
     };
 
-
-    methods.edit = function(user) {
-        return $http.post('/api/user', {
-            id: $rootScope.user._id,
-            name: user.name,
-            budget: user.budget,
-            location: user.location,
-            prefDistance: user.prefDistance,
-            groups: user.groups
-        }).success(broadcast);
-    };
-
-    methods.addGroup = function (groupName) {
-        return $http.post('/api/group', {
-            id: $rootScope.user._id, 
-            groupName: groupName
-        }).success(broadcast);
-    };
-
-    methods.removeGroup = function (groupName) {
-        return $http.get('/api/group', {
-            params: {
-                id: $rootScope.user._id, 
-                groupName: groupName
-            }
-        }).success(broadcast);
-    };
-
-    return methods;
+    return User;
 });

@@ -1,8 +1,10 @@
-app.controller('ListingsController', function ($scope, $rootScope, Listings) {
+app.controller('ListingsController', function ($scope, $rootScope, $routeParams, Listings, User) {
+    if (!User.isInitialized()) { User.init($routeParams.id); }
     $scope.listings = [];
-
+    
     $rootScope.$on('change:listings', function(event, listings) {
         $scope.listings = listings;
     });
-    Listings.get($rootScope.groupName);
+
+    Listings.getByGroup(User.currentGroup());
 });

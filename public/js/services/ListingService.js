@@ -1,45 +1,29 @@
 app.factory('Listings', function ($http, $rootScope, Maps) {    
-    var methods = {};
 
-    var broadcast = function (listings) {
-        console.log(listings);
-        var mapped = listings.map(function(listing, i) {
-            listing.id = i;
-            return listing;
-        }); // google maps plugin requires object.id to be present
-        $rootScope.$emit('change:listings', mapped);
+    var updateCache = function (listings) {
+        $rootScope.$emit('change:listings', listings);
     };
 
-    methods.get = function(groupName) {
-        return $http.get('/api/listings', {
-            params: {groupName: groupName}
-        }).success(broadcast);
-    };
+    var Listings = {};
 
-    methods.post = function(url) {
+    Listings.create = function (groupObj, url) {
+        var groupId = groupObj._id;
         return $http.post('/api/listings', {
-            groupName: $rootScope.groupName,
+            groupId: groupId,
             url: url
-        }).success(broadcast);
+        }).success(updateCache);
     };
 
-    methods.put = function(listing) {
-        return $http.put('/api/listings', {
-            params: {
-                groupName: $rootScope.groupName,
-                listing: listing
-            }
-        }).success(broadcast);
+    Listings.remove = function (id) {
+        return $http.delete('/api/listings/' + id)
+            .success(updateCache);
     };
 
-    methods.delete = function(listing) {
-        return $http.delete('/api/listings', {
-            params: {
-                groupName: $rootScope.groupName,
-                listingURL: listing.url
-            }
-        }).success(broadcast);
+    Listings.getByGroup = function (groupObj) {
+        var id = groupObj._id;
+        return $http.get('/api/group/' + id + '/listings')
+            .success(updateCache);
     };
 
-    return methods;
+    return Listings;
 });

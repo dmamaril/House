@@ -1,13 +1,14 @@
 app.controller('ChannelController', function ($scope, $rootScope, $location, Groups, User) {
-    $scope.groupName = $rootScope.groupName;
-    $scope.groups = $rootScope.user.groups;
+    $scope.groupName = User.currentGroup().name;
+    $scope.groups = User.get().map(function(group) {
+        return group.name;
+    });
     $scope.toJoin = '';
 
-    $rootScope.$on('change:channel', function(event, newChannel) {
-        $scope.groupName = newChannel;
-    });
-    $rootScope.$on('change:user', function(event, user) {
-        $scope.groups = $rootScope.user.groups;
+    $rootScope.$on('change:groups', function() {
+        $scope.groups = User.get().map(function(group) {
+            return group.name;
+        });
     });
 
     $scope.checkActive = function(groupName) {
@@ -19,14 +20,18 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
         User.removeGroup(groupName);
     };
 
+    $scope.create = function () {
+        Group.create(User.get(), $scope.toJoin);
+        $scope.toJoin = '';
+    };
+
     $scope.join = function () {
-        User.addGroup($scope.toJoin);
+        Group.addUser(User.get(), $scope.toJoin);
         $scope.toJoin = '';
     };
 
     $scope.switch = function (groupName) {
-        $rootScope.groupName = groupName;
-        $rootScope.$emit('change:channel', $rootScope.groupName);
-        $location.path('/groups'); // force reinstantiation of controller
+        User.currentGroup(groupName);
+        $scope.groupName = User.currentGroup().name;
     };
 });
