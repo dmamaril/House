@@ -9,8 +9,7 @@ var Authentication = require('./authentication.js');
 
 module.exports = function(app, passport) {
     /* === MAIN ROUTES === */
-    app.get('/api/user/:id', Authentication.check, function (req, res) {
-        console.log(req.params.id);
+    app.get('/api/user/:id', function (req, res) {
         User.findOne({_id: req.params.id})
         .populate('groups')
         .exec(function (err, user) {
@@ -71,6 +70,7 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/group/:id/listings', function (req, res) {
+        console.log('Receiving request', req.body.url);
         var newListing = new Listing({
             group: req.params.id
         })
@@ -135,7 +135,7 @@ module.exports = function(app, passport) {
 
 
     /* === DEFAULT === */
-    app.get('*', function(req, res) {
+    app.get('*', Authentication.check, function(req, res) {
         res.sendfile('./public/index.html');
     });
 };

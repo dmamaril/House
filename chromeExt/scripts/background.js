@@ -4,54 +4,29 @@ var saveListing = function () {
   });
 };
 
-var parseUrl = function (uri) {
-  var xhr = new XMLHttpRequest(); 
-  xhr.open('GET', uri, true);
-  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          if (uri.indexOf('craigslist') !== -1 && uri.indexOf('.html') !== -1) { 
-              postToServer(parser.craigslist(xhr.response, uri));
-            } else if (uri.indexOf('airbnb') !== -1 && uri.indexOf('/rooms/') !== -1) {
-              postToServer(parser.airbnb(xhr.response, uri));
-            } else {
-              console.log('Not a valid uri.');
-            }
-        } else {
-            console.log('Server communication error.');
-        }
-    }
-  };
-  xhr.send();
-};
-
 var postToServer = function (url) {
-    var postURL = 'http://localhost:8080/api/group/1234/listings';
 
-    var xhr = new XMLHttpRequest(); 
-    xhr.open('POST', postURL, true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    chrome.storage.local.get('groupId', function (groupId) {
+      var postURL = 'http://localhost:8080/api/group/' + groupId.groupId + '/listings';
 
-    xhr.onreadystatechange = function () {
-      // If the request completed
-      if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            console.log(xhr);
-          } else {
-              console.log('Error saving ');
-          }
-      }
-    };
+      var xhr = new XMLHttpRequest(); 
+      xhr.open('POST', postURL, true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-    chrome.storage.local.get('notImportantInfoPlsStayAway', function (storage) {
+      xhr.onreadystatechange = function () {
+        // If the request completed
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              // console.log(xhr);
+            } else {
+                console.log('Error saving ');
+            }
+        }
+      };
 
-      var params  =   'chromeData=' + url + 
-                      '&googleId=' + storage.notImportantInfoPlsStayAway;
-
-      // params = params.replace(/%20/g, '+');
-      xhr.send(params);
+        var params  =   'url=' + url;
+        // params = params.replace(/%20/g, '+');
+        xhr.send(params);
     });
 };
 
