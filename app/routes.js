@@ -71,6 +71,23 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/group/:id/listings', Authentication.check, function (req, res) {
+
+        if (req.body.chromeData) {
+            req.body.url = req.body.chromeData;
+            var googleId = req.body.googleId;
+
+            User.findOne({ _id: googleId }, function (err, user) {
+                if (err) { throw err; }
+                req.params.id = user.groups[0];
+                console.log(req.params.id, req.body.url);
+                // saveListing();
+            });
+        } else {
+            saveListing();
+        }
+
+
+
         var newListing = new Listing({
             group: req.params.id
         })
