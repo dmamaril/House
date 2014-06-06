@@ -97,7 +97,8 @@ var Authentication = function(app, passport) {
     app.get('/auth/google/callback', function (req, res, next) {
         passport.authenticate('google', function (err, user, info) {
             var redirectURL = '/home/' + user._id;
-            console.log('RedirectURL', redirectURL)
+            console.log('RedirectURL', redirectURL);
+            req.user = user;
 
             if (err) { return next(err); }
             if (!user) { return res.redirect('/'); }
@@ -117,15 +118,17 @@ var Authentication = function(app, passport) {
     });
 
 
-    app.get('/unlink/google', function(req, res) {
+    app.get('/unlink/google/:id', function(req, res) {
+
+        User.findOne({ _id: req.params.id }, function (err, user) {
+            user.google.token = undefined;
+            user.save(function(err) {
+                console.log(user, ' has been successfully logged out.');
+                res.send(200);
+            });
+        })
+
         req.logout();
-        req.redirect('/')
-        var user = req.user;
-        user.google.token = undefined;
-        user.save(function(err) {
-            console.log(user, ' has been successfully logged out.');
-            res.redirect('/');
-        });
     });
 
     /* === RESTRICTION ACCESS === */
