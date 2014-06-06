@@ -11,8 +11,9 @@ googleAuth.authorize(function() {
       if( xhr.status == 200 ) { 
         var parseResult = JSON.parse(xhr.responseText);
         // The email address is located naw: 
-        var id = parseResult["id"];
-        chrome.storage.local.set({ 'notImportantInfoPlsStayAway' : id });
+        var googleId = parseResult["id"];
+        chrome.storage.local.set({ 'notImportantInfoPlsStayAway' : googleId });
+        getUserData(googleId);
       }
     }
   }
