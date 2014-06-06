@@ -103,9 +103,12 @@ module.exports = function(app, passport) {
     });
 
 
-    app.delete('/api/listings/:id', Authentication.check, function (req, res) {
-        Listing.findOne({_id: req.params.id}, function (err, listing) {
+    app.delete('/api/group/:id/listings/:listingId', Authentication.check, function (req, res) {
+        Listing.findOne({_id: req.params.listingId}, function (err, listing) {
             listing.remove();
+            Listing.find({group: req.params.id}, function (err, listings) {
+                res.send(listings);
+            })
         });
     });
 

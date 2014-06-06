@@ -13,8 +13,9 @@ app.factory('Listings', function ($http, $rootScope, Maps) {
         }).success(updateCache);
     };
 
-    Listings.remove = function (id) {
-        return $http.delete('/api/listings/' + id)
+    Listings.remove = function (groupObj, id) {
+        var groupId = groupObj._id;
+        return $http.delete('/api/group/' + groupId + '/listings/' + id)
             .success(updateCache);
     };
 
