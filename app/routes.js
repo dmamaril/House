@@ -70,7 +70,6 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/group/:id/listings', function (req, res) {
-
         console.log('Receiving request', req.body.url);
         var newListing = new Listing({
             group: req.params.id
@@ -102,8 +101,6 @@ module.exports = function(app, passport) {
                 });
             });
         });
-        
-
     });
 
 
@@ -135,7 +132,6 @@ module.exports = function(app, passport) {
             });
         });
     });
-
 
 
     /* === DEFAULT === */

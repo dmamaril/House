@@ -21,10 +21,11 @@
   <div ng-controller="ChannelController" class="row">
     <div class="col-xs-12">
       <div class="subheading text-right">
-        <span ng-click="switch(groupName)" ng-repeat="groupName in groups" ng-class="checkActive(groupName)" class="subheading-text">
-          {{ groupName }}
-          <!--<span ng-click="remove(groupName)" class="group-delete">(-)</span>-->
+        <span ng-click="switch(group)" ng-repeat="group in groups" ng-class="checkActive(group)" class="subheading-text">
+          {{ group.name }}
+          <span ng-click="remove(group)" class="group-delete">(-)</span>
         </span>
+        <input type="button" ng-click="test('santa cruz')">
         <!--
         <span class="subheading-add">(+)</span>
         <input ng-model="toJoin" class="subheading-inputs">

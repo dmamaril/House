@@ -32,7 +32,7 @@ app.factory('Listings', function ($http, $rootScope, Maps, $location, User) {
                 console.log('You have been logged out!');
                 $location.path('/');
             });
-    }
+    };
 
     return Listings;
 });

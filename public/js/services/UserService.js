@@ -25,15 +25,11 @@ app.factory('User', function($http, $rootScope, $location) {
             .success(updateCache);
     };
 
-    User.currentGroup = function(groupName) {
+    User.currentGroup = function(group) {
         if (arguments.length === 0) {
             return currentGroup;
         } else {
-            userProfile.groups.forEach(function(group) {
-                if (groupName === group.name) {
-                    currentGroup = group;
-                }
-            });
+            currentGroup = group;
             return currentGroup;
         }
     };
