@@ -1,4 +1,4 @@
-app.factory('Listings', function ($http, $rootScope, Maps) {    
+app.factory('Listings', function ($http, $rootScope, Maps, $location, User) {    
 
     var updateCache = function (listings) {
         $rootScope.$emit('change:listings', listings);
@@ -24,6 +24,15 @@ app.factory('Listings', function ($http, $rootScope, Maps) {
         return $http.get('/api/group/' + id + '/listings')
             .success(updateCache);
     };
+
+    Listings.logout = function () {
+        var user = User.get();
+        return $http.get('/unlink/google/' + user._id)
+            .success(function () {
+                console.log('You have been logged out!');
+                $location.path('/');
+            });
+    }
 
     return Listings;
 });
