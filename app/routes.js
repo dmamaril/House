@@ -139,7 +139,7 @@ module.exports = function(app, passport) {
 
 
     /* === DEFAULT === */
-    app.get('*', function(req, res) {
+    app.get('*', Authentication.check, function(req, res) {
         res.sendfile('./public/index.html');
     });
 };
