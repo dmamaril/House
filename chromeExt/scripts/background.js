@@ -4,29 +4,6 @@ var saveListing = function () {
   });
 };
 
-// var parseUrl = function (uri) {
-//   var xhr = new XMLHttpRequest(); 
-//   xhr.open('GET', uri, true);
-//   xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-//   xhr.onreadystatechange = function () {
-//     if (xhr.readyState === 4) {
-//         if (xhr.status === 200) {
-//           if (uri.indexOf('craigslist') !== -1 && uri.indexOf('.html') !== -1) { 
-//               postToServer(parser.craigslist(xhr.response, uri));
-//             } else if (uri.indexOf('airbnb') !== -1 && uri.indexOf('/rooms/') !== -1) {
-//               postToServer(parser.airbnb(xhr.response, uri));
-//             } else {
-//               console.log('Not a valid uri.');
-//             }
-//         } else {
-//             console.log('Server communication error.');
-//         }
-//     }
-//   };
-//   xhr.send();
-// };
-
 var postToServer = function (url) {
 
     chrome.storage.local.get('groupId', function (groupId) {

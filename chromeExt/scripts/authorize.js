@@ -13,6 +13,7 @@ googleAuth.authorize(function() {
         // The email address is located naw: 
         var googleId = parseResult["id"];
         getUserData(googleId);
+      }
     }
   }
 
