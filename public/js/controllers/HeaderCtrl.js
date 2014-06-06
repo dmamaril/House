@@ -17,7 +17,7 @@ app.controller('HeaderController', function ($scope, $location, Listings, User) 
     };
 
     $scope.logout = function (groupName) {
-        console.log("You have been logged out!");
+        Listings.logout();
     };
 });
 
