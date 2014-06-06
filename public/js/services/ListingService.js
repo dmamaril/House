@@ -8,8 +8,7 @@ app.factory('Listings', function ($http, $rootScope, Maps) {
 
     Listings.create = function (groupObj, url) {
         var groupId = groupObj._id;
-        return $http.post('/api/listings', {
-            groupId: groupId,
+        return $http.post('/api/group/' + groupId + '/listings', {
             url: url
         }).success(updateCache);
     };

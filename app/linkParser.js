@@ -52,8 +52,8 @@ methods.airbnb = function (toParse, listingUrl) {
     var dailyPrice = toParse.substring(start, stop);
     dailyPrice = dailyPrice.substring(dailyPrice.lastIndexOf('$')+1, dailyPrice.lastIndexOf('</')) * 30;
     monthlyPrice = dailyPrice;
-  };
-  console.log({ listingUrl: listingUrl, coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice, votes: 0 });
+  }
+
   return { 
     title: neighborhood,
     url: listingUrl,
@@ -89,7 +89,6 @@ methods.craigslist = function (toParse, listingUrl) {
   var monthlyPrice = toParse.substring(toParse.indexOf('&#x0024;'), toParse.indexOf('&#x0024;') + 20);
   monthlyPrice = monthlyPrice.substring(monthlyPrice.indexOf(';')+1, monthlyPrice.indexOf('/')-1);
  
-  console.log({ listingUrl: listingUrl, coordinates: coordinates, neighborhood: neighborhood, bedrooms: bedrooms, monthlyPrice: monthlyPrice, votes: 0 });
   return { 
     title: neighborhood,
     url: listingUrl,

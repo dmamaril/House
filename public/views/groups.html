@@ -74,7 +74,7 @@
       <table class="groups-table alpha">
       <thead class="text-center">
         <tr class="group-header">
-          <td class="text-left group-col-contact">contact info</td>
+          <td class="text-center group-col-contact">contact info</td>
           <td class="group-col-distance">preferred distance</td>
           <td class="group-col-location">commute location</td>
           <td class="group-col-budget">preferred budget</td>
@@ -82,9 +82,13 @@
       </thead>
       <tbody>
         <tr ng-repeat="member in members" class="group-member">
-          <td class="group-cell text-left">
+          <td class="group-cell text-center">
             <span class="group-name">{{ member.google.name }}</span><br>
             <span class="group-email">{{ member.google.email }}</span>
+          </td>
+          <td class="group-cell text-center">
+            <span class="group-distance">{{ member.prefDistance }}</span>
+            <span class="group-length"> mi away</span>
           </td>
           <td class="group-cell text-center">
             <span class="group-location">{{ member.location }}</span><br>

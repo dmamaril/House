@@ -190,16 +190,13 @@ a:hover { text-decoration: none; }
     padding-bottom: 5px;
 }
 
-.group-col-contact { padding-left: 15px; width: 40%;}
-.group-col-location, .group-col-budget { width: 30%;}
-
-.group-name, .group-email, .group-contact { padding-left: 15px; }
+.group-col-contact, .group-col-location, .group-col-budget, .group-col-distance { width: 25%;}
 
 .group-name, .group-location { font-size: 18px; font-weight: 200; }
 .group-email, .group-city { font-size: 12px;}
 
-.group-dollar { font-size: 18px; }
-.group-price { font-size: 32px;}
+.group-dollar, .group-length { font-size: 18px; }
+.group-price, .group-distance { font-size: 32px;}
 
 .group-delete { font-size: 18px; font-weight: 100; color: #C0C8C0; }
 .group-delete:hover { cursor: pointer; color: #808080; }

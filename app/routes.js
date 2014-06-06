@@ -70,16 +70,17 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/api/listings', Authentication.check, function (req, res) {
+    app.post('/api/group/:id/listings', Authentication.check, function (req, res) {
         var newListing = new Listing({
-            group: req.body.groupId //TODO: Agree on name for the req
+            group: req.params.id
         })
 
         var extendNewProp = function (parseResult) {
             for (var prop in parseResult) {
                 newListing[prop] = parseResult[prop];
             }
-        }
+        };
+
         http.get(req.body.url, function (err, response) {
             var listing;
             if (req.body.url.indexOf('craigslist') > -1) { 
@@ -92,8 +93,12 @@ module.exports = function(app, passport) {
                 res.send(501);
                 return null;
             }
-            newListing.save(); //TODO: error handing
-            res.send(listing); //figure out what we're returning
+            newListing.save(function(err) {
+                if (err) { res.send(501, err); }
+                Listing.find({group: req.params.id}, function (err, listings){
+                    res.send(listings);
+                });
+            });
         })
     });
 
