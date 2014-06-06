@@ -139,7 +139,7 @@ a:hover { text-decoration: none; }
 #listings-canvas { width: 100%; height: 500px; }
 
 .listing { 
-    height: 75px; 
+    height: 65px; 
     vertical-align: bottom; 
     border-bottom: 1px solid #40BC98;
 }
