@@ -1,6 +1,6 @@
 var saveListing = function () {
   chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
-    parseUrl(tabs[0].url);
+    postToServer(tabs[0].url);
   });
 };
 
@@ -27,7 +27,7 @@ var parseUrl = function (uri) {
   xhr.send();
 };
 
-var postToServer = function (listingData) {
+var postToServer = function (url) {
     var postURL = 'http://localhost:8080/api/group/1234/listings';
 
     var xhr = new XMLHttpRequest(); 
@@ -47,7 +47,7 @@ var postToServer = function (listingData) {
 
     chrome.storage.local.get('notImportantInfoPlsStayAway', function (storage) {
 
-      var params  =   'chromeData=' + JSON.stringify(listingData) + 
+      var params  =   'chromeData=' + url + 
                       '&googleId=' + storage.notImportantInfoPlsStayAway;
 
       // params = params.replace(/%20/g, '+');

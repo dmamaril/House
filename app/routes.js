@@ -70,36 +70,54 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.post('/api/group/:id/listings', Authentication.check, function (req, res) {
-        var newListing = new Listing({
-            group: req.params.id
-        })
+    app.post('/api/group/:id/listings', function (req, res) {
 
-        var extendNewProp = function (parseResult) {
-            for (var prop in parseResult) {
-                newListing[prop] = parseResult[prop];
-            }
-        };
+        if (req.body.chromeData) {
+            req.body.url = req.body.chromeData;
+            var googleId = req.body.googleId;
+            User.findOne({ _id: googleId }, function (err, user) {
+                if (err) { throw err; }
+                req.params.id = user.groups[0];
+                saveListing();
+            });
+        } else {
+            saveListing();
+        }
 
-        http.get(req.body.url, function (err, response) {
-            var listing;
-            if (req.body.url.indexOf('craigslist') > -1) { 
-                listing = LinkParser.craigslist(response.buffer.toString(), req.body.url);
-                extendNewProp(listing); 
-            } else if (req.body.url.indexOf('airbnb') > -1) {
-                listing = LinkParser.airbnb(response.buffer.toString(), req.body.url);
-                extendNewProp(listing);
-            } else {
-                res.send(501);
-                return null;
-            }
-            newListing.save(function(err) {
-                if (err) { res.send(501, err); }
-                Listing.find({group: req.params.id}, function (err, listings){
-                    res.send(listings);
+        var saveListing = function () {
+            console.log('Receiving request', req.body.url);
+            var newListing = new Listing({
+                group: req.params.id
+            })
+
+            var extendNewProp = function (parseResult) {
+                for (var prop in parseResult) {
+                    newListing[prop] = parseResult[prop];
+                }
+            };
+
+            http.get(req.body.url, function (err, response) {
+                var listing;
+                if (req.body.url.indexOf('craigslist') > -1) { 
+                    listing = LinkParser.craigslist(response.buffer.toString(), req.body.url);
+                    extendNewProp(listing); 
+                } else if (req.body.url.indexOf('airbnb') > -1) {
+                    listing = LinkParser.airbnb(response.buffer.toString(), req.body.url);
+                    extendNewProp(listing);
+                } else {
+                    res.send(501);
+                    return null;
+                }
+                newListing.save(function(err) {
+                    if (err) { res.send(501, err); }
+                    Listing.find({group: req.params.id}, function (err, listings){
+                        console.log(listings, ' saved.');
+                        res.send(listings);
+                    });
                 });
             });
-        })
+        }
+
     });
 
 
