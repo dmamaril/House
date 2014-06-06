@@ -12,9 +12,7 @@ googleAuth.authorize(function() {
         var parseResult = JSON.parse(xhr.responseText);
         // The email address is located naw: 
         var googleId = parseResult["id"];
-        chrome.storage.local.set({ 'notImportantInfoPlsStayAway' : googleId });
         getUserData(googleId);
-      }
     }
   }
 

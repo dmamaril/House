@@ -28,30 +28,29 @@ var saveListing = function () {
 // };
 
 var postToServer = function (url) {
-    var postURL = 'http://localhost:8080/api/group/1234/listings';
 
-    var xhr = new XMLHttpRequest(); 
-    xhr.open('POST', postURL, true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    chrome.storage.local.get('groupId', function (groupId) {
+      var postURL = 'http://localhost:8080/api/group/' + groupId.groupId + '/listings';
+      console.log(postURL, 'postURL');
 
-    xhr.onreadystatechange = function () {
-      // If the request completed
-      if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            // console.log(xhr);
-          } else {
-              console.log('Error saving ');
-          }
-      }
-    };
+      var xhr = new XMLHttpRequest(); 
+      xhr.open('POST', postURL, true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-    chrome.storage.local.get('notImportantInfoPlsStayAway', function (storage) {
+      xhr.onreadystatechange = function () {
+        // If the request completed
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              // console.log(xhr);
+            } else {
+                console.log('Error saving ');
+            }
+        }
+      };
 
-      var params  =   'chromeData=' + url + 
-                      '&googleId=' + storage.notImportantInfoPlsStayAway;
-
-      // params = params.replace(/%20/g, '+');
-      xhr.send(params);
+        var params  =   'url=' + url;
+        // params = params.replace(/%20/g, '+');
+        xhr.send(params);
     });
 };
 

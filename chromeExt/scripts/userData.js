@@ -10,8 +10,8 @@ var getUserData = function (googleId) {
     if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           var parseResult = JSON.parse(xhr.responseText);
-          var group = parseResult['groups'][0]['_id'];
-          console.log(group);
+          var groupId = parseResult['groups'][0]['_id'];
+          chrome.storage.local.set({ 'groupId' : groupId });
         } else {
             console.log('Server communication error.');
         }
