@@ -134,7 +134,6 @@ module.exports = function(app, passport) {
     });
 
 
-
     /* === DEFAULT === */
     app.get('*', function(req, res) {
         res.sendfile('./public/index.html');

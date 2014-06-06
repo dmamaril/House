@@ -1,8 +1,6 @@
 app.controller('ChannelController', function ($scope, $rootScope, $location, Groups, User) {
     $scope.groupName = User.currentGroup().name;
-    $scope.groups = User.get().groups.map(function(group) {
-        return group.name;
-    });
+    $scope.groups = User.get().groups;
     $scope.toJoin = '';
 
     $rootScope.$on('change:groups', function() {
@@ -16,8 +14,8 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
         return '';
     };
 
-    $scope.remove = function (groupName) {
-        User.removeGroup(groupName);
+    $scope.remove = function (group) {
+        Group.removeUser(User.get(), group);
     };
 
     $scope.create = function () {
@@ -30,8 +28,8 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
         $scope.toJoin = '';
     };
 
-    $scope.switch = function (groupName) {
-        User.currentGroup(groupName);
+    $scope.switch = function (group) {
+        User.currentGroup(group);
         $scope.groupName = User.currentGroup().name;
     };
 });

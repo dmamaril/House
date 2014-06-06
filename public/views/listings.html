@@ -21,9 +21,9 @@
   <div ng-controller="ChannelController" class="row">
     <div class="col-xs-12">
       <div class="subheading text-right">
-        <span ng-click="switch(groupName)" ng-repeat="groupName in groups" ng-class="checkActive(groupName)" class="subheading-text">
-          {{ groupName }}
-          <!--<span ng-click="remove(groupName)" class="group-delete">(-)</span>-->
+        <span ng-click="switch(group)" ng-repeat="group in groups" ng-class="checkActive(group)" class="subheading-text">
+          {{ group.name }}
+          <span ng-click="remove(group)" class="group-delete">(-)</span>
         </span>
         <input type="button" ng-click="test('santa cruz')">
         <!--
@@ -52,7 +52,6 @@
         <tr ng-repeat="listing in properties" class="listing">
           <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">{{ listing.price }}</span></td>
           <td class="listing-main">
-            <!--span ng-click="toggleVote(listing)" class="listing-votes">{{ listing.votes.length }} votes</span><br-->
             <span class="listing-address">{{ listing.title }}</span><br>
             <span class="listing-url">{{ listing.url }}</span>
           </td>
