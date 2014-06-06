@@ -8,7 +8,6 @@ var postToServer = function (url) {
 
     chrome.storage.local.get('groupId', function (groupId) {
       var postURL = 'http://localhost:8080/api/group/' + groupId.groupId + '/listings';
-      console.log(postURL, 'postURL');
 
       var xhr = new XMLHttpRequest(); 
       xhr.open('POST', postURL, true);

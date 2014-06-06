@@ -1,6 +1,5 @@
 var getUserData = function (googleId) {
   var url = 'http://127.0.0.1:8080/api/user/' + googleId;
-  console.log(url);
 
   var xhr = new XMLHttpRequest(); 
   xhr.open('GET', url, true);
