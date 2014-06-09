@@ -4,7 +4,6 @@ app.factory('Groups', function ($rootScope, $http, User) {
     };
 
     var updateGroups = function (groups) {
-        console.log(groups);
         $rootScope.$emit('change:groups', groups);
     };
 

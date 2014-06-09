@@ -3,10 +3,17 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
     $scope.groups = User.get().groups;
     $scope.toJoin = '';
 
-    $rootScope.$on('change:groups', function() {
-        $scope.groups = User.get().groups.map(function(group) {
-            return group.name;
-        });
+    $rootScope.$on('change:groups', function(event, data) {
+        console.log(data.groups);
+        console.log(data);
+        /* ON DELETE */
+        if (data.groups) {
+            console.log(User.get());
+            // $scope.groups = User.get().
+        /* ON CREATE */
+        } else {
+            $scope.groups.push(data);
+        }
     });
 
     $scope.checkActive = function(groupName) {
