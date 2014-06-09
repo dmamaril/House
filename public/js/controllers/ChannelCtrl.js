@@ -4,12 +4,11 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
     $scope.toJoin = '';
 
     $rootScope.$on('change:groups', function(event, data) {
-        console.log(data.groups);
-        console.log(data);
         /* ON DELETE */
         if (data.groups) {
-            console.log(User.get());
-            // $scope.groups = User.get().
+            $scope.groups.forEach(function (group, index) {
+              if (data.groups.indexOf(group._id) === -1) { $scope.groups.splice(index, 1); }
+            });
         /* ON CREATE */
         } else {
             $scope.groups.push(data);
