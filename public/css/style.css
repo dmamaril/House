@@ -162,7 +162,9 @@ a:hover { text-decoration: none; }
 .listing-address { font-size: 18px; font-weight: 400; color: #808080;}
 .listing-url { font-size: 12px; font-weight: 300; color: #C0C8C0;}
 
-.listing-rooms { font-size: 18px; font-weight: 300; color: #808080;}
+.listing-rooms { 
+    display: inline-block; margin-bottom: 10px;
+    font-size: 18px; font-weight: 300; color: #808080; }
 .listing-distance { font-size: 12px; font-weight: 300; color: #C0C8C0;}
 
 .listing-delete { font-size: 18px; font-weight: 300; color: #C0C8C0; }

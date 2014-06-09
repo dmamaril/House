@@ -26,13 +26,8 @@
           <span ng-click="remove(group)" class="group-delete">(-)</span>
         </span>
         
-        <span class="subheading-add">(+) CREATE GROUP</span>
-          <input ng-model="toJoin" class="subheading-inputs">
-        <span ng-click="create()" class="subheading-add">: join</span>
-
-        <span> INVITE USER BY EMAIL</span>
-          <input ng-model="emailToInvite">
-          <button ng-click="join()"> INVITE! </button>
+        <input ng-model="toJoin" class="subheading-inputs">
+        <span ng-click="create()" class="subheading-add">: CREATE</span>
         
       </div>
     </div>
@@ -64,7 +59,7 @@
           </td>
           <td class="listing-end">
             <span class="listing-rooms">{{ listing.rooms }} BR</span><br>
-            <span class="listing-distance">1.5 mi away</span>
+            <span class="listing-distance"></span>
           </td>
           <td class="listing-postfix">
             <span ng-click="remove(listing)" class="listing-delete">x</span>
