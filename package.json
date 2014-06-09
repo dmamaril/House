@@ -12,7 +12,8 @@
     "cookie-parser": "~1.0.0",
     "method-override": "^1.0.2",
     "express-session": "~1.0.0",
-    "passport": "^0.2.0"
+    "passport": "^0.2.0",
+    "mailgun-js": "^0.4.9"
   },
   "devDependencies": {},
   "scripts": {

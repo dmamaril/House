@@ -6,8 +6,9 @@ var Group = require('./models/Group.js');
 var Listing = require('./models/Listing.js');
 
 var Authentication = require('./authentication.js');
+var MailGun = require('./mailGun.js');
 
-module.exports = function(app, passport) {
+module.exports = function(app) {
     /* === MAIN ROUTES === */
     app.get('/api/user/:id', function (req, res) {
         User.findOne({_id: req.params.id})

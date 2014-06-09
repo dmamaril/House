@@ -29,6 +29,10 @@
         <span class="subheading-add">(+) CREATE GROUP</span>
           <input ng-model="toJoin" class="subheading-inputs">
         <span ng-click="create()" class="subheading-add">: join</span>
+
+        <span> INVITE USER BY EMAIL</span>
+          <input ng-model="emailToInvite">
+          <button ng-click="join()"> INVITE! </button>
         
       </div>
     </div>
@@ -37,7 +41,15 @@
   <div class="row">
     <div ng-controller="MapController" class="col-sm-6 omega">
       <google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options">
-        <marker ng-repeat="m in properties" coords="m.location[0]">
+        <marker ng-repeat="m in properties" coords="m.location[0]" click="m.show = !m.show">
+          <window show="m.show">
+            <div>
+              <h4 class="list-group-item-heading">Price: {{m.price | number:0}}</h4>
+              <p>Rooms: {{m.rooms}}</p>
+              <a href={{m.url}}> link </a>
+            </div>
+          </window>
+        </marker>
       </google-map>
     </div>
     

@@ -32,6 +32,7 @@ var updateUser = function (profile, token, done) {
       if (user) {
         // if there is a user id already but no token (user was linked at one point and then removed)
         if (!user.google.token) {
+            user._id          = profile.id;
             user.google.token = token;
             user.google.name  = profile.displayName;
             user.google.email = profile.emails[0].value.toLowerCase() || ''; // pull the first email
