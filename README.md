@@ -21,6 +21,9 @@ Upvote/downvote listings that you like to narrow down the search. View the gener
 ## Challenges
 * Custom CraigsList & AirBnB parsers
 * Transition from local login/authentication to OAuth 2.0 with Google passport strategy
+* Team workflow with git and handling merge conflicts
+* First experience working with agile methodologies
+* Developing backend and frontend in parallel (accomodating changes in routing)
 
 ## Diving In
 ```
