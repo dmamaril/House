@@ -21,7 +21,9 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
     };
 
     $scope.remove = function (group) {
-        Groups.removeGroupFromUser(User.get(), group);
+        if (group !== $scope.groups[0]) {
+            Groups.removeGroupFromUser(User.get(), group);
+        }
     };
 
     $scope.create = function () {
