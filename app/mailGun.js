@@ -16,7 +16,6 @@ MailGun.joinGroupEmail = function (user, sendTo, groupToJoin) {
   mailgun.messages().send(msgData, function (error, body) {
     console.log(body);
   });
-
 };
 
 module.exports = MailGun;
