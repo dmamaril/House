@@ -29,6 +29,10 @@
         <span class="subheading-add">(+) CREATE GROUP</span>
           <input ng-model="toJoin" class="subheading-inputs">
         <span ng-click="create()" class="subheading-add">: join</span>
+
+        <span> INVITE USER BY EMAIL</span>
+          <input ng-model="emailInvite">
+          <button ng-click="mailGunInvite()"> INVITE! </button>
         
       </div>
     </div>
