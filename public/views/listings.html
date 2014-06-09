@@ -9,8 +9,6 @@
           <input type="text" class="submitter" ng-model="url" ng-keypress="post($event)" placeholder="Enter an address or a Craigslist/AirBnB link to save a listing.">
         </div>
         <div class="col-sm-3 main-pad-links text-right">
-            <span ng-click="navigate('listings')" class="link-main main-header-text">Listings</span>
-            <span ng-click="navigate('groups')" class="link-main main-header-text">Groups</span>
             <span ng-click="logout()" class="link-main main-header-text">Logout</span>
         </div>
       </div>
@@ -19,18 +17,6 @@
 
 <div ng-controller="ListingsController" class="main container-fluid">
   <div ng-controller="ChannelController" class="row">
-    <div class="col-xs-12">
-      <div class="subheading text-right">
-        <span ng-click="switch(group)" ng-repeat="group in groups" ng-class="checkActive(group)" class="subheading-text">
-          {{ group.name }}
-          <span ng-click="remove(group)" class="group-delete">(-)</span>
-        </span>
-        
-        <input ng-model="toJoin" class="subheading-inputs">
-        <span ng-click="create()" class="subheading-add">: CREATE</span>
-        
-      </div>
-    </div>
   </div>
 
   <div class="row">
@@ -39,9 +25,9 @@
         <marker ng-repeat="m in properties" coords="m.location[0]" click="m.show = !m.show">
           <window show="m.show">
             <div>
-              <h4 class="list-group-item-heading">Price: {{m.price | number:0}}</h4>
+              <h4 class="list-group-item-heading">Price: $ {{m.price | number:0}}</h4>
               <p>Rooms: {{m.rooms}}</p>
-              <a href={{m.url}}> link </a>
+              <a target="_blank" href={{m.url}}> link </a>
             </div>
           </window>
         </marker>

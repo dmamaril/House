@@ -9,8 +9,6 @@
           <input type="text" class="submitter" ng-model="url" ng-keypress="post($event)" placeholder="Enter an address or a Craigslist/AirBnB link to save a listing.">
         </div>
         <div class="col-sm-3 main-pad-links text-right">
-            <span ng-click="navigate('listings')" class="link-main main-header-text">Listings</span>
-            <span ng-click="navigate('groups')" class="link-main main-header-text">Groups</span>
             <span ng-click="logout()" class="link-main main-header-text">Logout</span>
         </div>
       </div>
@@ -19,20 +17,6 @@
 
 <div ng-controller="GroupsController" class="main container-fluid">
   <div ng-controller="ChannelController" class="row">
-    <div class="col-xs-12">
-      <div class="subheading text-right">
-        <span ng-click="switch(group)" ng-repeat="group in groups" ng-class="checkActive(group)" class="subheading-text">
-          {{ group.name }}
-          <span ng-click="remove(group)" class="group-delete">(-)</span>
-        </span>
-        <input type="button" ng-click="test('santa cruz')">
-        <!--
-        <span class="subheading-add">(+)</span>
-        <input ng-model="toJoin" class="subheading-inputs">
-        <span ng-click="join()" class="subheading-add">: join</span>
-        -->
-      </div>
-    </div>
   </div>
 
   <div class="row">

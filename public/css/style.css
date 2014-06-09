@@ -33,6 +33,8 @@ a:hover { text-decoration: none; }
     background-color: #EEF0EE;
 }
 
+.logo:hover, .link-main:hover { cursor: pointer; }
+
 /* ========= HEADERS ========= */
 /* COMMON HEADER */
 .splash-pad-logo { padding-top: 4px; }
