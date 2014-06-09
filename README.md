@@ -23,10 +23,7 @@ View the general neighborhood of the listing along with the distance from your d
 *That's* how you make apartment hunting easy.
 
 ## Tech Stack
-![Alt text](/public/assets/stack.jpg?raw=true)
-+ Passport & OAuth
-+ Google Maps
-+ Karma / Jasmine Test Suite
+![Alt text](/public/assets/techStack.jpg?raw=true)
 
 ## Challenges
 * Custom CraigsList & AirBnB parsers
