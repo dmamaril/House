@@ -2,6 +2,7 @@ app.factory('Groups', function ($rootScope, $http, User) {
     var updateMembers = function (members) {
         $rootScope.$emit('change:members', members);
     };
+
     var updateGroups = function (groups) {
         $rootScope.$emit('change:groups', groups);
     };
@@ -11,7 +12,7 @@ app.factory('Groups', function ($rootScope, $http, User) {
     });
 
     var Group = {};
-    Group.create = function(creator, groupName) {
+    Group.createGroup = function(creator, groupName) {
         return $http.post('/api/group', {
             name: groupName,
             userId: creator._id
@@ -25,11 +26,11 @@ app.factory('Groups', function ($rootScope, $http, User) {
             .success(updateMembers);
     };
 
-    Group.removeUser = function(user, group) {
+    Group.removeGroupFromUser = function(user, group) {
         var id = group._id;
         var userId = user._id;
         return $http.delete('/api/group/' + id + '/users/' + userId)
-            .success(updateMembers);
+            .success(updateGroups);
     };
 
     Group.getMembers = function(group) {

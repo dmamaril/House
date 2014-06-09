@@ -3,10 +3,16 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
     $scope.groups = User.get().groups;
     $scope.toJoin = '';
 
-    $rootScope.$on('change:groups', function() {
-        $scope.groups = User.get().groups.map(function(group) {
-            return group.name;
-        });
+    $rootScope.$on('change:groups', function(event, data) {
+        /* ON DELETE */
+        if (data.groups) {
+            $scope.groups.forEach(function (group, index) {
+              if (data.groups.indexOf(group._id) === -1) { $scope.groups.splice(index, 1); }
+            });
+        /* ON CREATE */
+        } else {
+            $scope.groups.push(data);
+        }
     });
 
     $scope.checkActive = function(groupName) {
@@ -15,11 +21,13 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
     };
 
     $scope.remove = function (group) {
-        Groups.removeUser(User.get(), group);
+        if (group !== $scope.groups[0]) {
+            Groups.removeGroupFromUser(User.get(), group);
+        }
     };
 
     $scope.create = function () {
-        Groups.create(User.get(), $scope.toJoin);
+        Groups.createGroup(User.get(), $scope.toJoin);
         $scope.toJoin = '';
     };
 
