@@ -15,16 +15,16 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
     };
 
     $scope.remove = function (group) {
-        Group.removeUser(User.get(), group);
+        Groups.removeUser(User.get(), group);
     };
 
     $scope.create = function () {
-        Group.create(User.get(), $scope.toJoin);
+        Groups.create(User.get(), $scope.toJoin);
         $scope.toJoin = '';
     };
 
     $scope.join = function () {
-        Group.addUser(User.get(), $scope.toJoin);
+        Groups.addUser(User.get(), $scope.toJoin);
         $scope.toJoin = '';
     };
 

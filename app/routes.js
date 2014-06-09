@@ -44,10 +44,12 @@ module.exports = function(app, passport) {
         var newGroup = new Group({
             name: req.body.name
         });
-        newGroup.save(function (err) {
+        newGroup.save(function (err, newGroup) {
             User.findOne({_id: req.body.userId}, function (err, user) {
-                user.groups.push(newGroup);
-                user.save(function(err) {
+                user.groups.push(newGroup._id);
+                user.save(function(err, user) {
+                    console.log(user);
+                    console.log(req.body.name, ' saved to ', user.google.name, "'s groups.");
                     res.send(newGroup);
                 });
             });
