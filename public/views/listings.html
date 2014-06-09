@@ -25,12 +25,11 @@
           {{ group.name }}
           <span ng-click="remove(group)" class="group-delete">(-)</span>
         </span>
-        <input type="button" ng-click="test('santa cruz')">
-        <!--
-        <span class="subheading-add">(+)</span>
-        <input ng-model="toJoin" class="subheading-inputs">
-        <span ng-click="join()" class="subheading-add">: join</span>
-        -->
+        
+        <span class="subheading-add">(+) CREATE GROUP</span>
+          <input ng-model="toJoin" class="subheading-inputs">
+        <span ng-click="create()" class="subheading-add">: join</span>
+        
       </div>
     </div>
   </div>
@@ -38,12 +37,7 @@
   <div class="row">
     <div ng-controller="MapController" class="col-sm-6 omega">
       <google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options">
-        <markers 
-          models="properties"
-          fit="true"
-          labelContent="'address'"
-          coords="'location'">
-        </markers>
+        <marker ng-repeat="m in properties" coords="m.location[0]">
       </google-map>
     </div>
     <div ng-controller="PropertiesController" class="col-sm-6 alpha">
