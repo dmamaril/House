@@ -21,7 +21,8 @@
 
   <div class="row">
     <div ng-controller="MapController" class="col-sm-6 omega">
-      <google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options">
+      <div id="map-canvas" class="main"></div>
+<!--       <google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options">
         <marker ng-repeat="m in properties" coords="m.location[0]" click="m.show = !m.show">
           <window show="m.show">
             <div>
@@ -31,7 +32,7 @@
             </div>
           </window>
         </marker>
-      </google-map>
+      </google-map> -->
     </div>
     
     <div ng-controller="PropertiesController" class="col-sm-6 alpha">
@@ -41,7 +42,7 @@
           <td class="listing-begin"><span class="listing-currency">$ </span><span class="listing-cost">{{ listing.price }}</span></td>
           <td class="listing-main">
             <span class="listing-address">{{ listing.title }}</span><br>
-            <span class="listing-url">{{ listing.url }}</span>
+            <span class="listing-url"><a target="_blank" href="{{ listing.url }}">{{ listing.url }}</a></span>
           </td>
           <td class="listing-end">
             <span class="listing-rooms">{{ listing.rooms }} BR</span><br>
