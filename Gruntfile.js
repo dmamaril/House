@@ -7,7 +7,9 @@ module.exports = function(grunt) {
       dist: {
         src: [
           'public/**/*.js', // all js in the folders
-          '!public/libs/'
+          '!public/libs/',
+          '!app/config',
+          'app/**/*.js'
         ],
         dest: 'deploy/dist/production.js'
       }
@@ -29,6 +31,7 @@ module.exports = function(grunt) {
     jshint: {
       files: [
         'public/**/*.js',
+        'app/**/*.js'
       ],
       options: {
         force: 'true',

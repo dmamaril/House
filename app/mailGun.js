@@ -31,7 +31,7 @@ var MailGun = function (app) {
   /* INVITE ROUTE */
   app.get('/invite/:groupId/:email', function (req, res) {
     Group.findOne({_id: req.params.groupId}, function (err, group) {
-      User.findOne({google.email: req.params.email}, function(err, user) {
+      User.findOne({ 'google.email' : req.params.email}, function(err, user) {
         if (user) {
           inviteToGroupEmail(user.google.email, group.name);
           res.send(200, "Invite sent");
