@@ -11,6 +11,7 @@ var MailGun = require('./mailGun.js');
 module.exports = function(app) {
     /* === MAIN ROUTES === */
     app.get('/api/user/:id', function (req, res) {
+        MailGun.joinGroupEmail();
         User.findOne({_id: req.params.id})
         .populate('groups')
         .exec(function (err, user) {
