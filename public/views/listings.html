@@ -40,9 +40,9 @@
         <marker ng-repeat="m in properties" coords="m.location[0]" click="m.show = !m.show">
           <window show="m.show">
             <div>
-              <h4 class="list-group-item-heading">Price: {{price | number:0}}</h4>
-              <p>Rooms: {{rooms}}</p>
-              <a href={{url}}> link </a>
+              <h4 class="list-group-item-heading">Price: {{m.price | number:0}}</h4>
+              <p>Rooms: {{m.rooms}}</p>
+              <a href={{m.url}}> link </a>
             </div>
           </window>
         </marker>
