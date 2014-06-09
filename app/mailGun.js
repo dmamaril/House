@@ -11,7 +11,7 @@ MailGun.joinGroupEmail = function (user, sendTo, groupToJoin) {
   msgData.from    = user.google.name;
   msgData.to      = sendTo;
   msgData.subject = user.google.name + ' has invited you to join their group ' + groupToJoin + '!';
-  msgData.text    = 'Test text';
+  msgData.html    = 'Test text';
 
   mailgun.messages().send(msgData, function (error, body) {
     console.log(body);
