@@ -16,6 +16,7 @@ app.factory('User', function($http, $rootScope, $location) {
     };
 
     User.get = function () { return userProfile; };
+    
     User.set = function (userAttrs) {
         Object.keys(userAttrs).forEach(function(key) {
             userProfile[key] = userAttrs[key];
