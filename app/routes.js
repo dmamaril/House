@@ -48,7 +48,6 @@ module.exports = function(app, passport) {
             User.findOne({_id: req.body.userId}, function (err, user) {
                 user.groups.push(newGroup._id);
                 user.save(function(err, user) {
-                    console.log(user);
                     console.log(req.body.name, ' saved to ', user.google.name, "'s groups.");
                     res.send(newGroup);
                 });
@@ -127,7 +126,7 @@ module.exports = function(app, passport) {
 
     app.delete('/api/group/:id/users/:userId', function (req, res) {
         User.findOne({_id: req.params.userId}, function (err, user) {
-            user.groups.remove(req.param.id);
+            user.groups.remove(req.params.id);
             user.save(function(err) {
                 if (err) {return err;}
                 res.send(user);
