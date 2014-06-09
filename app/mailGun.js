@@ -5,7 +5,7 @@ var mailgun = new Mailgun({apiKey: mgAuth.api_key, domain: mgAuth.domain});
 
 // var MailGun =  {};
 
-var inviteToGroupEmail = function (user, sendTo, groupToJoin) {
+var inviteToGroupEmail = function (sendTo, groupToJoin) {
   var msgData = {};
 
   msgData.from    = 'House: apartment hunting made easy <noreply@house.com>';
@@ -29,17 +29,26 @@ var joinGroupEmail = function (userTo, groupToJoin) {
 
 var MailGun = function (app) {
   /* INVITE ROUTE */
-  app.get('path', function (req, res) {
-
+  app.get('/invite/:groupId/:email', function (req, res) {
+    Group.findOne({_id: req.params.groupId}, function (err, group) {
+      User.findOne({google.email: req.params.email}, function(err, user) {
+        if (user) {
+          inviteToGroupEmail(user.google.email, group.name);
+          res.send(200, "Invite sent");
+        } else {
+          res.send(404, "User not registered");
+        }
+      });
+    });
   });
 
   /* JOIN ROUTE */
-  app.get('path', function (req, res) {
-    User.findOne({ _id: req.params.id }, function (err, user) {
+  app.get('/join', function (req, res) {
+    User.findOne({ _id: req.params.userId }, function (err, user) {
       if (err) { return err; }
       user.groups.push(req.params.groupId);
       user.save(function (user) {
-
+        res.send(200, "Added");
       });
     });
   });
