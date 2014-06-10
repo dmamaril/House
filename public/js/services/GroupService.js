@@ -12,6 +12,7 @@ app.factory('Groups', function ($rootScope, $http, User) {
     });
 
     var Group = {};
+    
     Group.createGroup = function(creator, groupName) {
         return $http.post('/api/group', {
             name: groupName,

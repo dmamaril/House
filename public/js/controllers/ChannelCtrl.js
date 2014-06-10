@@ -3,6 +3,8 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
     $scope.groups = User.get().groups;
     $scope.toJoin = '';
 
+    User.currentGroup().isClicked = true;
+
     $rootScope.$on('change:groups', function(event, data) {
         /* ON DELETE */
         if (data.groups) {
@@ -36,7 +38,9 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
     };
 
     $scope.switch = function (group) {
-        User.currentGroup(group);
-        $scope.groupName = User.currentGroup().name;
+        User.currentGroup().isClicked = false;
+        $scope.groupName = User.currentGroup(group).name;
+        group.checkActive = 'subheading-active';
+        group.isClicked = true;
     };
 });
