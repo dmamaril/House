@@ -19,12 +19,6 @@ app.factory('Groups', function ($rootScope, $http, User) {
         }).success(updateGroups);
     };
 
-    Group.joinGroup = function(user, groupKey) {
-        var userId = user._id;
-        return $http.get('/join/group/' + groupKey + '/users/' + userId)
-            .success(updateMembers);
-    };
-
     Group.removeGroupFromUser = function(user, group) {
         var id = group._id;
         var userId = user._id;

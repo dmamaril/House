@@ -6,7 +6,7 @@ app.controller('HeaderController', function ($scope, $location, Listings, User) 
     };
 
     $scope.home = function() {
-        $location.path('/');
+        $location.path('/groups');
     };
 
     $scope.post = function (keyEvent, groupName) {
