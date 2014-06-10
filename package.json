@@ -13,7 +13,17 @@
     "method-override": "^1.0.2",
     "express-session": "~1.0.0",
     "passport": "^0.2.0",
-    "mailgun-js": "^0.4.9"
+    "mailgun-js": "^0.4.9",
+    "grunt": "^0.4.4",
+    "grunt-contrib-concat": "^0.3.0",
+    "grunt-contrib-cssmin": "^0.9.0",
+    "grunt-contrib-jshint": "^0.9.2",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha-test": "^0.10.0",
+    "grunt-nodemon": "^0.2.1",
+    "grunt-shell": "^0.6.4",
+    "minimatch": "^0.3.0"
   },
   "devDependencies": {},
   "scripts": {
