@@ -27,8 +27,13 @@ module.exports = function (app) {
     Group.findOne({_id: req.params.groupId}, function (err, group) {
       User.findOne({ 'google.email' : req.params.email}, function(err, user) {
         if (user) {
-          inviteToGroupEmail(user, group);
-          res.send(200, "Invite sent");
+          if (user.groups.indexOf(req.params.groupId) === -1) {
+            inviteToGroupEmail(user, group);
+            res.send(200, "Invite sent");            
+          } else {
+            console.log("User is already a member of " + group.name);
+            res.send(404, "User is already in group.");
+          }
         } else {
           res.send(404, "User not registered");
         }
