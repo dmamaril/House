@@ -39,7 +39,8 @@
 
   <div class="row">
     <div ng-controller="MapController" class="col-sm-6 omega">
-      <google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options">
+     <div id="map-canvas" class="main"></div>
+<!--       <google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options">
         <marker ng-repeat="m in properties" coords="m.location[0]" click="m.show = !m.show">
           <window show="m.show">
             <div>
@@ -49,7 +50,7 @@
             </div>
           </window>
         </marker>
-      </google-map>
+      </google-map> -->
     </div>
     
     <div ng-controller="PropertiesController" class="col-sm-6 alpha">
