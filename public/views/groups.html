@@ -21,11 +21,11 @@
   <div ng-controller="ChannelController" class="row">
     <div class="col-xs-12">
       <div class="subheading text-right">
-        <span ng-click="switch(group)" ng-repeat="group in groups" ng-class="checkActive(group)" class="subheading-text">
+        <span ng-click="switch(group)" ng-repeat="group in groups track by $index" ng-class="{'subheading-active' : group.isClicked}" class="subheading-text">
           {{ group.name }}
-          <span ng-click="remove(group)" class="group-delete">(-)</span>
+          <span ng-click="remove(group)" ng-model='group.isClicked' class="group-delete">(-)</span>
         </span>
-        
+
         <span> INVITE USER BY EMAIL</span>
           <input ng-model="emailToInvite">
           <button ng-click="emailInvite()"> INVITE! </button>  
