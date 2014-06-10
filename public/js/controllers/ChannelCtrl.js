@@ -1,4 +1,4 @@
-app.controller('ChannelController', function ($scope, $rootScope, $location, Groups, User) {
+app.controller('ChannelController', function ($scope, $rootScope, $location, Groups, User, Listings) {
     $scope.groupName = User.currentGroup().name;
     $scope.groups = User.get().groups;
     $scope.toJoin = '';
@@ -16,11 +16,6 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
             $scope.groups.push(data);
         }
     });
-
-    $scope.checkActive = function(groupName) {
-        if ($scope.groupName === groupName) { return 'subheading-active'; }
-        return '';
-    };
 
     $scope.remove = function (group) {
         if (group !== $scope.groups[0]) {
@@ -42,5 +37,6 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
         $scope.groupName = User.currentGroup(group).name;
         group.checkActive = 'subheading-active';
         group.isClicked = true;
+        $rootScope.$emit('change:listings', Listings.getByGroup(User.currentGroup()));
     };
 });
