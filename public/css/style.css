@@ -33,6 +33,8 @@ a:hover { text-decoration: none; }
     background-color: #EEF0EE;
 }
 
+.logo:hover, .link-main:hover { cursor: pointer; }
+
 /* ========= HEADERS ========= */
 /* COMMON HEADER */
 .splash-pad-logo { padding-top: 4px; }
@@ -160,14 +162,21 @@ a:hover { text-decoration: none; }
 .listing-votes { font-size: 12px; font-weight: 300; color: #C0C8C0;}
 .listing-votes:hover { cursor: pointer; color: #808080; }
 .listing-address { font-size: 18px; font-weight: 400; color: #808080;}
+.listing-address a { color: #808080; }
+.listing-address a:hover { color: #40BC98; }
 .listing-url { font-size: 12px; font-weight: 300; color: #C0C8C0;}
+.listing-url a { color: #C0C8C0;}
+.listing-url a:hover { color: #808080;}
 
-.listing-rooms { font-size: 18px; font-weight: 300; color: #808080;}
+.listing-rooms { 
+    display: inline-block; margin-bottom: 10px;
+    font-size: 18px; font-weight: 300; color: #808080; }
 .listing-distance { font-size: 12px; font-weight: 300; color: #C0C8C0;}
 
 .listing-delete { font-size: 18px; font-weight: 300; color: #C0C8C0; }
 .listing-delete:hover { cursor: pointer; color: #808080; }
 
+.listing-map-font { font-family: 'Raleway', sans-serif; }
 /* GROUPS PAGE */
 .groups-table { width: 100%;}
 .group-header {

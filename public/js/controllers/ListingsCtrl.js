@@ -6,9 +6,5 @@ app.controller('ListingsController', function ($scope, $rootScope, $routeParams,
         $scope.listings = listings;
     });
 
-    // $rootScope.on('change:currentGroup', function (event, currentGroup) {
-
-    // });
-
     Listings.getByGroup(User.currentGroup());
 });
