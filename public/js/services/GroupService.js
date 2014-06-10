@@ -19,10 +19,9 @@ app.factory('Groups', function ($rootScope, $http, User) {
         }).success(updateGroups);
     };
 
-    Group.addUser = function(user, group) {
-        var id = group._id;
+    Group.joinGroup = function(user, groupKey) {
         var userId = user._id;
-        return $http.put('/api/group/' + id + '/users/' + userId)
+        return $http.get('/join/group/' + groupKey + '/users/' + userId)
             .success(updateMembers);
     };
 
@@ -37,6 +36,10 @@ app.factory('Groups', function ($rootScope, $http, User) {
         var id = group._id;
         return $http.get('/api/group/' + id + '/users/')
             .success(updateMembers);
+    };
+
+    Group.emailInvite = function (groupId, email) {
+        return $http.get('/invite/' + groupId + '/' + email);
     };
 
     return Group;

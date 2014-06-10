@@ -1,39 +1,32 @@
 var Mailgun = require('mailgun-js');
 var mgAuth = require('./config/mailGunAuth.js');
 
+var User = require('./models/User.js');
+var Group = require('./models/Group.js');
+
 var mailgun = new Mailgun({apiKey: mgAuth.api_key, domain: mgAuth.domain});
 
-// var MailGun =  {};
 
-var inviteToGroupEmail = function (sendTo, groupToJoin) {
+var inviteToGroupEmail = function (userTo, groupToJoin) {
   var msgData = {};
 
   msgData.from    = 'House: apartment hunting made easy <noreply@house.com>';
-  msgData.to      = sendTo;
-  msgData.subject = user.google.name + ' has invited you to join their group ' + groupToJoin + '!';
-  msgData.html    = 'Test text';
+  msgData.to      = userTo.google.email;
+  msgData.subject = "You've been invited to join " + groupToJoin.name;
+  msgData.html    = "Hey, " + userTo.google.name + "Add this key: " + groupToJoin._id;
 
   mailgun.messages().send(msgData, function (error, body) {
     console.log(body);
   });
 };
 
-var joinGroupEmail = function (userTo, groupToJoin) {
-  var msgData = {};
-
-  msgData.from    = 'House: apartment hunting made easy <noreply@house.com>';
-  msgData.to      = userTo.google.email;
-  msgData.subject = "You've been added to " + groupToJoin.name;
-  msgData.html    = "Add this key: " + groupToJoin._id;
-};
-
-var MailGun = function (app) {
+module.exports = function (app) {
   /* INVITE ROUTE */
   app.get('/invite/:groupId/:email', function (req, res) {
     Group.findOne({_id: req.params.groupId}, function (err, group) {
-      User.findOne({google.email: req.params.email}, function(err, user) {
+      User.findOne({ 'google.email' : req.params.email}, function(err, user) {
         if (user) {
-          inviteToGroupEmail(user.google.email, group.name);
+          inviteToGroupEmail(user, group);
           res.send(200, "Invite sent");
         } else {
           res.send(404, "User not registered");
@@ -43,15 +36,15 @@ var MailGun = function (app) {
   });
 
   /* JOIN ROUTE */
-  app.get('/join', function (req, res) {
+  app.get('/join/group/:groupId/users/:userId', function (req, res) {
     User.findOne({ _id: req.params.userId }, function (err, user) {
       if (err) { return err; }
+      console.log(user);
       user.groups.push(req.params.groupId);
-      user.save(function (user) {
+      user.save(function () {
+        console.log(user.google.name, ' added to groupId: ', req.params.groupId);
         res.send(200, "Added");
       });
     });
   });
 };
-
-module.exports = MailGun;

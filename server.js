@@ -43,8 +43,8 @@ app.use(methodOverride());                  // simulate DELETE and PUT
 
 // authentication and routes
 require('./app/authentication.js')(app, passport); // authentication
+require('./app/mailGun.js')(app); // mailGun
 require('./app/routes.js')(app); // routes
-require('./app/mailGun.js'); // mailGun
 
 // start app
 app.listen(port);

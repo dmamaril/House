@@ -6,7 +6,6 @@ var Group = require('./models/Group.js');
 var Listing = require('./models/Listing.js');
 
 var Authentication = require('./authentication.js');
-var MailGun = require('./mailGun.js');
 
 module.exports = function(app) {
     /* === MAIN ROUTES === */

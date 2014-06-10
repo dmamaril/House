@@ -31,9 +31,12 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
         $scope.toJoin = '';
     };
 
-    $scope.join = function () {
-        Groups.addUser(User.get(), $scope.toJoin);
-        $scope.toJoin = '';
+    $scope.joinGroup = function () {
+        Groups.joinGroup(User.get(), $scope.groupKey, User.currentGroup());
+    };
+
+    $scope.emailInvite = function () {
+        Groups.emailInvite(User.currentGroup()._id, $scope.emailToInvite);
     };
 
     $scope.switch = function (group) {
