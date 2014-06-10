@@ -37,7 +37,7 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
         $scope.groupName = User.currentGroup(group).name;
         group.checkActive = 'subheading-active';
         group.isClicked = true;
-        $rootScope.$emit('change:listings', Listings.getByGroup(User.currentGroup()));
+        Listings.getByGroup(User.currentGroup());
         Groups.getMembers(User.currentGroup());
     };
 });
