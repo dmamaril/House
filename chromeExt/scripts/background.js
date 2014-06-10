@@ -17,7 +17,6 @@ var postToServer = function (url) {
         // If the request completed
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-              // console.log(xhr);
             } else {
                 console.log('Error saving ');
             }
@@ -25,7 +24,6 @@ var postToServer = function (url) {
       };
 
         var params  =   'url=' + url;
-        // params = params.replace(/%20/g, '+');
         xhr.send(params);
     });
 };
