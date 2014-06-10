@@ -26,13 +26,10 @@
           <span ng-click="remove(group)" ng-model='group.isClicked' class="group-delete">(-)</span>
         </span>
         
-        <span class="subheading-add">(+) CREATE GROUP</span>
+        <span class="subheading-add">(+)</span>
           <input ng-model="toJoin" class="subheading-inputs">
-        <span ng-click="create()" class="subheading-add">: join</span>
+        <span ng-click="create()" class="subheading-add">: <- Create Group</span>
 
-        <span> INVITE USER BY EMAIL</span>
-          <input ng-model="emailToInvite">
-          <button ng-click="emailInvite()"> INVITE! </button>                
       </div>
     </div>
   </div>
