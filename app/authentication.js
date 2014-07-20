@@ -36,7 +36,6 @@ var updateUser = function (profile, token, done) {
             user.google.token = token;
             user.google.name  = profile.displayName;
             user.google.email = profile.emails[0].value.toLowerCase() || ''; // pull the first email
-
             user.save();
             return done(null, user);
         }
@@ -45,7 +44,6 @@ var updateUser = function (profile, token, done) {
       } else {
         createUser(profile, token, done);
       }
-
     });
 
 };
@@ -95,9 +93,10 @@ var Authentication = function(app, passport) {
 
     /* === O-AUTH ROUTES === */   
     app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
     app.get('/auth/google/callback', function (req, res, next) {
         passport.authenticate('google', function (err, user, info) {
-            var redirectURL = '/home/' + user._id;
+            var redirectURL = '/#/home/' + user._id;
             console.log('RedirectURL', redirectURL);
             req.user = user;
 

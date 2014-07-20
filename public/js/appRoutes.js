@@ -25,5 +25,5 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 		controller: 'ListingsController'
 	});
 
-	$locationProvider.html5Mode(true);
+	// $locationProvider.html5Mode(true);
 }]);
