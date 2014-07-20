@@ -23,9 +23,12 @@ app.controller('ChannelController', function ($scope, $rootScope, $location, Gro
         }
     };
 
-    $scope.create = function () {
-        Groups.createGroup(User.get(), $scope.toJoin);
-        $scope.toJoin = '';
+    $scope.create = function (e) {
+        if (e === 'click' || e.which === 13) {
+            console.log(e);
+            // Groups.createGroup(User.get(), $scope.toJoin);
+            // $scope.toJoin = '';            
+        }
     };
 
     $scope.emailInvite = function () {
