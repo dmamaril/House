@@ -6,6 +6,7 @@
     "mongoose": "~3.6.13",
     "passport-google-oauth": "~0.1.5",
     "connect-flash": "~0.1.1",
+    "http-request" : "latest",
     "morgan": "~1.0.0",
     "body-parser": "~1.0.0",
     "cookie-parser": "~1.0.0",
