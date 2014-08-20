@@ -11,7 +11,7 @@ app.factory('User', function($http, $rootScope, $location) {
     var User = {};
 
     User.fetch = function(id) {
-        var id = id || userProfile._id;
+        id = id || userProfile._id;
         return $http.get('/api/user/' + id).success(updateCache);
     };
 
