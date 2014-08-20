@@ -13,15 +13,15 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
 /* ==== CONFIG ==== */
-var db = require('./app/config/db.js');
-var port = process.env.PORT || 8080;
+var port  = process.env.PORT || 8080;
+var dbURI = process.env.DB || 'mongodb://localhost/testr'
 
 /* ==== MONGODB ==== */
 var User = require('./app/models/User.js');
 var Group = require('./app/models/Group.js');
 var Listing = require('./app/models/Listing.js');
 
-mongoose.connect(db.url);
+mongoose.connect(dbURI);
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.once('open', function() { console.log("Mongo DB connected!"); });
 

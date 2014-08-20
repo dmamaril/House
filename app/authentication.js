@@ -76,9 +76,9 @@ var Authentication = function(app, passport) {
     });
 
     passport.use(new GoogleStrategy({
-            clientID        : configAuth.googleAuth.clientID,
-            clientSecret    : configAuth.googleAuth.clientSecret,
-            callbackURL     : configAuth.googleAuth.callbackURL,
+            clientID        : process.env.GOOGLEID || configAuth.googleAuth.clientID,
+            clientSecret    : process.env.GOOGLESECRET || configAuth.googleAuth.clientSecret,
+            callbackURL     : prcess.env.GOOGLECB || configAuth.googleAuth.callbackURL,
             passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
         }, function(req, token, refreshToken, profile, done) {
             process.nextTick(function() {

@@ -11,7 +11,7 @@ module.exports = function(grunt) {
           '!app/config',
           'app/**/*.js'
         ],
-        dest: 'deploy/dist/production.js'
+        dest: 'public/dist/production.js'
       }
     },
 
@@ -23,8 +23,8 @@ module.exports = function(grunt) {
 
     uglify: {
       build: {
-        src: 'deploy/dist/production.js',
-        dest: 'deploy/dist/production.min.js'
+        src: 'public/dist/production.js',
+        dest: 'public/dist/production.min.js'
       }
     },
 
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
         expand: true,
         cwd: 'public/',
         src: ['*.css', '!*.min.css'],
-        dest: 'deploy/dist/',
+        dest: 'public/dist/',
         ext: '.min.css'
       }
     },
