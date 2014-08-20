@@ -38,7 +38,7 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc',
         ignores: [
           'bower_components/**/*.js',
-          'public/lib/**/*.js',
+          'public/libs/**/*.js',
           'public/dist/**/*.js'
         ]
       }
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
       scripts: {
         files: [
           'deploy/client/**/*.js',
-          'deploy/lib/**/*.js',
+          'deploy/libs/**/*.js',
         ],
         tasks: [
           'concat',
