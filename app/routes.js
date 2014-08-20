@@ -28,9 +28,9 @@ module.exports = function(app) {
         .exec(function (err, user) {
             console.log(req.body);
             if (user) {
-                if (req.body.budget) { user.budget = req.body.budget };
-                if (req.body.location) { user.location = req.body.location };
-                if (req.body.prefDistance) { user.prefDistance = req.body.prefDistance };
+                if (req.body.budget) { user.budget = req.body.budget }
+                if (req.body.location) { user.location = req.body.location }
+                if (req.body.prefDistance) { user.prefDistance = req.body.prefDistance }
                 user.save(function (err, savedUser) {
                     console.log(savedUser, 'Successfully saved!');
                 });
